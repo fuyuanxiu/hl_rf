@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: htmlhead" th:with="title='权限管理'"></head>
+<style>
+.layui-colla-icon{
+position:inherit;
+float:right;
+padding-right:10px; 
+}
+.layui-colla-title{
+padding:0 15px 0 5px;
+}
+.layui-colla-title i{
+margin-right:10px;
+margin-left:10px;
+color: #1E9FFF;
+font-size: 20px;
+}
+.layui-card-header .layui-icon{
+left:15px;
+}
+.layui-card-header{
+padding:0 35px;
+}
+.layui-form-label {
+    width: 50px;
+}
+.lable_big{
+width: 60px;
+}
+.padd{
+padding-right:80px; 
+}
+.form{
+background-color:#FFFFFF;
+padding-top:15px;
+padding-bottom:5px;
+}
+
+/*供应商上传资料列表*/
+.uploadContent{
+   margin-top:10px;
+   padding-left:15px;
+   cursor: pointer;
+   }  
+.img-list{
+  overflow:hidden;
+  width:100%;
+}
+.uploadDialog{
+  top:8%;
+  height:450px;
+  width:30%;
+}
+.img-list .img-content{
+  float:left;
+  text-align:left;
+  position:relative;
+  display:inline-block;
+  width:180px;
+  height:220px;
+  padding:5px;
+  margin:5px 10px 10px 0;
+  border:1px solid #d1dbe5;
+  border-radius:4px;
+  transition:all .3s;
+  box-shadow:0 2px 4px 0 rgba(0,0,0,.12), 0 0 6px 0 rgba(0,0,0,.04);
+}
+.img-list .img-upload{
+  float:left;
+  width:200px;
+  height:270px;
+  display:table;
+  text-align:center;
+}
+.img-list .uploader{
+  width:100%;
+  display:table-cell;
+  vertical-align:middle;
+}
+.img-list .img-progress{
+  text-align:center;
+  padding-top:50px;
+}
+.img-list .img-content img{
+  display:block;
+  width:100%;
+  height:150px;
+  margin:0 auto;
+  border-radius:4px;
+}
+.img-list .img-content .name{
+  margin-top:10px;
+}
+.img-list .img-content .name>div{
+  width:90%;
+  text-overflow:ellipsis;
+  overflow:hidden;
+  height:25px;
+  line-height:25px;
+}
+.img-list .img-content:hover .del,
+.img-list .img-content:hover .layer{
+  opacity:1;
+}
+.img-list .img-content .del,
+.img-list .img-content .layer{
+  opacity:0;
+  transition:all .3s;
+}
+.img-list .img-content .del{
+  position:absolute;
+  bottom:5px;
+  right:10px;
+  color:#8492a6;
+  cursor:pointer;
+  font-size:1.1em;
+}
+.img-list .img-content .layer{
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  height:160px;
+  color:#fff;
+  text-align:center;
+  z-index:5;
+  background-color:rgba(0,0,0,.4);
+  text-align: center;
+}
+.img-list .img-content .layer i{
+  font-size:1.6em;
+  margin-top:80px;
+  margin: 0 auto;
+}
+.el-card__header{
+    padding: 7px 20px;
+    border-bottom: 1px solid #ebeef5;
+    box-sizing: border-box;
+}
+
+</style>
+<body class="layui-layout-body">
+	<div class="layui-collapse" lay-filter="test">
+	  <div class="layui-colla-item">
+	    <h2 class="layui-colla-title"><i class="layui-icon layui-icon-username"></i>供应商基本信息</h2>
+	    <div class="layui-colla-content " style="background-color:#f2f2f2">
+	    
+	    <form class="layui-form form" action="" >
+	      <div class="layui-form-item">
+		    <label class="layui-form-label lable_big">用户名</label>
+		    <div class="layui-input-inline padd" >
+		      <input type="text" name="title" value="pengle" autocomplete="off" class="layui-input">
+		    </div>
+		    <label class="layui-form-label lable_big">中文名称</label>
+		    <div class="layui-input-inline padd">
+		      <input type="text" name="title"  value="惠州朋乐信息技术有限公司" autocomplete="off" class="layui-input">
+		    </div>
+		    <label class="layui-form-label lable_big">英文名称</label>
+		    <div class="layui-input-inline ">
+		      <input type="text" name="title" value="pengle"  autocomplete="off" class="layui-input">
+		    </div>
+		  </div>
+		  <div class="layui-form-item">
+		    <label class="layui-form-label lable_big">公司简称</label>
+		    <div class="layui-input-inline padd" >
+		      <input type="text" name="title" value="朋乐"  autocomplete="off" class="layui-input">
+		    </div>
+		    <label class="layui-form-label lable_big">类别</label>
+		    <div class="layui-input-inline padd">
+		      <input type="text" name="title" value="成品"  autocomplete="off" class="layui-input">
+		    </div>
+		    <label class="layui-form-label lable_big">注册大类</label>
+		    <div class="layui-input-inline ">
+		      <input type="text" name="title" value="机加工"  autocomplete="off" class="layui-input">
+		    </div>
+		  </div>
+		  <div class="layui-form-item">
+		    <label class="layui-form-label lable_big">注册描述</label>
+		    <div class="layui-input-inline padd" >
+		      <input type="text" name="title" value="认证软件企业"  autocomplete="off" class="layui-input">
+		    </div>
+		    <label class="layui-form-label lable_big">地址</label>
+		    <div class="layui-input-inline " style="width:560px;">
+		      <input type="text" name="title" value="中国广东省惠州市中凯高新区666号"  autocomplete="off" class="layui-input">
+		    </div>
+		  </div>
+	    </form>
+	    
+			  <div class="layui-row layui-col-space10" style="padding-top:10px;">
+			    <div class="layui-col-md4">
+				    <div class="layui-card">
+					  <div class="layui-card-header"><i class="layui-icon layui-icon-username"></i>主要联系人</div>
+					  <div class="layui-card-body">
+					     <div class="layui-form-item">
+						    <label class="layui-form-label">姓名</label>
+						    <div class="layui-inline">
+						      <input type="text" name="title" value="吴经理"   autocomplete="off" class="layui-input">
+						    </div>
+						    <label class="layui-form-label">电话</label>
+						    <div class="layui-inline">
+						      <input type="text" name="title" value="0752-00000000" autocomplete="off" class="layui-input">
+						    </div>
+						    <label class="layui-form-label">职位</label>
+						    <div class="layui-inline">
+						      <input type="text" name="title"  value="总经理" autocomplete="off" class="layui-input">
+						    </div>
+						    <label class="layui-form-label">性别</label>
+						    <div class="layui-inline">
+						      <input type="text" name="title"  value="男" autocomplete="off" class="layui-input">
+						    </div>
+						    <label class="layui-form-label">邮箱</label>
+						    <div class="layui-inline">
+						      <input type="text" name="title" value="12345678vip@163.com" autocomplete="off" class="layui-input">
+						    </div>
+						  </div>
+					  </div>
+					</div>
+			    </div>
+			    <div class="layui-col-md4">
+				    <div class="layui-card">
+					  <div class="layui-card-header"><i class="layui-icon layui-icon-username"></i>备用联系人</div>
+					  <div class="layui-card-body">
+						  <div class="layui-form-item">
+						    <label class="layui-form-label">姓名</label>
+						    <div class="layui-inline">
+						      <input type="text" name="title" value="吴经理"   autocomplete="off" class="layui-input">
+						    </div>
+						    <label class="layui-form-label">电话</label>
+						    <div class="layui-inline">
+						      <input type="text" name="title" value="0752-00000000" autocomplete="off" class="layui-input">
+						    </div>
+						    <label class="layui-form-label">职位</label>
+						    <div class="layui-inline">
+						      <input type="text" name="title"  value="总经理" autocomplete="off" class="layui-input">
+						    </div>
+						    <label class="layui-form-label">性别</label>
+						    <div class="layui-inline">
+						      <input type="text" name="title"  value="男" autocomplete="off" class="layui-input">
+						    </div>
+						    <label class="layui-form-label">邮箱</label>
+						    <div class="layui-inline">
+						      <input type="text" name="title" value="12345678vip@163.com" autocomplete="off" class="layui-input">
+						    </div>
+						  </div>
+					  </div>
+					</div>
+			    </div>
+			    <div class="layui-col-md4">
+				    <div class="layui-card">
+					  <div class="layui-card-header"><i class="layui-icon layui-icon-username"></i>备用联系人2</div>
+					  <div class="layui-card-body">
+						  <div class="layui-form-item">
+						    <label class="layui-form-label">姓名</label>
+						    <div class="layui-inline">
+						      <input type="text" name="title" value="吴经理"   autocomplete="off" class="layui-input">
+						    </div>
+						    <label class="layui-form-label">电话</label>
+						    <div class="layui-inline">
+						      <input type="text" name="title" value="0752-00000000" autocomplete="off" class="layui-input">
+						    </div>
+						    <label class="layui-form-label">职位</label>
+						    <div class="layui-inline">
+						      <input type="text" name="title"  value="总经理" autocomplete="off" class="layui-input">
+						    </div>
+						    <label class="layui-form-label">性别</label>
+						    <div class="layui-inline">
+						      <input type="text" name="title"  value="男" autocomplete="off" class="layui-input">
+						    </div>
+						    <label class="layui-form-label">邮箱</label>
+						    <div class="layui-inline">
+						      <input type="text" name="title" value="12345678vip@163.com" autocomplete="off" class="layui-input">
+						    </div>
+						  </div>
+					  </div>
+					</div>
+			    </div>
+	    </div>
+	  </div>
+	  </div>
+	  <div class="layui-colla-item">
+	    <h2 class="layui-colla-title"><i class="layui-icon layui-icon-rmb"></i>银行信息</h2>
+	    <div class="layui-colla-content ">
+		    <form class="layui-form form" action="" >
+		      <div class="layui-form-item">
+			    <label class="layui-form-label lable_big">账户名</label>
+			    <div class="layui-input-inline padd" >
+			      <input type="text" name="title" value="惠州朋乐信息技术有限公司" autocomplete="off" class="layui-input">
+			    </div>
+			    <label class="layui-form-label lable_big">银行账户</label>
+			    <div class="layui-input-inline padd">
+			      <input type="text" name="title"  value="0000000000000000000" autocomplete="off" class="layui-input">
+			    </div>
+			    <label class="layui-form-label lable_big">开户银行</label>
+			    <div class="layui-input-inline ">
+			      <input type="text" name="title" value="中国银行"  autocomplete="off" class="layui-input">
+			    </div>
+			  </div>
+			  <div class="layui-form-item">
+			    <label class="layui-form-label lable_big">开户分行</label>
+			    <div class="layui-input-inline padd" >
+			      <input type="text" name="title" value="朋乐支行"  autocomplete="off" class="layui-input">
+			    </div>
+			    <label class="layui-form-label lable_big">支付地点</label>
+			    <div class="layui-input-inline padd">
+			      <input type="text" name="title" value="惠州"  autocomplete="off" class="layui-input">
+			    </div>
+			    <label class="layui-form-label lable_big">采购地点</label>
+			    <div class="layui-input-inline ">
+			      <input type="text" name="title" value="惠州"  autocomplete="off" class="layui-input">
+			    </div>
+			  </div>
+			  <div class="layui-form-item">
+			    <label class="layui-form-label lable_big">付款方式</label>
+			    <div class="layui-input-inline padd" >
+			       <select name="city" lay-verify="required">
+			        <option value="0">支票</option>
+			        <option value="1">电子付款</option>
+			        <option value="2">电汇</option>
+			        <option value="3">结算</option>
+			      </select>
+			    </div>
+			    <label class="layui-form-label lable_big">付款条件</label>
+			    <div class="layui-input-inline padd" >
+			      <select name="city" lay-verify="required">
+			        <option value="0">30天</option>
+			        <option value="1">立即付款</option>
+			        <option value="2">10天</option>
+			        <option value="3">20天</option>
+			      </select>
+			    </div>
+			    <label class="layui-form-label lable_big">使用货币</label>
+			    <div class="layui-input-inline ">
+			      <input type="text" name="title" value="CNY"  autocomplete="off" class="layui-input">
+			    </div>
+			  </div>
+		    </form>
+	    </div>
+	  </div>
+	  <div class="layui-colla-item ">
+	    <h2 class="layui-colla-title"><i class="layui-icon layui-icon-read"></i>资质文件
+	      <span style="font-size: 12px; margin-left: 15px; color: rgb(85, 85, 85);">*请上传公司资质文件、营业执照、ROHS报告（有效期）、ISO体系文件（有效期管理）、等文件的电子档</span>
+	    </h2>
+	    <div class="layui-colla-content layui-show">
+	    <div class="layui-container">
+		    <div class="layui-row layui-col-space10">
+			  <div class="layui-col-md3">
+			    <div class="uploadContent">
+				    <div class="img-list">
+						    <div class="img-content" >
+							    <img alt="" src="../../img/notimg.jpg" style="height:140px" >
+							    <div class="name">
+								    <div>三证合一-开票资格</div>
+							    </div>
+							    <div class="del">
+								    <button type="button" class="layui-btn  layui-btn-danger layui-btn-sm"><i class="layui-icon">&#xe640;</i></button>
+								    <button type="button" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe601;</i></button>
+							    </div>
+							    <div class="layer test-upload-demoMore"  lay-data="{url: '/a/'}">
+								    <i class="layui-icon layui-icon-upload-drag">上传附件</i>  
+							    </div>
+						    </div>
+					    </div>
+			    </div>
+			  </div>
+			  <div class="layui-col-md3">
+			    <div class="uploadContent">
+				    <div class="img-list">
+						    <div class="img-content">
+							    <img alt="" src="../../img/timg.jpg" style="height:140px">
+							    <div class="name">
+								    <div>供应商调查-预评估表</div>
+							    </div>
+							    <div class="del">
+								    <button type="button" class="layui-btn  layui-btn-danger layui-btn-sm"><i class="layui-icon">&#xe640;</i></button>
+								    <button type="button" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe601;</i></button>
+							    </div>
+							    <div class="layer test-upload-demoMore"  lay-data="{url: '/a/'}">
+								    <i class="layui-icon layui-icon-upload-drag">上传附件</i>  
+							    </div>
+						    </div>
+					    </div>
+			    </div>
+			  </div>
+			  <div class="layui-col-md3">
+			    <div class="uploadContent">
+				    <div class="img-list">
+						    <div class="img-content">
+							    <img alt="" src="../../img/timg.jpg" style="height:140px" >
+							    <div class="name">
+								    <div>商务手册</div>
+							    </div>
+							    <div class="del">
+								    <button type="button" class="layui-btn  layui-btn-danger layui-btn-sm"><i class="layui-icon">&#xe640;</i></button>
+								    <button type="button"  class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe601;</i></button>
+							    </div>
+							    <div class="layer test-upload-demoMore"  lay-data="{url: '/a/'}">
+								    <i class="layui-icon layui-icon-upload-drag">上传附件</i>  
+							    </div>
+						    </div>
+					    </div>
+			    </div>
+			  </div>
+			  <div class="layui-col-md3">
+			    <div class="uploadContent">
+				    <div class="img-list">
+						    <div class="img-content">
+							    <img alt="" src="../../img/notimg.jpg" style="height:140px">
+							    <div class="name">
+								    <div>保密协议</div>
+							    </div>
+							    <div class="del">
+								    <button type="button" class="layui-btn  layui-btn-danger layui-btn-sm"><i class="layui-icon">&#xe640;</i></button>
+								    <button type="button" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe601;</i></button>
+							    </div>
+							    <div class="layer test-upload-demoMore"  lay-data="{url: '/a/'}">
+								    <i class="layui-icon layui-icon-upload-drag">上传附件</i>  
+							    </div>
+						    </div>
+					    </div>
+			    </div>
+			  </div>
+			</div>
+		</div> 
+		    
+	    </div>
+	  </div>
+	</div>
+	<script src="/js/auth/supplierInfo.js"></script>
+</body>
+</html>

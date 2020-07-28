@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: htmlhead" th:with="title='权限管理'"></head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <!--头-->
+ <!--    <div th:replace="fragments/head :: header"></div> -->
+
+    <div  style="margin: 1%">
+        <div class="demoTable">
+            &nbsp;&nbsp;<button class="layui-btn" onclick="addPerm('{{r.id}}',0)">开通权限</button>
+        </div>
+
+        <div id="permTable" class="grid">
+        </div>
+        <script id="view" type="text/html">
+            <table class="layui-table">
+                <thead>
+                <tr>
+                    <th>追溯索引</th>
+                    <th>物料批次</th>
+                    <th>物流条码</th>
+                    <th>投入数量</th>
+                    <th>物流编号</th>
+                    <th>物流描述</th>
+                    <th>供应商编码</th>
+                    <th>生产订单</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{# layui.each(d.rows,function(index,r){ }}
+                <tr>
+                    <td>{{r.PROC_NAME}}</td>
+                    <td>{{r.LOT_NO}}</td>
+                    <td>{{r.ITEM_BARCODE}}</td>
+                    <td>{{r.QTY}}</td>
+                    <td>{{r.ITEM_NO}}</td>
+                    <td>{{r.ITEMNAME}}</td>
+                    <td>{{r.LIFNO}}</td>
+                    <td>{{r.TASK_NO}}</td>
+                </tr>
+                {{# }); }}
+                </tbody>
+            </table>
+        </script>
+    </div>
+
+    <!--底部-->
+ <!--    <div th:replace="fragments/footer :: footer"></div> -->
+    <script src="/js/report/batch.js" th:src="@{/js/report/batch.js}"></script>
+    <script th:inline="javascript">
+        var permList=/*[[${permList}]]*/;
+    </script>
+</div>
+</body>
+</html>

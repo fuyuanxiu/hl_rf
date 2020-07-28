@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head th:include="layout :: htmlhead" th:with="title='OCV2'">
+    <style th:inline="text">
+        .layui-table, .layui-table-view{
+            margin:0px;
+        }
+    </style>
+
+</head>
+
+<body class="layui-layout-body" style="font:12px Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-serif;">
+<div class="layui-layout layui-layout-admin">
+    <form id="userSearch" class="layui-form layui-form-pane" method="post" action="" style="margin-top: 5px;">
+        <div class="layui-form-item" style="margin-bottom: 0px;height:36px;">
+            <div class="layui-inline" style="margin-right:0px;">
+                <label class="layui-form-label" style="width:60px;">日期</label>
+                <div class="layui-input-inline" style="width:150px;">
+                    <input type="text" class="layui-input" name="stime" id="test-laydate-start" placeholder="开始日期">
+                </div>
+                <div class="layui-form-mid">
+                    -
+                </div>
+                <div class="layui-input-inline" style="width:150px;">
+                    <input type="text" class="layui-input" name="etime" id="test-laydate-end" placeholder="结束日期">
+                </div>
+                <label class="layui-form-label" style="width:60px;">线体:</label>
+                <div class="layui-input-inline  layui-form" lay-filter="line" style="width:100px;">
+                    <select name="lineno" lay-verify="lineno" id="lineno">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-bottom: 0px">
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width:60px;">型号:</label>
+                <div class="layui-input-inline" style="margin-right:0px;width:150px;">
+                    <input id="pmodel" name="pmodel" autocomplete="off" class="layui-input" type="text"/>
+                </div>
+                <label class="layui-form-label" style="width:90px;">电芯条码:</label>
+                <div class="layui-input-inline" style="margin-right:0px;width:252px;">
+                    <input id="keyword" name="keyword" autocomplete="off" class="layui-input" type="text"/>
+                </div>
+                <!--按钮-->
+                <button type="reset" class="layui-btn layui-btn-primary" title="重置">
+                    <i class="layui-icon">&#xe669;</i>
+                </button>
+                <button class="layui-btn"  lay-submit="" data-url="drill" lay-filter="doSearch" title="查询">
+                    <i class="layui-icon">&#xe615;</i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <div class="layui-tab layui-tab-brief" lay-filter="tabFilter" style="margin:0px;">
+        <table id="list2" lay-filter="unitTable2"></table>
+        <!-- <ul class="layui-tab-title" id="ul">
+           <li lay-id="OCV1" class="layui-this">OCV1信息</li>
+           <li lay-id="OCV2" >OCV2信息</li>
+        </ul>
+        <div class="layui-tab-content" style="height: 100px; display: block;padding-left:10px;padding-top:5px;">
+            <div class="layui-tab-item layui-show">
+                <div class="layui-form-item">
+                    <table id="unitList" lay-filter="unitTable" style="margin:0px;"></table>
+                </div>
+            </div>
+            <div class="layui-tab-item">
+               <div class="layui-form-item">
+                    <table id="list2" lay-filter="unitTable2"></table>
+                </div>
+            </div>
+        </div> -->
+    </div>
+
+
+    <script src="/js/report/ocv2.js" th:src="@{/js/report/ocv2.js}"></script>
+</div>
+</body>
+</html>

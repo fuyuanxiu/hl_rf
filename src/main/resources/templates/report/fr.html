@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head th:include="layout :: htmlhead" th:with="title='应急处置管理'">
+<style th:inline="text">
+.layui-table, .layui-table-view{
+margin:0px;
+}
+</style>
+
+</head>
+
+<body class="layui-layout-body" style="font:12px Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-serif;">
+<div class="layui-layout layui-layout-admin">
+ <form id="userSearch" class="layui-form layui-form-pane" method="post" action="" style="margin-top: 5px;">
+                        <div class="layui-form-item" style="margin-bottom: 0px">
+                           <div class="layui-inline">
+				                  <label class="layui-form-label" style="width:90px;">日期</label>
+				                  <div class="layui-input-inline">
+				                    <input type="text" class="layui-input" name="stime" id="test-laydate-start" placeholder="开始日期">
+				                  </div>
+				                  <div class="layui-form-mid">
+				                    -
+				                  </div>
+				                  <div class="layui-input-inline">
+				                    <input type="text" class="layui-input" name="etime" id="test-laydate-end" placeholder="结束日期">
+				                  </div>
+				                </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label" style="width:90px;">电芯条码:</label>
+                                <div class="layui-input-inline">
+                                    <input id="keyword" name="keyword" autocomplete="off" class="layui-input" type="text"/>
+                                </div>
+                                
+				                <!-- <div class="layui-input-inline" id="IsPurchased">
+					              <input type="radio" name="ptype" value="HC" title="化成" checked="">
+					              <input type="radio" name="ptype" value="FR" title="分容">
+					            </div> -->
+                                <!--按钮-->
+                                <button type="reset" class="layui-btn layui-btn-primary" title="重置">
+                                    <i class="layui-icon">&#xe669;</i>
+                                </button>
+                                <button class="layui-btn"  lay-submit="" data-url="drill" lay-filter="doSearch" title="查询">
+                                    <i class="layui-icon">&#xe615;</i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                   
+    <table id="unitList" lay-filter="unitTable" style="margin:0px;"></table>
+
+        <script type="text/html" id="optBar">
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="detail">详情</a>
+        </script>
+    <script src="/js/report/fr.js" th:src="@{/js/report/fr.js}"></script>
+</div>
+</body>
+</html>

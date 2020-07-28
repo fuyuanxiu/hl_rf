@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head th:include="layout :: htmlhead" th:with="title='应急处置管理'">
+<style th:inline="text">
+.layui-table, .layui-table-view{
+margin:0px;
+}
+</style>
+
+</head>
+
+<body class="layui-layout-body" style="font:12px Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-serif;">
+<div class="layui-layout layui-layout-admin">
+ <form id="userSearch" class="layui-form layui-form-pane" method="post" action="" style="margin-top: 5px;">
+                        <div class="layui-form-item" style="margin-bottom: 0px">
+                            <div class="layui-inline">
+                                <label class="layui-form-label" style="width:150px;">电芯条码/批次:</label>
+                                <div class="layui-input-inline">
+                                    <input id="keyword" name="keyword" autocomplete="off" class="layui-input" type="text"/>
+                                </div>
+                              <!--   <label class="layui-form-label">工单单号:</label>
+                                <div class="layui-input-inline">
+                                    <input id="nameSearch" name="nameSearch" autocomplete="off" class="layui-input" type="text"/>
+                                </div> -->
+                                <!--按钮-->
+                                <button type="reset" class="layui-btn layui-btn-primary" title="重置">
+                                    <i class="layui-icon">&#xe669;</i>重置
+                                </button>
+                                <button class="layui-btn"  lay-submit="" data-url="drill" lay-filter="doSearch" title="查询">
+                                    <i class="layui-icon">&#xe615;</i>查询
+                                </button>
+                                <button type="button" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="doDownload" title="导出">
+                                    <i class="layui-icon">&#xe601;</i>导出
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                   
+    <div class="layui-tab layui-tab-brief" lay-filter="tabFilter" style="margin:0px;">
+        <ul class="layui-tab-title" id="ul">
+        </ul>
+        <div class="layui-tab-content" style="height: 100px; display: block;padding-left:10px;padding-top:5px;">
+            <div class="layui-tab-item layui-show">
+                <div class="layui-form-item">
+                    <table id="unitList" lay-filter="unitTable" style="margin:0px;"></table>
+                </div>
+            </div>
+            <div class="layui-tab-item">
+               <div class="layui-form-item">
+                    <table id="list2" lay-filter="unitTable2"></table>
+                </div>
+            </div>
+            <div class="layui-tab-item">
+               <div class="layui-form-item">
+                    <table id="list3" lay-filter="unitTable3"></table>
+                </div>
+            </div>
+            <div class="layui-tab-item">
+               <div class="layui-form-item">
+                    <table id="list4" lay-filter="unitTable4"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="/js/report/trace.js" th:src="@{/js/report/trace.js}"></script>
+</div>
+</body>
+</html>
