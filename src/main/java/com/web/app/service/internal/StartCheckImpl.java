@@ -77,6 +77,75 @@ public class StartCheckImpl implements StartCheckService {
 
         return resultList;
     }
+   
+    @Override
+	public ApiResponseResult addStartCheck( //开工授权
+			String usercode,
+    		String proc,
+    		String workCenter,
+    		String taskNo,
+    		String eq_code,
+    		String staffNoInfo,
+    		String eq_id_Info
+			) throws Exception {
+		// TODO Auto-generated method stub
+		List<Object> list = this.addStartCheckPrc(usercode,proc,workCenter,taskNo,eq_code,
+				staffNoInfo,eq_id_Info, "PRC_Produce_Authorization");  
+		if(!list.get(0).toString().equals("0")){
+            return ApiResponseResult.failure(list.get(1).toString());
+        }
+		return ApiResponseResult.success(list.get(1).toString());
+	}
+    //执行开工授权存储过程
+    private List addStartCheckPrc(
+    		String usercode,
+    		String proc,
+    		String workCenter,
+    		String taskNo,
+    		String eq_code,
+    		String staffNoInfo,
+    		String eq_id_Info,String prc_name)throws Exception{
+        List resultList = (List) jdbcTemplate.execute(new CallableStatementCreator() {
+            @Override
+            public CallableStatement createCallableStatement(Connection con) throws SQLException {
+                String storedProc = "{call "+prc_name+"(?,?,?,?,?,?,?,?,?)}";// 调用的sql
+                CallableStatement cs = con.prepareCall(storedProc);
+                cs.setString(1, usercode);// 账号
+                cs.setString(2, proc);// 工序
+                cs.setString(3, workCenter);// 工作中心
+                cs.setString(4, taskNo);// 工单
+                cs.setString(5, eq_code);// 设备编号
+                cs.setString(6, staffNoInfo);// 工号信息
+                cs.setString(7, eq_id_Info);// 设备ID
+                cs.registerOutParameter(8,java.sql.Types.INTEGER);// 返回标识
+                cs.registerOutParameter(9,java.sql.Types.VARCHAR);// 输出参数 
+                return cs;
+            }
+        }, new CallableStatementCallback() {
+            public Object doInCallableStatement(CallableStatement cs) throws SQLException, DataAccessException {
+                List<Object> result = new ArrayList<>();
+//                List<Map<String, Object>> l = new ArrayList();
+                cs.execute();
+                result.add(cs.getString(8));
+                result.add(cs.getString(9));
+//                if(cs.getString(2).toString().equals("0")){
+//                    //游标处理
+//                    ResultSet rs = (ResultSet)cs.getObject(4);
+//
+//                    try {
+//						l = fitMap(rs);
+//					} catch (Exception e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//                    result.add(l);
+//                }
+//                System.out.println(l);
+                return result;
+            }
+        });
+        return resultList;
+    }
     
 	//值为"null"或者null转换成""
     private String getEmpty(String str){

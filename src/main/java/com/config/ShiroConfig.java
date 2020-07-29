@@ -121,7 +121,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/queryAppVersion", "anon");
         
         filterChainDefinitionMap.put("/start/*", "anon");
-        
+        filterChainDefinitionMap.put("/produce/*", "anon");
 
         filterChainDefinitionMap.put("/wd_rf/login1", "anon");
         filterChainDefinitionMap.put("/wd_rf/queryPurview", "anon");

@@ -28,4 +28,24 @@ public class StartCheckController extends WebController {
             return ApiResponseResult.failure(e.toString());
         }
     }
+    
+    @ApiOperation(value = "执行开工授权", notes = "执行开工授权")
+    @RequestMapping(value = "/addStartCheck", method = RequestMethod.POST, produces = "application/json")
+    public ApiResponseResult addStartCheck(
+    		@RequestParam(value = "usercode") String usercode,
+    		@RequestParam(value = "proc") String proc,
+    		@RequestParam(value = "workCenter") String workCenter,
+    		@RequestParam(value = "taskNo") String taskNo,
+    		@RequestParam(value = "eq_code") String eq_code,
+    		@RequestParam(value = "staffNoInfo") String staffNoInfo,
+    		@RequestParam(value = "eq_id_Info") String eq_id_Info
+    		){
+        try{
+            return createService.addStartCheck(usercode,proc,workCenter,taskNo,eq_code,
+    				staffNoInfo,eq_id_Info);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ApiResponseResult.failure(e.toString());
+        }
+    }
 }
