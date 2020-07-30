@@ -128,19 +128,6 @@ public class StartCheckImpl implements StartCheckService {
                 cs.execute();
                 result.add(cs.getString(8));
                 result.add(cs.getString(9));
-//                if(cs.getString(2).toString().equals("0")){
-//                    //游标处理
-//                    ResultSet rs = (ResultSet)cs.getObject(4);
-//
-//                    try {
-//						l = fitMap(rs);
-//					} catch (Exception e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//                    result.add(l);
-//                }
-//                System.out.println(l);
                 return result;
             }
         });
