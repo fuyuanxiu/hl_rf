@@ -122,6 +122,7 @@ public class ShiroConfig {
         
         filterChainDefinitionMap.put("/start/*", "anon");
         filterChainDefinitionMap.put("/produce/*", "anon");
+        filterChainDefinitionMap.put("/produceVerify/*", "anon");
 
         filterChainDefinitionMap.put("/wd_rf/login1", "anon");
         filterChainDefinitionMap.put("/wd_rf/queryPurview", "anon");
