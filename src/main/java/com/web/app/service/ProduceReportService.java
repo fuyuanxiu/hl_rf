@@ -2,7 +2,7 @@ package com.web.app.service;
 
 import com.app.base.data.ApiResponseResult;
 
-public interface ProduceBgService {
+public interface ProduceReportService {
 	
 	 //根据工单号获取待生产工单信息
     public ApiResponseResult getProduceList(String usercode) throws Exception;//方法

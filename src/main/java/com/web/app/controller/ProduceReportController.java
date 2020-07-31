@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.base.control.WebController;
 import com.app.base.data.ApiResponseResult;
-import com.web.app.service.ProduceBgService;
+import com.web.app.service.ProduceReportService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,11 +16,11 @@ import io.swagger.annotations.ApiOperation;
 @Api(description = "生产报工")
 @RestController
 @RequestMapping(value= "/produce")
-public class ProduceBgController extends WebController {
+public class ProduceReportController extends WebController {
 	@Autowired
-    private ProduceBgService createService;
+    private ProduceReportService createService;
 
-    @ApiOperation(value = "根据工单号获取工单信息", notes = "根据工单号获取工单信息")
+    @ApiOperation(value = "获取工单信息", notes = "获取工单信息")
     @RequestMapping(value = "/getProduceList", method = RequestMethod.POST, produces = "application/json")
     public ApiResponseResult getProduceList(@RequestParam(value = "usercode") String usercode){
         try{
@@ -31,7 +31,7 @@ public class ProduceBgController extends WebController {
         }
     }
     
-    @ApiOperation(value = "添加生产报工数据", notes = "添加生产报工数据")
+    @ApiOperation(value = "执行报工", notes = "执行报工")
     @RequestMapping(value = "/produceReport", method = RequestMethod.POST, produces = "application/json")
     public ApiResponseResult produceReport(
     		@RequestParam(value = "usercode") String usercode,//用户ID

@@ -20,11 +20,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.app.base.data.ApiResponseResult;
-import com.web.app.service.ProduceBgService;
+import com.web.app.service.ProduceReportService;
 
-@Service(value = "ProduceBgService")
+@Service(value = "ProduceReportService")
 @Transactional(propagation = Propagation.REQUIRED)
-public class ProduceBglmpl implements ProduceBgService {
+public class ProduceReportlmpl implements ProduceReportService {
 	
 	 @Autowired
 	    private JdbcTemplate jdbcTemplate;
