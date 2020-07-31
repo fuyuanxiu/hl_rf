@@ -188,7 +188,7 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
 	    		String reportInfo
 	    		) throws Exception {
 			// TODO Auto-generated method stub
-					List<Object> list = this.sumbitProduceVerifyPrc(usercode,reportInfo,"PRC_Produce_BG_Report");	        
+					List<Object> list = this.sumbitProduceVerifyPrc(usercode,reportInfo,"PRC_Produce_BGVerify_forMobile");	        
 					if(!list.get(0).toString().equals("0")){//存储过程调用失败 //判断返回标识
 			            return ApiResponseResult.failure(list.get(1).toString());//失败返回字段
 			        }
@@ -206,7 +206,7 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
 	                String storedProc = "{call "+prc_name+"(?,?,?,?)}";// 调用的sql
 	                CallableStatement cs = con.prepareCall(storedProc);
 	                cs.setString(1, usercode);// 账号
-	                cs.setString(2, reportInfo);//工厂编号
+	                cs.setString(2, reportInfo);//参数信息字符串
 	                cs.registerOutParameter(3,java.sql.Types.INTEGER);// 输出参数 返回标识
 	                cs.registerOutParameter(4,java.sql.Types.VARCHAR);// 输出参数 返回标识
 	                return cs;
