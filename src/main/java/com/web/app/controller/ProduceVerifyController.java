@@ -15,7 +15,7 @@ import io.swagger.annotations.ApiOperation;
 
 @Api(description = "报工审核")
 @RestController
-@RequestMapping(value= "/produceVerify")
+@RequestMapping(value= "/produce_verify")
 public class ProduceVerifyController extends WebController {
 	@Autowired
     private ProduceVerifyService createService;
