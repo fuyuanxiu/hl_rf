@@ -12,4 +12,9 @@ public interface ProduceVerifyService {
     		String workCenter,
     		String taskNo,
     		String eq_code) throws Exception;
+    //提交审核信息
+    public ApiResponseResult sumbitProduceVerify(
+    		String usercode,String reportInfo
+    		) throws Exception;
 }
+

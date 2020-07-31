@@ -33,7 +33,7 @@ public class ProduceVerifyController extends WebController {
     
     @ApiOperation(value = "获取生产审核数据", notes = "获取生产审核数据")
     @RequestMapping(value = "/getProduceVerifyDetail", method = RequestMethod.POST, produces = "application/json")
-    public ApiResponseResult produceReport(
+    public ApiResponseResult getProduceVerifyDetail(
     		@RequestParam(value = "usercode") String usercode,//用户ID
     		@RequestParam(value = "proc") String proc,//工序
     		@RequestParam(value = "workCenter") String workCenter,//工作中心
@@ -43,6 +43,19 @@ public class ProduceVerifyController extends WebController {
         try{
             return createService.getProduceVerifyDetail(usercode,proc,
             		workCenter,taskNo,eq_code);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ApiResponseResult.failure(e.toString());
+        }
+    }
+    
+    @ApiOperation(value = "提交审核信息", notes = "提交审核信息")
+    @RequestMapping(value = "/sumbitProduceVerify", method = RequestMethod.POST, produces = "application/json")
+    public ApiResponseResult sumbitProduceVerify(
+    		@RequestParam(value = "usercode") String usercode,
+    		@RequestParam(value = "reportInfo") String reportInfo){
+        try{
+            return createService.sumbitProduceVerify(usercode,reportInfo);
         }catch (Exception e){
             e.printStackTrace();
             return ApiResponseResult.failure(e.toString());
