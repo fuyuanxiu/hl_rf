@@ -35,7 +35,50 @@ public class StartCheckImpl implements StartCheckService {
 		if(!list.get(0).toString().equals("0")){
             return ApiResponseResult.failure(list.get(1).toString());
         }
-		return ApiResponseResult.success().data(list.get(2));
+		List<Map<String, Object>> l = (List<Map<String, Object>>) list.get(2);
+		//处理数据
+		//去掉重复的WORL_SINGNUM的记录
+		List<Map<String, Object>> l_new = new ArrayList<Map<String, Object>>();
+		l_new.add(l.get(0));
+		for(int i=1;i<l.size();i++){
+			Map<String, Object> map0 = l.get(i-1);
+			Map<String, Object> map1 = l.get(i);
+			String task_no0 = map0.get("WORL_SINGNUM").toString();
+			String task_no1 = map1.get("WORL_SINGNUM").toString();
+			if(!task_no0.equals(task_no1)){
+				l_new.add(map1);
+			}
+		}
+		//挨个获取新的WORL_SINGNUM的字数据
+		List<Map<String, Object>> l_last= new ArrayList<Map<String, Object>>();
+		for(int j=0;j<l_new.size();j++){
+			List<Map<String, Object>> child = new ArrayList<Map<String, Object>>();
+			for(int k=0;k<l.size();k++){
+				if(l_new.get(j).get("WORL_SINGNUM").toString().equals(l.get(k).get("WORL_SINGNUM").toString())){
+					Map<String, Object> m = l.get(k);
+					Map<String, Object> m_new = new HashMap<String, Object>();
+					m_new.put("WORKSHOP_CENTER_CODE", m.get("WORKSHOP_CENTER_CODE").toString());
+					m_new.put("WORPROC_CODE", m.get("WORPROC_CODE").toString());
+					m_new.put("WORPROC_NAME", m.get("WORPROC_NAME").toString());
+					m_new.put("EQU_CODE", m.get("EQU_CODE").toString());
+					m_new.put("EQU_NAME", m.get("EQU_NAME").toString());
+					m_new.put("STATUS", m.get("STATUS").toString());
+					child.add(m_new);
+				}
+			}
+			Map<String, Object> m = l_new.get(j);
+			Map<String, Object> m_new = new HashMap<String, Object>();
+			m_new.put("WORL_SINGNUM", m.get("WORL_SINGNUM").toString());
+			m_new.put("PRO_NAME", m.get("PRO_NAME").toString());
+			m_new.put("PRO_CODE", m.get("PRO_CODE").toString());
+			m_new.put("PROD_DATE_END", m.get("PROD_DATE_END").toString());
+			m_new.put("PROD_DATE", m.get("PROD_DATE").toString());
+			m_new.put("WORL_QTY", m.get("WORL_QTY").toString());
+			m_new.put("COMPLETE_QTY", m.get("COMPLETE_QTY").toString());
+			m_new.put("Child", child);
+			l_last.add(m_new);
+		}
+		return ApiResponseResult.success().data(l_last);//返回数据集
 	}
 	//执行存储获取数据
     private List getStartListPrc(String usercode,String prc_name)throws Exception{

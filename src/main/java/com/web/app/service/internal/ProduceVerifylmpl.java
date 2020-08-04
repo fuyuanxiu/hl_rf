@@ -61,6 +61,8 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
 					Map<String, Object> m_new = new HashMap<String, Object>();
 					m_new.put("PROC_NAM", m.get("PROC_NAM").toString());
 					m_new.put("PROC_NO", m.get("PROC_NO").toString());
+					m_new.put("EQU_CODE", m.get("EQU_CODE").toString());//-
+					m_new.put("EQU_NAME", m.get("EQU_NAME").toString());//-
 					m_new.put("PRODUCE_STATE", m.get("PRODUCE_STATE").toString());
 					m_new.put("WORKSHOP_CENTER_CODE", m.get("WORKSHOP_CENTER_CODE").toString());
 					child.add(m_new);
@@ -73,13 +75,12 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
 			m_new.put("BOARD_NAME", m.get("BOARD_NAME").toString());
 			m_new.put("PLAN_QTY", m.get("PLAN_QTY").toString());
 			m_new.put("COMPLETE_QTY", m.get("COMPLETE_QTY").toString());
-			m_new.put("EQU_CODE", m.get("EQU_CODE").toString());
-			m_new.put("EQU_NAME", m.get("EQU_NAME").toString());
+			//m_new.put("EQU_CODE", m.get("EQU_CODE").toString());
+			//m_new.put("EQU_NAME", m.get("EQU_NAME").toString());
 			m_new.put("PROC_NAM", m.get("PROC_NAM").toString());
 			m_new.put("Child", child);
 			l_last.add(m_new);
 		}
-
 		return ApiResponseResult.success().data(l_last);//返回数据集
 	}
 	//执行存储过程，获取工单信息
