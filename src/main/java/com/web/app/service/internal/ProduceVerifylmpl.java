@@ -56,7 +56,7 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
 		for(int j=0;j<l_new.size();j++){
 			List<Map<String, Object>> child = new ArrayList<Map<String, Object>>();
 			for(int k=0;k<l.size();k++){
-				if(l_new.get(j).get("TASK_NO").toString().equals(l.get(j).get("TASK_NO").toString())){
+				if(l_new.get(j).get("TASK_NO").toString().equals(l.get(k).get("TASK_NO").toString())){
 					Map<String, Object> m = l.get(k);
 					Map<String, Object> m_new = new HashMap<String, Object>();
 					m_new.put("PROC_NAM", m.get("PROC_NAM").toString());
