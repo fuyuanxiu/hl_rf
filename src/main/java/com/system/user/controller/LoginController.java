@@ -192,6 +192,26 @@ public class LoginController extends WebController{
             return ApiResponseResult.failure("用户登录失败！"+e.toString());
         }
 	}
+    //获取用户姓名
+    @ApiOperation(value = "获取用户姓名", notes = "根据工号获取用户姓名并返回给前端")
+   	@ApiImplicitParam(name = "username", value = "用户Id", paramType = "Query", required = true, dataType = "String")
+   	@RequestMapping(value = "/check_name", method = RequestMethod.POST, produces = "application/json")
+   	public ApiResponseResult check_name(@RequestBody Map<String, Object> params) {		
+   		try {
+   			String username = params.get("username").toString().toUpperCase();
+   			
+       		List<Map<String, Object>> userForBase=sysUserService.findByUserCode(username);
+               if(userForBase.size() == 0){
+               	return ApiResponseResult.failure("用户不存在！");
+               }else {
+               		return ApiResponseResult.success().data(userForBase.get(0));
+               }
+           } catch (Exception e) {
+           	System.out.println(e.toString());
+               return ApiResponseResult.failure("获取信息用户失败！"+e.toString());
+           }
+   	}
+    
     
 //	 解密算法
 	private String proPass(String src) throws Exception {

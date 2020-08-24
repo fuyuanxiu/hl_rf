@@ -75,14 +75,17 @@ public class ProduceReportlmpl implements ProduceReportService {
 					m_new.put("PRO_CODE", m.get("PRO_CODE").toString());
 					m_new.put("PERSON_NAME", m.get("PERSON_NAME").toString());
 					m_new.put("PERSON_CODE", m.get("PERSON_CODE").toString());
-					m_new.put("WORKSHOP_CENTER_CODE", m.get("WORKSHOP_CENTER_CODE").toString());
+					//m_new.put("WORKSHOP_CENTER_CODE", m.get("WORKSHOP_CENTER_CODE").toString());工作中心
 					m_new.put("PROD_DATE_END", m.get("PROD_DATE_END").toString());
 					m_new.put("PROD_DATE", m.get("PROD_DATE").toString());
 					m_new.put("OUTPUT_QTY", m.get("OUTPUT_QTY").toString());
 					m_new.put("BG_QTY", m.get("BG_QTY").toString());
-					m_new.put("CLASSES", m.get("CLASSES").toString());
-					m_new.put("WORL_QTY", m.get("WORL_QTY").toString());
-					m_new.put("COMPLETE_QTY", m.get("COMPLETE_QTY").toString());
+					//m_new.put("CLASSES", m.get("CLASSES").toString());
+					//m_new.put("WORL_QTY", m.get("WORL_QTY").toString());工单数量
+					//m_new.put("COMPLETE_QTY", m.get("COMPLETE_QTY").toString());完工数量
+					m_new.put("HG_QTY", m.get("HG_QTY").toString());//合格数量
+					m_new.put("LASTUPDATE_DATE", m.get("LASTUPDATE_DATE").toString());//最后一次报数时间
+					m_new.put("BHG_QTY", m.get("BHG_QTY").toString());//不合格数量
 					m_new.put("Child", child);
 					l_last.add(m_new);
 				}
