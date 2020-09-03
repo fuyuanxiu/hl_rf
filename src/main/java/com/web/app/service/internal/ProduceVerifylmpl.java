@@ -37,7 +37,7 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
 		if(!list.get(0).toString().equals("0")){//存储过程调用失败 //判断返回游标
             return ApiResponseResult.failure(list.get(1).toString());
         }
-		List<Map<String, Object>> l = (List<Map<String, Object>>) list.get(2);
+		List<Map<String, Object>> l = (List<Map<String, Object>>) list.get(3);
 		//处理数据
 		//先去掉重复的TASK_NO的记录
 		List<Map<String, Object>> l_new = new ArrayList<Map<String, Object>>();
@@ -59,26 +59,25 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
 				if(l_new.get(j).get("TASK_NO").toString().equals(l.get(k).get("TASK_NO").toString())){
 					Map<String, Object> m = l.get(k);
 					Map<String, Object> m_new = new HashMap<String, Object>();
-					m_new.put("PROC_NAM", m.get("PROC_NAM").toString());
-					m_new.put("PROC_NO", m.get("PROC_NO").toString());
+					m_new.put("WORPROC_NAME", m.get("WORPROC_NAME").toString());
+					m_new.put("WORPROC_CODE", m.get("WORPROC_CODE").toString());
 					m_new.put("EQU_CODE", m.get("EQU_CODE").toString());//-
 					m_new.put("EQU_NAME", m.get("EQU_NAME").toString());//-
 					m_new.put("PRODUCE_STATE", m.get("PRODUCE_STATE").toString());
-					m_new.put("WORKSHOP_CENTER_CODE", m.get("WORKSHOP_CENTER_CODE").toString());
+					m_new.put("WORKSHOP_CENTER_NAME", m.get("WORKSHOP_CENTER_NAME").toString());
 					child.add(m_new);
 				}
 			}
 			Map<String, Object> m = l_new.get(j);
 			Map<String, Object> m_new = new HashMap<String, Object>();
 			m_new.put("TASK_NO", m.get("TASK_NO").toString());
-			m_new.put("BOARD_ITEM", m.get("BOARD_ITEM").toString());
-			m_new.put("BOARD_NAME", m.get("BOARD_NAME").toString());
+			//m_new.put("BOARD_ITEM", m.get("BOARD_ITEM").toString());
+			m_new.put("PRO_CODE", m.get("PRO_CODE").toString());
 			m_new.put("PLAN_QTY", m.get("PLAN_QTY").toString());
 			m_new.put("COMPLETE_QTY", m.get("COMPLETE_QTY").toString());
-			//m_new.put("EQU_CODE", m.get("EQU_CODE").toString());
-			//m_new.put("EQU_NAME", m.get("EQU_NAME").toString());
-			m_new.put("PROC_NAM", m.get("PROC_NAM").toString());
+			m_new.put("PRO_NAME", m.get("PRO_NAME").toString());
 			m_new.put("Child", child);
+			m_new.put("Role", list.get(2));
 			l_last.add(m_new);
 		}
 		return ApiResponseResult.success().data(l_last);//返回数据集
@@ -88,12 +87,13 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
         List resultList = (List) jdbcTemplate.execute(new CallableStatementCreator() {
             @Override
             public CallableStatement createCallableStatement(Connection con) throws SQLException {
-                String storedProc = "{call "+prc_name+"(?,?,?,?)}";// 调用的sql
+                String storedProc = "{call "+prc_name+"(?,?,?,?,?)}";// 调用的sql
                 CallableStatement cs = con.prepareCall(storedProc);
                 cs.setString(1, usercode);// 账号
                 cs.registerOutParameter(2,java.sql.Types.INTEGER);// 输出参数 返回标识
                 cs.registerOutParameter(3,java.sql.Types.VARCHAR);// 输出参数 返回标识
                 cs.registerOutParameter(4,-10);// 输出参数 追溯数据
+                cs.registerOutParameter(5,java.sql.Types.VARCHAR);// 输出参数 返回角色标识
                 return cs;
             }
         }, new CallableStatementCallback() {
@@ -103,6 +103,7 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
                 cs.execute();
                 result.add(cs.getInt(2));
                 result.add(cs.getString(3));
+                result.add(cs.getString(5));
                 if(cs.getString(2).toString().equals("0")){
                     //游标处理
                     ResultSet rs = (ResultSet)cs.getObject(4);

@@ -53,4 +53,36 @@ public class ProduceReportController extends WebController {
             return ApiResponseResult.failure(e.toString());
         }
     }
+    
+    @ApiOperation(value = "获取报工信息详情", notes = "获取报工信息详情")
+    @RequestMapping(value = "/getReportRecord", method = RequestMethod.POST, produces = "application/json")
+    public ApiResponseResult getReportRecord(@RequestParam(value = "usercode") String usercode,
+    		@RequestParam(value = "plan_ID") String plan_ID,//工厂编号
+    		@RequestParam(value = "proc") String proc,//公司编号
+    		@RequestParam(value = "eq_CODE") String eq_CODE//排产计划ID
+    		){
+        try{
+            return createService.getReportRecord(usercode,plan_ID,proc,eq_CODE);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ApiResponseResult.failure(e.toString());
+        }
+    }
+    
+    @ApiOperation(value = "修改报工记录", notes = "修改报工记录")
+    @RequestMapping(value = "/updateReportRecord", method = RequestMethod.POST, produces = "application/json")
+    public ApiResponseResult updateReportRecord(@RequestParam(value = "usercode") String usercode,
+    		@RequestParam(value = "plan_ID") String plan_ID,//排产计划 ID
+    		@RequestParam(value = "report_ID") String report_ID,//报工明细 ID
+    		@RequestParam(value = "bg_QTY") String bg_QTY,//报工数
+    		@RequestParam(value = "unqua_Qty") String unqua_Qty,//不合格数
+    		@RequestParam(value = "qua_Qty") String qua_Qty//合格数
+    		){
+        try{
+            return createService.updateReportRecord(usercode,plan_ID,report_ID,bg_QTY,unqua_Qty,qua_Qty);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ApiResponseResult.failure(e.toString());
+        }
+    }
 }

@@ -94,7 +94,7 @@ body {
 /*右侧内容主要部分图表*/
 .container-right-main-chart {
 	height: 425px;
-	width: 770px;
+	width: 800px;
 	margin: 0;
 }
 
@@ -108,18 +108,18 @@ body {
 /*右侧内容主要部分信息栏格子*/
 .container-right-main-info-cell {
 	height: 140px;
-	width: 200px;
+	width: 170px;
 	margin: 0 0 0 0; /*上： 右： 下:  左：*/
 }
 /*选项卡(主要部分)*/
 #right_main_container div {
-	width: 770px;
+	width: 800px;
 	height: 400px;
 	border: 1px solid red;
 	display: none;
 	margin-top: 2px;
 	text-align: center;
-	line-height: 200px;
+	/* line-height: 200px; */
 	font-size: 30px;
 }
 
@@ -134,7 +134,7 @@ body {
 	display: none;
 	margin-top: 2px;
 	text-align: center;
-	line-height: 200px;
+	/* line-height: 200px; */
 	font-size: 30px;
 }
 
@@ -174,12 +174,14 @@ li {
 	padding: 0;
 	margin: 2px;
 }
-.li-inline{
-float:left;
-width:45%;
+
+.li-inline {
+	float: left;
+	width: 45%;
 }
-.table-left{
-margin:5px 0 0 10px;
+
+.table-left {
+	margin: 5px 0 0 10px;
 }
 </style>
 </head>
@@ -216,27 +218,41 @@ margin:5px 0 0 10px;
 						<li>物料说明：</li>
 						<li>任务数：</li>
 					</ul>
-					<ul style="margin-top:10px">
-					<li class="li-inline">投料数量：</li>
-					<li class="li-inline">已完成数量：</li>
-					<li class="li-inline">______</li>
-					<li class="li-inline">______</li>
-					<li class="li-inline">在制数量：</li>
-					<li class="li-inline">退库数量：</li>
-					<li class="li-inline">______</li>
-					<li class="li-inline">______</li>
-					<li class="li-inline">报废数量：</li>
-					<li class="li-inline">待入库数量：</li>
-					<li class="li-inline">______</li>
-					<li class="li-inline">______</li>
+					<ul style="margin-top: 10px">
+						<li class="li-inline">投料数量：</li>
+						<li class="li-inline">已完成数量：</li>
+						<li class="li-inline">______</li>
+						<li class="li-inline">______</li>
+						<li class="li-inline">在制数量：</li>
+						<li class="li-inline">退库数量：</li>
+						<li class="li-inline">______</li>
+						<li class="li-inline">______</li>
+						<li class="li-inline">报废数量：</li>
+						<li class="li-inline">待入库数量：</li>
+						<li class="li-inline">______</li>
+						<li class="li-inline">______</li>
 					</ul>
 					<table class="table-left" border="1px">
-					<tr>
-					<th>待下发工单</th><th>任务数</th><th>投料数</th>
-					</tr>
-					<tr><td>1</td><td>2</td><td>3</td></tr>
-					<tr><td>3</td><td>3</td><td>1</td></tr>
-					<tr><td>1</td><td>1</td><td>3</td></tr>
+						<tr>
+							<th>待下发工单</th>
+							<th>任务数</th>
+							<th>投料数</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>2</td>
+							<td>3</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>3</td>
+							<td>1</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>1</td>
+							<td>3</td>
+						</tr>
 					</table>
 				</div>
 			</div>
@@ -245,27 +261,56 @@ margin:5px 0 0 10px;
 			<div class="container-right-main div-boder">
 				<div class="container-right-main-chart div-boder">
 					<div id="wrap">
-						<button class="active">选项一</button>
-						<button>选项二</button>
-						<button>选项三</button>
+						<button class="active">法</button>
+						<!-- <button>环</button>
+						<button>测</button> -->
 						<div id="right_main_container">
-							<div class="active">内容一</div>
-							<div>内容二</div>
-							<div>内容三</div>
+							<div class="active" id="chart1"></div>
+
 						</div>
 					</div>
 				</div>
 				<div class="container-right-main-info div-boder">
-					<div class="container-right-main-info-cell div-boder"></div>
-					<div class="container-right-main-info-cell div-boder"></div>
-					<div class="container-right-main-info-cell div-boder"></div>
+					<div class="container-right-main-info-cell div-boder">
+						<div style="margin-top: 5px;" align="center">
+							<img src="../images/portrait.png" style="width: 82px;">
+						</div>
+						<div align="center">
+							<ul>
+								<li>姓名：张大强</li>
+								<li>职务：车间经理</li>
+							</ul>
+						</div>
+					</div>
+					<div class="container-right-main-info-cell div-boder">
+						<div style="margin-top: 5px;" align="center">
+							<img src="../images/portrait.png" style="width: 82px;">
+						</div>
+						<div align="center">
+							<ul>
+								<li>姓名：王达达</li>
+								<li>职务：线长</li>
+							</ul>
+						</div>
+					</div>
+					<div class="container-right-main-info-cell div-boder">
+						<div style="margin-top: 5px;" align="center">
+							<img src="../images/portrait.png" style="width: 82px;">
+						</div>
+						<div align="center">
+							<ul>
+								<li>姓名：李四</li>
+								<li>职务：质检员</li>
+							</ul>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="container-right-vice div-boder">
 				<div id="bottom_wrap">
-					<button class="active">选项一</button>
-					<button>选项二</button>
-					<button>选项三</button>
+					<button class="active">人</button>
+					<button>机</button>
+					<button>料</button>
 					<div id="right_vice_container">
 						<div class="active">内容一</div>
 						<div>内容二</div>
@@ -277,6 +322,10 @@ margin:5px 0 0 10px;
 	</div>
 	<script type="text/javascript">
 		getProWarn();
+		var chart1 = "chart1"
+		var chart2 = "chart2"
+		getChart(chart1);
+		//getChart(chart2);
 		/*选项卡切换(主要内容)*/
 		var oWrap = document.getElementById('wrap')
 		var oBtn = oWrap.getElementsByTagName('button')
@@ -284,13 +333,14 @@ margin:5px 0 0 10px;
 		var oDiv = oCon.getElementsByTagName('div')
 		for (var i = 0; i < oBtn.length; i++) {
 			oBtn[i].index = i
-			oBtn[i].onclick = function() {
+			oBtn[i].onclick = function() {//多个div显示问题，无法显示echarts图表
 				for (var j = 0; j < oBtn.length; j++) {
 					oBtn[j].style.backgroundColor = 'white'
 					oDiv[j].style.display = 'none'
 				}
 				this.style.backgroundColor = '#0099FF'
 				oDiv[this.index].style.display = 'block'
+
 			}
 		}
 		/*选项卡切换(底部内容)*/
@@ -343,6 +393,90 @@ margin:5px 0 0 10px;
 			};
 			var gaugeChart = echarts.init(document.getElementById('pro_warn'));
 			gaugeChart.setOption(option);
+		}
+		//主内容
+		function getChart(chart) {
+			option = {
+				tooltip : {
+					trigger : 'axis',
+					axisPointer : {
+						type : 'cross',
+						crossStyle : {
+							color : '#999'
+						}
+					}
+				},
+				toolbox : {
+					feature : {
+						dataView : {
+							show : true,
+							readOnly : false
+						},
+						magicType : {
+							show : true,
+							type : [ 'line', 'bar' ]
+						},
+						restore : {
+							show : true
+						},
+						saveAsImage : {
+							show : true
+						}
+					}
+				},
+				legend : {
+					data : [ '蒸发量', '降水量', '平均温度' ]
+				},
+				xAxis : [ {
+					type : 'category',
+					data : [ '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月',
+							'9月', '10月', '11月', '12月' ],
+					axisPointer : {
+						type : 'shadow'
+					}
+				} ],
+				yAxis : [ {
+					type : 'value',
+					name : '水量',
+					min : 0,
+					max : 250,
+					interval : 50,
+					axisLabel : {
+						formatter : '{value} ml'
+					}
+				}, {
+					type : 'value',
+					name : '温度',
+					min : 0,
+					max : 25,
+					interval : 5,
+					axisLabel : {
+						formatter : '{value} °C'
+					}
+				} ],
+				series : [
+						{
+							name : '蒸发量',
+							type : 'bar',
+							data : [ 2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6,
+									162.2, 32.6, 20.0, 6.4, 3.3 ]
+						},
+						{
+							name : '降水量',
+							type : 'bar',
+							data : [ 2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6,
+									182.2, 48.7, 18.8, 6.0, 2.3 ]
+						},
+						{
+							name : '平均温度',
+							type : 'line',
+							yAxisIndex : 1,
+							data : [ 2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4,
+									23.0, 16.5, 12.0, 6.2 ]
+						} ]
+			};
+			var chart1 = echarts.init(document.getElementById(chart));
+			chart1.setOption(option);
 		}
 	</script>
 </body>
