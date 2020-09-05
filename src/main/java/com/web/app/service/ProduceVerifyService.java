@@ -9,12 +9,25 @@ public interface ProduceVerifyService {
     public ApiResponseResult getProduceVerifyDetail(
     		String usercode,
     		String proc,
-    		String workCenter,
     		String taskNo,
     		String eq_code) throws Exception;
     //提交审核信息
     public ApiResponseResult sumbitProduceVerify(
     		String usercode,String reportInfo
+    		) throws Exception;
+    //获取个人报工详情的明细
+    public ApiResponseResult getProduceRecordDetail(
+    		String usercode,String plan_id,String role
+    		) throws Exception;
+    
+    //提交修改过的报工明细
+    public ApiResponseResult sumbitProduceRecordDetail(
+    		String usercode,
+    		String proc,
+    		String task_no,
+    		String eq_code,
+    		String reportInfo,
+    		String role
     		) throws Exception;
 }
 

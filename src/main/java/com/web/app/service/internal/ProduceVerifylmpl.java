@@ -126,12 +126,11 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
 	public ApiResponseResult getProduceVerifyDetail(
 			String usercode,
     		String proc,
-    		String workCenter,
     		String taskNo,
     		String eq_code) throws Exception {
 		// TODO Auto-generated method stub
 				List<Object> list = this.getProduceVerifyDetailPrc(usercode,proc,
-						 workCenter,taskNo,eq_code,"PRC_Produce_BGVerify_GetInfo02");	        
+						 taskNo,eq_code,"PRC_Produce_BGVerify_GetInfo02");	        
 				if(!list.get(0).toString().equals("0")){//存储过程调用失败 //判断返回标识
 		            return ApiResponseResult.failure(list.get(1).toString());//失败返回字段
 		        }			
@@ -142,22 +141,20 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
 	 private List getProduceVerifyDetailPrc(
 			 String usercode,
 	    		String proc,
-	    		String workCenter,
 	    		String taskNo,
 	    		String eq_code,String prc_name)throws Exception{
 	        List resultList = (List) jdbcTemplate.execute(new CallableStatementCreator() {
 	            @Override
 	            public CallableStatement createCallableStatement(Connection con) throws SQLException {
-	                String storedProc = "{call "+prc_name+"(?,?,?,?,?,?,?,?)}";// 调用的sql
+	                String storedProc = "{call "+prc_name+"(?,?,?,?,?,?,?)}";// 调用的sql
 	                CallableStatement cs = con.prepareCall(storedProc);
 	                cs.setString(1, usercode);// 账号
 	                cs.setString(2, proc);//工序
-	                cs.setString(3, workCenter);//工作中心
-	                cs.setString(4, taskNo);//工单号
-	                cs.setString(5, eq_code);//设备编号
-	                cs.registerOutParameter(6,java.sql.Types.INTEGER);// 输出参数 返回标识
-	                cs.registerOutParameter(7,java.sql.Types.VARCHAR);// 输出参数 返回标识
-	                cs.registerOutParameter(8,-10);// 输出参数 追溯数据
+	                cs.setString(3, taskNo);//工单号
+	                cs.setString(4, eq_code);//设备编号
+	                cs.registerOutParameter(5,java.sql.Types.INTEGER);// 输出参数 返回标识
+	                cs.registerOutParameter(6,java.sql.Types.VARCHAR);// 输出参数 返回标识
+	                cs.registerOutParameter(7,-10);// 输出参数 追溯数据
 	                return cs;
 	            }
 	        }, new CallableStatementCallback() {
@@ -165,11 +162,11 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
 	            	List<Object> result = new ArrayList<>();
 	                List<Map<String, Object>> l = new ArrayList();
 	                cs.execute();
-	                result.add(cs.getInt(6));
-	                result.add(cs.getString(7));
-	                if(cs.getString(6).toString().equals("0")){
+	                result.add(cs.getInt(5));
+	                result.add(cs.getString(6));
+	                if(cs.getString(5).toString().equals("0")){
 	                    //游标处理
-	                    ResultSet rs = (ResultSet)cs.getObject(8);
+	                    ResultSet rs = (ResultSet)cs.getObject(7);
 	                    try {
 							l = fitMap(rs);
 						} catch (Exception e) {
@@ -226,6 +223,108 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
 	        });
 	        return resultList;
 	    }
+	 //获取个人的报工明细
+	 @Override
+		public ApiResponseResult getProduceRecordDetail(
+				String usercode,String plan_id,String role) throws Exception {
+			// TODO Auto-generated method stub
+					List<Object> list = this.getProduceRecordDetailPrc(usercode,
+							plan_id,role,"PRC_Produce_BGVerify_GetInfo03");	        
+					if(!list.get(0).toString().equals("0")){//存储过程调用失败 //判断返回标识
+			            return ApiResponseResult.failure(list.get(1).toString());//失败返回字段
+			        }			
+					return ApiResponseResult.success().data(list.get(2));//返回数据集
+		}
+	 
+	//获取个人的报工明细
+		private List getProduceRecordDetailPrc(String usercode,String plan_id,String role,String prc_name)throws Exception{
+	        List resultList = (List) jdbcTemplate.execute(new CallableStatementCreator() {
+	            @Override
+	            public CallableStatement createCallableStatement(Connection con) throws SQLException {
+	                String storedProc = "{call "+prc_name+"(?,?,?,?,?,?)}";// 调用的sql
+	                CallableStatement cs = con.prepareCall(storedProc);
+	                cs.setString(1, usercode);// 账号
+	                cs.setString(2, plan_id);// 账号
+	                cs.setString(3, role);// 账号
+	                cs.registerOutParameter(4,java.sql.Types.INTEGER);// 输出参数 返回标识
+	                cs.registerOutParameter(5,java.sql.Types.VARCHAR);// 输出参数 返回标识
+	                cs.registerOutParameter(6,-10);// 输出参数 追溯数据
+	                
+	                return cs;
+	            }
+	        }, new CallableStatementCallback() {
+	            public Object doInCallableStatement(CallableStatement cs) throws SQLException, DataAccessException {
+	                List<Object> result = new ArrayList<>();
+	                List<Map<String, Object>> l = new ArrayList();
+	                cs.execute();
+	                result.add(cs.getInt(4));
+	                result.add(cs.getString(5));
+	                if(cs.getString(4).toString().equals("0")){
+	                    //游标处理
+	                    ResultSet rs = (ResultSet)cs.getObject(6);
+	                    try {
+							l = fitMap(rs);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+	                    result.add(l);
+	                }
+	                System.out.println(l);
+	                return result;
+	            }
+	        });
+	        return resultList;
+	    }
+	//保存修改后的报工明细
+		@Override
+		public ApiResponseResult sumbitProduceRecordDetail(
+				String usercode,
+	    		String proc,
+	    		String task_no,
+	    		String eq_code,
+	    		String reportInfo,
+	    		String role
+	    		) throws Exception {
+			// TODO Auto-generated method stub
+					List<Object> list = this.sumbitProduceRecordDetailPrc(usercode,proc,task_no,eq_code,reportInfo,role,"PRC_Produce_BGVerify_Save");	        
+					if(!list.get(0).toString().equals("0")){//存储过程调用失败 //判断返回标识
+			            return ApiResponseResult.failure(list.get(1).toString());//失败返回字段
+			        }
+					
+					return ApiResponseResult.success(list.get(1).toString());//返回判断字段数据
+		}
+	//执行保存
+		 private List sumbitProduceRecordDetailPrc(
+				 String usercode,String proc,String task_no,String eq_code,String reportInfo,String role,
+		    		String prc_name)throws Exception{
+		        List resultList = (List) jdbcTemplate.execute(new CallableStatementCreator() {
+		            @Override
+		            public CallableStatement createCallableStatement(Connection con) throws SQLException {
+		                String storedProc = "{call "+prc_name+"(?,?,?,?,?,?,?,?)}";// 调用的sql
+		                CallableStatement cs = con.prepareCall(storedProc);
+		                cs.setString(1, usercode);// 账号
+		                cs.setString(2, proc);//工序
+		                cs.setString(3, task_no);// 工单号
+		                cs.setString(4, eq_code);//设备
+		                cs.setString(5, reportInfo);//参数信息字符串
+		                cs.setString(6, role);// 角色
+		                cs.registerOutParameter(7,java.sql.Types.INTEGER);// 输出参数 返回标识
+		                cs.registerOutParameter(8,java.sql.Types.VARCHAR);// 输出参数 返回标识
+		                return cs;
+		            }
+		        }, new CallableStatementCallback() {
+		            public Object doInCallableStatement(CallableStatement cs) throws SQLException, DataAccessException {
+		                List<Object> result = new ArrayList<>();
+		                cs.execute();
+		                result.add(cs.getInt(7));//（标识）
+		                result.add(cs.getString(8));//返回信息
+		                System.out.print(result);;
+		                return result;
+		            }
+		        });
+		        return resultList;
+		    }
 	//值为"null"或者null转换成""
     private String getEmpty(String str){
         if(str == null){
