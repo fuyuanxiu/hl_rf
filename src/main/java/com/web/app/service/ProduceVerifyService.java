@@ -13,7 +13,11 @@ public interface ProduceVerifyService {
     		String eq_code) throws Exception;
     //提交审核信息
     public ApiResponseResult sumbitProduceVerify(
-    		String usercode,String reportInfo
+    		String usercode,
+    		String proc,
+    		String task_no,
+    		String eq_code,
+    		String role
     		) throws Exception;
     //获取个人报工详情的明细
     public ApiResponseResult getProduceRecordDetail(

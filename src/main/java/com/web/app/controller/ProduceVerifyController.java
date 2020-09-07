@@ -50,9 +50,12 @@ public class ProduceVerifyController extends WebController {
     @RequestMapping(value = "/sumbitProduceVerify", method = RequestMethod.POST, produces = "application/json")
     public ApiResponseResult sumbitProduceVerify(
     		@RequestParam(value = "usercode") String usercode,
-    		@RequestParam(value = "reportInfo") String reportInfo){
+    		@RequestParam(value = "proc") String proc,
+    		@RequestParam(value = "task_no") String task_no,
+    		@RequestParam(value = "eq_code") String eq_code,
+    		@RequestParam(value = "role") String role){
         try{
-            return createService.sumbitProduceVerify(usercode,reportInfo);
+            return createService.sumbitProduceVerify(usercode,proc,task_no,eq_code,role);
         }catch (Exception e){
             e.printStackTrace();
             return ApiResponseResult.failure(e.toString());

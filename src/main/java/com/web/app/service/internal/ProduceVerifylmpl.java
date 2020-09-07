@@ -185,10 +185,13 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
 	 @Override
 		public ApiResponseResult sumbitProduceVerify(
 				String usercode,
-	    		String reportInfo
+	    		String proc,
+	    		String task_no,
+	    		String eq_code,
+	    		String role
 	    		) throws Exception {
 			// TODO Auto-generated method stub
-					List<Object> list = this.sumbitProduceVerifyPrc(usercode,reportInfo,"PRC_Produce_BGVerify_forMobile");	        
+					List<Object> list = this.sumbitProduceVerifyPrc(usercode,proc,task_no,eq_code,role,"PRC_Produce_BGVerify");	        
 					if(!list.get(0).toString().equals("0")){//存储过程调用失败 //判断返回标识
 			            return ApiResponseResult.failure(list.get(1).toString());//失败返回字段
 			        }
@@ -198,25 +201,32 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
 	 
 	//执行存储--提交审核
 	 private List sumbitProduceVerifyPrc(
-			 String usercode,String reportInfo,
+			 String usercode,
+			 String proc,
+	    		String task_no,
+	    		String eq_code,
+	    		String role,
 	    		String prc_name)throws Exception{
 	        List resultList = (List) jdbcTemplate.execute(new CallableStatementCreator() {
 	            @Override
 	            public CallableStatement createCallableStatement(Connection con) throws SQLException {
-	                String storedProc = "{call "+prc_name+"(?,?,?,?)}";// 调用的sql
+	                String storedProc = "{call "+prc_name+"(?,?,?,?,?,?,?)}";// 调用的sql
 	                CallableStatement cs = con.prepareCall(storedProc);
 	                cs.setString(1, usercode);// 账号
-	                cs.setString(2, reportInfo);//参数信息字符串
-	                cs.registerOutParameter(3,java.sql.Types.INTEGER);// 输出参数 返回标识
-	                cs.registerOutParameter(4,java.sql.Types.VARCHAR);// 输出参数 返回标识
+	                cs.setString(2, proc);//工序
+	                cs.setString(3, task_no);// 工单
+	                cs.setString(4, eq_code);//设备编号
+	                cs.setString(5, role);// 角色
+	                cs.registerOutParameter(6,java.sql.Types.INTEGER);// 输出参数 返回标识
+	                cs.registerOutParameter(7,java.sql.Types.VARCHAR);// 输出参数 返回标识
 	                return cs;
 	            }
 	        }, new CallableStatementCallback() {
 	            public Object doInCallableStatement(CallableStatement cs) throws SQLException, DataAccessException {
 	                List<Object> result = new ArrayList<>();
 	                cs.execute();
-	                result.add(cs.getInt(3));//（标识）
-	                result.add(cs.getString(4));//返回信息
+	                result.add(cs.getInt(6));//（标识）
+	                result.add(cs.getString(7));//返回信息
 	                System.out.print(result);;
 	                return result;
 	            }
