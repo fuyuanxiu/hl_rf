@@ -20,7 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-@Service(value = "StartService")
+@Service(value = "StartCheckService")
 @Transactional(propagation = Propagation.REQUIRED)
 public class StartCheckImpl implements StartCheckService {
 
