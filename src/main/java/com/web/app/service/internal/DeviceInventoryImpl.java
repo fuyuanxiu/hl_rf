@@ -35,8 +35,14 @@ public class DeviceInventoryImpl implements DeviceInventoryService {
 		if(!list.get(0).toString().equals("0")){
             return ApiResponseResult.failure(list.get(1).toString());
         }
+		List<Map<String, Object>> l_last= new ArrayList<Map<String, Object>>();
+		Map<String, Object> m_new = new HashMap<String, Object>();
+		m_new.put("billNo", list.get(2).toString());
+		m_new.put("area", list.get(3).toString());
+		m_new.put("timeInterval",list.get(4).toString());
+		l_last.add(m_new);
 		
-		return ApiResponseResult.success().data(list.toString());//返回数据集
+		return ApiResponseResult.success().data(l_last);//返回数据集
 	}
 	//执行存储获取数据
     private List judgeUserPowerPrc(String usercode,String prc_name)throws Exception{
@@ -66,7 +72,6 @@ public class DeviceInventoryImpl implements DeviceInventoryService {
 				return result;
 			}
         });
-
         return resultList;
     }
    //判断盘点区域是否正确
@@ -83,7 +88,7 @@ public class DeviceInventoryImpl implements DeviceInventoryService {
 		if(!list.get(0).toString().equals("0")){
             return ApiResponseResult.failure(list.get(1).toString());
         }
-		return ApiResponseResult.success(list.get(1).toString());
+		return ApiResponseResult.success(list.toString());
 	}
     private List judgeAreaPrc(
     		String usercode,
@@ -119,24 +124,29 @@ public class DeviceInventoryImpl implements DeviceInventoryService {
     @Override
 	public ApiResponseResult judgeDevice( 
 			String usercode,
-    		String area,//当前区域
-    		String check_id,//盘点单号
-    		String eq_code//设备编号
+			String check_id,//盘点单号
+			String eq_code,//设备编号
+    		String area//当前区域
 			) throws Exception {
 		// TODO Auto-generated method stub
-		List<Object> list = this.judgeDevicePrc(usercode,area,check_id,eq_code,
+		List<Object> list = this.judgeDevicePrc(usercode,check_id,eq_code,area,
 				"PRC_EQ_Stocktaking_Auto");  
+		List<Map<String, Object>> l_last= new ArrayList<Map<String, Object>>();
+		Map<String, Object> m_new = new HashMap<String, Object>();
+		m_new.put("result", list.get(1).toString());
+		m_new.put("old_location", list.get(2).toString());
+		l_last.add(m_new);
 		if(!list.get(0).toString().equals("0")){
-            return ApiResponseResult.failure(list.get(1).toString());
+            return ApiResponseResult.failure().data(l_last);
         }
-		return ApiResponseResult.success(list.get(1).toString());
+		return ApiResponseResult.success().data(l_last);
 	}
     //执行
     private List judgeDevicePrc(
     		String usercode,
-    		String area,//当前区域
     		String check_id,//盘点单号
     		String eq_code,//设备编号
+    		String area,//当前区域
     		String prc_name)throws Exception{
         List resultList = (List) jdbcTemplate.execute(new CallableStatementCreator() {
             @Override
@@ -144,9 +154,9 @@ public class DeviceInventoryImpl implements DeviceInventoryService {
                 String storedProc = "{call "+prc_name+"(?,?,?,?,?,?,?)}";// 调用的sql
                 CallableStatement cs = con.prepareCall(storedProc);
                 cs.setString(1, usercode);// 账号
-                cs.setString(2, check_id);// 区域
-                cs.setString(3, eq_code);// 授权的盘点区域
-                cs.setString(4, area);// 盘点单号
+                cs.setString(2, check_id);// 盘点单号
+                cs.setString(3, eq_code);// 设备
+                cs.setString(4, area);// 区域
                 cs.registerOutParameter(5,java.sql.Types.VARCHAR);// 输出参数  原来的区域
                 cs.registerOutParameter(6,java.sql.Types.INTEGER);// 返回标识
                 cs.registerOutParameter(7,java.sql.Types.VARCHAR);// 输出参数 
@@ -170,12 +180,12 @@ public class DeviceInventoryImpl implements DeviceInventoryService {
     @Override
 	public ApiResponseResult sumbitInventory( 
 			String usercode,
-    		String area,//当前区域
-    		String check_id,//盘点单号
-    		String eq_code//设备编号
+			String check_id,//盘点单号
+			String eq_code,//设备编号
+    		String area//当前区域
 			) throws Exception {
 		// TODO Auto-generated method stub
-		List<Object> list = this.judgeDevicePrc(usercode,area,check_id,eq_code,
+		List<Object> list = this.judgeDevicePrc(usercode,check_id,eq_code,area,
 				"PRC_EQ_Stocktaking_Manual");  
 		if(!list.get(0).toString().equals("0")){
             return ApiResponseResult.failure(list.get(1).toString());
@@ -185,9 +195,9 @@ public class DeviceInventoryImpl implements DeviceInventoryService {
     //执行
     private List sumbitInventory(
     		String usercode,
-    		String area,//当前区域
     		String check_id,//盘点单号
     		String eq_code,//设备编号
+    		String area, //当前区域 
     		String prc_name)throws Exception{
         List resultList = (List) jdbcTemplate.execute(new CallableStatementCreator() {
             @Override

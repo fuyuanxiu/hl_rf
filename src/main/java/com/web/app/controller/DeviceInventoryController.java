@@ -46,11 +46,11 @@ public class DeviceInventoryController extends WebController {
     @ApiOperation(value = "判断盘点设备", notes = "判断盘点设备")
     @RequestMapping(value = "/judgeDevice", method = RequestMethod.POST, produces = "application/json")
     public ApiResponseResult judgeDevice(@RequestParam(value = "usercode") String usercode,
-    		@RequestParam(value = "area") String area,
     		@RequestParam(value = "check_id") String check_id,
-    		@RequestParam(value = "eq_code") String eq_code){
+    		@RequestParam(value = "eq_code") String eq_code,
+    		@RequestParam(value = "area") String area){
         try{
-            return deviceService.judgeDevice(usercode,area,check_id,eq_code);
+            return deviceService.judgeDevice(usercode,check_id,eq_code,area);
         }catch (Exception e){
             e.printStackTrace();
             return ApiResponseResult.failure(e.toString());
@@ -59,11 +59,12 @@ public class DeviceInventoryController extends WebController {
     @ApiOperation(value = "提交盘点", notes = "提交盘点")
     @RequestMapping(value = "/sumbitInventory", method = RequestMethod.POST, produces = "application/json")
     public ApiResponseResult sumbitInventory(@RequestParam(value = "usercode") String usercode,
-    		@RequestParam(value = "area") String area,
     		@RequestParam(value = "check_id") String check_id,
-    		@RequestParam(value = "eq_code") String eq_code){
+    		@RequestParam(value = "eq_code") String eq_code,
+    		@RequestParam(value = "area") String area
+    		){
         try{
-            return deviceService.sumbitInventory(usercode,area,check_id,eq_code);
+            return deviceService.sumbitInventory(usercode,check_id,eq_code,area);
         }catch (Exception e){
             e.printStackTrace();
             return ApiResponseResult.failure(e.toString());

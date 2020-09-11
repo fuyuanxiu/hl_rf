@@ -18,15 +18,15 @@ public interface DeviceInventoryService {
   //判断盘点设备
     public ApiResponseResult judgeDevice(
     		String usercode,
-    		String area,//当前区域
     		String check_id,//盘点单号
-    		String eq_code//设备编号
+    		String eq_code,//设备编号
+    		String area//当前区域
     		) throws Exception;
     //保存设备盘点记录
     public ApiResponseResult sumbitInventory(
     		String usercode,
-    		String area,//当前区域
     		String check_id,//盘点单号
-    		String eq_code//设备编号
+    		String eq_code,//设备编号
+    		String area//当前区域
     		) throws Exception;
 }
