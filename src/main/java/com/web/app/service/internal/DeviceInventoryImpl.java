@@ -64,7 +64,7 @@ public class DeviceInventoryImpl implements DeviceInventoryService {
 			public Object doInCallableStatement(CallableStatement cs) throws SQLException, DataAccessException {
 				List<Object> result = new ArrayList<>();
 				cs.execute();
-				result.add(cs.getString(2));
+				result.add(cs.getInt(2));
 				result.add(cs.getString(3));
 				result.add(cs.getString(4));
 				result.add(cs.getString(5));
@@ -113,7 +113,7 @@ public class DeviceInventoryImpl implements DeviceInventoryService {
                 List<Object> result = new ArrayList<>();
 //                List<Map<String, Object>> l = new ArrayList();
                 cs.execute();
-                result.add(cs.getString(5));
+                result.add(cs.getInt(5));
                 result.add(cs.getString(6));
                 return result;
             }
@@ -131,14 +131,14 @@ public class DeviceInventoryImpl implements DeviceInventoryService {
 		// TODO Auto-generated method stub
 		List<Object> list = this.judgeDevicePrc(usercode,check_id,eq_code,area,
 				"PRC_EQ_Stocktaking_Auto");  
+		if(!list.get(0).toString().equals("0")){
+            return ApiResponseResult.failure(list.get(1).toString());
+        }
 		List<Map<String, Object>> l_last= new ArrayList<Map<String, Object>>();
 		Map<String, Object> m_new = new HashMap<String, Object>();
 		m_new.put("result", list.get(1).toString());
 		m_new.put("old_location", list.get(2).toString());
 		l_last.add(m_new);
-		if(!list.get(0).toString().equals("0")){
-            return ApiResponseResult.failure().data(l_last);
-        }
 		return ApiResponseResult.success().data(l_last);
 	}
     //执行
@@ -167,7 +167,7 @@ public class DeviceInventoryImpl implements DeviceInventoryService {
                 List<Object> result = new ArrayList<>();
 //                List<Map<String, Object>> l = new ArrayList();
                 cs.execute();
-                result.add(cs.getString(6));
+                result.add(cs.getInt(6));
                 result.add(cs.getString(7));
                 result.add(cs.getString(5));
                 return result;
@@ -218,7 +218,7 @@ public class DeviceInventoryImpl implements DeviceInventoryService {
                 List<Object> result = new ArrayList<>();
 //                List<Map<String, Object>> l = new ArrayList();
                 cs.execute();
-                result.add(cs.getString(6));
+                result.add(cs.getInt(6));
                 result.add(cs.getString(7));
                 result.add(cs.getString(5));
                 return result;

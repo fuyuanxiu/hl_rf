@@ -167,7 +167,7 @@ public class DevReApplylmpl implements DevReApplyService {
 					if(!list.get(0).toString().equals("0")){//存储过程调用失败 //判断返回标识
 			            return ApiResponseResult.failure(list.get(1).toString());//失败返回字段
 			        }			
-					return ApiResponseResult.success().data(list.get(1).toString());//返回字段
+					return ApiResponseResult.success(list.get(1).toString());//返回字段
 		}
 	 
 	 private List cannelPrc(String usercode,String apply_id,String prc_name) throws Exception {
@@ -201,7 +201,7 @@ public class DevReApplylmpl implements DevReApplyService {
 		if (!list.get(0).toString().equals("0")) {// 存储过程调用失败 //判断返回标识
 			return ApiResponseResult.failure(list.get(1).toString());// 失败返回字段
 		}
-		return ApiResponseResult.success().data(list.get(1).toString());// 返回字段
+		return ApiResponseResult.success(list.get(1).toString());// 返回字段
 	}
 
 	private List finishPrc(String usercode, String apply_id, String prc_name) throws Exception {
