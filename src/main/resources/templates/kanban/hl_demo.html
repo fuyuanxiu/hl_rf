@@ -121,23 +121,23 @@ body {
 	text-align: center;
 	font-size: 30px;
 }*/
-
 .right_main_container_div_active {
 	width: 800px;
 	height: 400px;
-	border: 1px solid red;
+	/*border: 1px solid red;*/
 	margin-top: 2px;
 	text-align: center;
 	font-size: 30px;
 }
-.div_none{
-display: none;
+
+.div_none {
+	display: none;
 }
 /*选项卡(底部部分)*/
 #right_vice_container div {
 	width: 970px;
 	height: 225px;
-	border: 1px solid red;
+	/*border: 1px solid red;*/
 	display: none;
 	margin-top: 2px;
 	text-align: center;
@@ -211,6 +211,20 @@ li {
 				<div class="left_title1 div-boder">
 					<span>异常报警</span>
 				</div>
+				<div class="div-boder"
+					style="float: left; width: 45%; text-align: center;">
+					<div class="div-boder">
+						<span>质量</span>
+					</div>
+					<div class="div-boder" style="background-color:#00FF33;height:30px;margin-top:35px;margin-left:5px;width:30px;"></div>
+				</div>
+				<div class="div-boder"
+					style="float: left; width: 45%; text-align: center;">
+					<div class="div-boder">
+						<span>设备</span>
+					</div>
+					
+				</div>
 			</div>
 			<div class="container-left-bottom div-boder">
 				<div class="left_title2 div-boder">
@@ -271,9 +285,9 @@ li {
 						<button>环</button>
 						<button>测</button>
 						<div id="right_main_container">
-							<div class="right_main_container_div_active" id="chart1" ></div>
+							<div class="right_main_container_div_active" id="chart1"></div>
 							<div class="right_main_container_div_active div_none" id="chart2"></div>
-							<div class="right_main_container_div_active div_none" id="chart3"></div> 
+							<div class="right_main_container_div_active div_none" id="chart3"></div>
 						</div>
 					</div>
 				</div>
@@ -328,16 +342,31 @@ li {
 		</div>
 	</div>
 	<script type="text/javascript">
+		var sec = 3;//轮播间隔
 		getProWarn();
 		getChart1("chart1");
 		getChart2("chart2");
 		getChart3("chart3");
+		var index = 0;
+		//3秒轮播一次
+		var timer = setInterval(function() {
+			index = (index == 2) ? 0 : index + 1;
+			//某个div显示
+			clickMainContainerButton(index);
+		}, sec * 1000);
+
+		/*js触发按钮onclick 轮播切换选项卡事件*/
+		function clickMainContainerButton(b_index) {
+			var oWrap = document.getElementById('wrap')
+			var oBtn = oWrap.getElementsByTagName('button')
+			oBtn[b_index].onclick();
+		}
 		/*选项卡切换(主要内容)*/
 		var oWrap = document.getElementById('wrap')
 		var oBtn = oWrap.getElementsByTagName('button')
 		//var oCon = document.getElementById('right_main_container')
 		//var oDiv = oCon.getElementsByTagName('div')
-		var oDiv=["chart1","chart2","chart3"]
+		var oDiv = [ "chart1", "chart2", "chart3" ]
 		for (var i = 0; i < oBtn.length; i++) {
 			oBtn[i].index = i
 			oBtn[i].onclick = function() {
@@ -349,7 +378,8 @@ li {
 				}
 				this.style.backgroundColor = '#0099FF'
 				//$(oDiv[this.index]).addClass("right_main_container_div_active");
-				document.getElementById(oDiv[this.index]).classList.remove("div_none");
+				document.getElementById(oDiv[this.index]).classList
+						.remove("div_none");
 				//oDiv[this.index].style.display = 'block'
 
 			}
@@ -408,9 +438,9 @@ li {
 		//主内容
 		function getChart1(chart) {
 			option = {
-					title: {
-				        text: '折线图堆叠'
-				    },
+				title : {
+					text : '折线图堆叠'
+				},
 				tooltip : {
 					trigger : 'axis',
 					axisPointer : {
@@ -476,162 +506,145 @@ li {
 		}
 		function getChart2(chart) {
 			option = {
-					title: {
-				        text: '折线图堆叠'
-				    },
-				    tooltip: {
-				        trigger: 'axis',
-				        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-				            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-				        }
-				    },
-				    legend: {
-				        data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎', '百度', '谷歌', '必应', '其他']
-				    },
-				    grid: {
-				        left: '3%',
-				        right: '4%',
-				        bottom: '3%',
-				        containLabel: true
-				    },
-				    xAxis: [
-				        {
-				            type: 'category',
-				            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-				        }
-				    ],
-				    yAxis: [
-				        {
-				            type: 'value'
-				        }
-				    ],
-				    series: [
-				        {
-				            name: '直接访问',
-				            type: 'bar',
-				            data: [320, 332, 301, 334, 390, 330, 320]
-				        },
-				        {
-				            name: '邮件营销',
-				            type: 'bar',
-				            stack: '广告',
-				            data: [120, 132, 101, 134, 90, 230, 210]
-				        },
-				        {
-				            name: '联盟广告',
-				            type: 'bar',
-				            stack: '广告',
-				            data: [220, 182, 191, 234, 290, 330, 310]
-				        },
-				        {
-				            name: '视频广告',
-				            type: 'bar',
-				            stack: '广告',
-				            data: [150, 232, 201, 154, 190, 330, 410]
-				        },
-				        {
-				            name: '搜索引擎',
-				            type: 'bar',
-				            data: [862, 1018, 964, 1026, 1679, 1600, 1570],
-				            markLine: {
-				                lineStyle: {
-				                    type: 'dashed'
-				                },
-				                data: [
-				                    [{type: 'min'}, {type: 'max'}]
-				                ]
-				            }
-				        },
-				        {
-				            name: '百度',
-				            type: 'bar',
-				            barWidth: 5,
-				            stack: '搜索引擎',
-				            data: [620, 732, 701, 734, 1090, 1130, 1120]
-				        },
-				        {
-				            name: '谷歌',
-				            type: 'bar',
-				            stack: '搜索引擎',
-				            data: [120, 132, 101, 134, 290, 230, 220]
-				        },
-				        {
-				            name: '必应',
-				            type: 'bar',
-				            stack: '搜索引擎',
-				            data: [60, 72, 71, 74, 190, 130, 110]
-				        },
-				        {
-				            name: '其他',
-				            type: 'bar',
-				            stack: '搜索引擎',
-				            data: [62, 82, 91, 84, 109, 110, 120]
-				        }
-				    ]
-				};
+				title : {
+					text : '折线图堆叠'
+				},
+				tooltip : {
+					trigger : 'axis',
+					axisPointer : { // 坐标轴指示器，坐标轴触发有效
+						type : 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				legend : {
+					data : [ '直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎', '百度',
+							'谷歌', '必应', '其他' ]
+				},
+				grid : {
+					left : '3%',
+					right : '4%',
+					bottom : '3%',
+					containLabel : true
+				},
+				xAxis : [ {
+					type : 'category',
+					data : [ '周一', '周二', '周三', '周四', '周五', '周六', '周日' ]
+				} ],
+				yAxis : [ {
+					type : 'value'
+				} ],
+				series : [ {
+					name : '直接访问',
+					type : 'bar',
+					data : [ 320, 332, 301, 334, 390, 330, 320 ]
+				}, {
+					name : '邮件营销',
+					type : 'bar',
+					stack : '广告',
+					data : [ 120, 132, 101, 134, 90, 230, 210 ]
+				}, {
+					name : '联盟广告',
+					type : 'bar',
+					stack : '广告',
+					data : [ 220, 182, 191, 234, 290, 330, 310 ]
+				}, {
+					name : '视频广告',
+					type : 'bar',
+					stack : '广告',
+					data : [ 150, 232, 201, 154, 190, 330, 410 ]
+				}, {
+					name : '搜索引擎',
+					type : 'bar',
+					data : [ 862, 1018, 964, 1026, 1679, 1600, 1570 ],
+					markLine : {
+						lineStyle : {
+							type : 'dashed'
+						},
+						data : [ [ {
+							type : 'min'
+						}, {
+							type : 'max'
+						} ] ]
+					}
+				}, {
+					name : '百度',
+					type : 'bar',
+					barWidth : 5,
+					stack : '搜索引擎',
+					data : [ 620, 732, 701, 734, 1090, 1130, 1120 ]
+				}, {
+					name : '谷歌',
+					type : 'bar',
+					stack : '搜索引擎',
+					data : [ 120, 132, 101, 134, 290, 230, 220 ]
+				}, {
+					name : '必应',
+					type : 'bar',
+					stack : '搜索引擎',
+					data : [ 60, 72, 71, 74, 190, 130, 110 ]
+				}, {
+					name : '其他',
+					type : 'bar',
+					stack : '搜索引擎',
+					data : [ 62, 82, 91, 84, 109, 110, 120 ]
+				} ]
+			};
 			var chart = echarts.init(document.getElementById(chart));
 			chart.setOption(option);
 		}
 		function getChart3(chart) {
 			option = {
-				    title: {
-				        text: '折线图堆叠'
-				    },
-				    legend: {
-				        data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
-				    },
-				    grid: {
-				        left: '3%',
-				        right: '4%',
-				        bottom: '3%',
-				        containLabel: true
-				    },
-				    toolbox: {
-				        feature: {
-				            saveAsImage: {}
-				        }
-				    },
-				    xAxis: {
-				        type: 'category',
-				        boundaryGap: false,
-				        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-				    },
-				    yAxis: {
-				        type: 'value'
-				    },
-				    series: [
-				        {
-				            name: '邮件营销',
-				            type: 'line',
-				            stack: '总量',
-				            data: [120, 132, 101, 134, 90, 230, 210]
-				        },
-				        {
-				            name: '联盟广告',
-				            type: 'line',
-				            stack: '总量',
-				            data: [220, 182, 191, 234, 290, 330, 310]
-				        },
-				        {
-				            name: '视频广告',
-				            type: 'line',
-				            stack: '总量',
-				            data: [150, 232, 201, 154, 190, 330, 410]
-				        },
-				        {
-				            name: '直接访问',
-				            type: 'line',
-				            stack: '总量',
-				            data: [320, 332, 301, 334, 390, 330, 320]
-				        },
-				        {
-				            name: '搜索引擎',
-				            type: 'line',
-				            stack: '总量',
-				            data: [820, 932, 901, 934, 1290, 1330, 1320]
-				        }
-				    ]
-				};
+				title : {
+					text : '折线图堆叠'
+				},
+				legend : {
+					data : [ '邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎' ]
+				},
+				grid : {
+					left : '3%',
+					right : '4%',
+					bottom : '3%',
+					containLabel : true
+				},
+				toolbox : {
+					feature : {
+						saveAsImage : {}
+					}
+				},
+				xAxis : {
+					type : 'category',
+					boundaryGap : false,
+					data : [ '周一', '周二', '周三', '周四', '周五', '周六', '周日' ]
+				},
+				yAxis : {
+					type : 'value'
+				},
+				series : [ {
+					name : '邮件营销',
+					type : 'line',
+					stack : '总量',
+					data : [ 120, 132, 101, 134, 90, 230, 210 ]
+				}, {
+					name : '联盟广告',
+					type : 'line',
+					stack : '总量',
+					data : [ 220, 182, 191, 234, 290, 330, 310 ]
+				}, {
+					name : '视频广告',
+					type : 'line',
+					stack : '总量',
+					data : [ 150, 232, 201, 154, 190, 330, 410 ]
+				}, {
+					name : '直接访问',
+					type : 'line',
+					stack : '总量',
+					data : [ 320, 332, 301, 334, 390, 330, 320 ]
+				}, {
+					name : '搜索引擎',
+					type : 'line',
+					stack : '总量',
+					data : [ 820, 932, 901, 934, 1290, 1330, 1320 ]
+				} ]
+			};
 			var chart = echarts.init(document.getElementById(chart));
 			chart.setOption(option);
 		}
