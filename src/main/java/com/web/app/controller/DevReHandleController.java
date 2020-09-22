@@ -21,10 +21,10 @@ public class DevReHandleController extends WebController  {
 	private DevReHandleService devReHandleService;
 	
 	@ApiOperation(value = "获取设备报修申请单", notes = "获取设备报修申请单")
-	@RequestMapping(value = "/getHandleList", method = RequestMethod.POST, produces = "application/json")
-	public ApiResponseResult getHandleList(@RequestParam(value = "usercode") String usercode) {
+	@RequestMapping(value = "/getList", method = RequestMethod.POST, produces = "application/json")
+	public ApiResponseResult getList(@RequestParam(value = "usercode") String usercode) {
 		try {
-			return devReHandleService.getHandleList(usercode);
+			return devReHandleService.getList(usercode);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ApiResponseResult.failure(e.toString());

@@ -29,16 +29,16 @@ public class DevReHandlelmpl implements DevReHandleService {
 	private JdbcTemplate jdbcTemplate;
 
 	@Override
-	public ApiResponseResult getHandleList(String usercode) throws Exception {
+	public ApiResponseResult getList(String usercode) throws Exception {
 		// TODO Auto-generated method stub
-		List<Object> list = this.getHandleListPrc(usercode, "PRC_EQ_Repair_HandleList");
+		List<Object> list = this.getListPrc(usercode, "PRC_EQ_Repair_HandleList");
 		if (!list.get(0).toString().equals("0")) {// 存储过程调用失败 //判断返回标识
 			return ApiResponseResult.failure(list.get(1).toString());// 失败返回字段
 		}
 		return ApiResponseResult.success().data(list.get(2));// 返回数据集
 	}
 
-	private List getHandleListPrc(String usercode, String prc_name) throws Exception {
+	private List getListPrc(String usercode, String prc_name) throws Exception {
 		List resultList = (List) jdbcTemplate.execute(new CallableStatementCreator() {
 			@Override
 			public CallableStatement createCallableStatement(Connection con) throws SQLException {
@@ -82,7 +82,7 @@ public class DevReHandlelmpl implements DevReHandleService {
 					if(!list.get(0).toString().equals("0")){//存储过程调用失败 //判断返回标识
 			            return ApiResponseResult.failure(list.get(1).toString());//失败返回字段
 			        }			
-					return ApiResponseResult.success().data(list.get(1).toString());//返回字段
+					return ApiResponseResult.success(list.get(1).toString());//返回字段
 		} 
 	 
 	 private List assignPrc(String usercode,String id,String repair_man,String prc_name) throws Exception {
@@ -117,7 +117,7 @@ public class DevReHandlelmpl implements DevReHandleService {
 					if(!list.get(0).toString().equals("0")){//存储过程调用失败 //判断返回标识
 			            return ApiResponseResult.failure(list.get(1).toString());//失败返回字段
 			        }			
-					return ApiResponseResult.success().data(list.get(1).toString());//返回字段
+					return ApiResponseResult.success(list.get(1).toString());//返回字段
 		} 
 	 
 	 private List transferPrc(String usercode,String id,String repair_man,String prc_name) throws Exception {
@@ -154,9 +154,9 @@ public class DevReHandlelmpl implements DevReHandleService {
 		}
 		List<Map<String, Object>> l_new= new ArrayList<Map<String, Object>>();
 		Map<String, Object> m_new = new HashMap<String, Object>();
-		m_new.put("FettlerInfo", list.get(3));
-		m_new.put("Programme", list.get(4));
-		m_new.put("Result", list.get(5));
+		m_new.put("FettlerInfo", list.get(2));
+		m_new.put("Programme", list.get(3));
+		m_new.put("Result", list.get(4));
 		l_new.add(m_new);
 		return ApiResponseResult.success().data(l_new);// 返回数字集合
 	}
