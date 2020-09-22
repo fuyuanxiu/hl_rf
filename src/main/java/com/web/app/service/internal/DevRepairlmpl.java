@@ -29,16 +29,16 @@ public class DevRepairlmpl implements DevRepairService {
 	private JdbcTemplate jdbcTemplate;
 
 	@Override
-	public ApiResponseResult getRepairList(String usercode) throws Exception {
+	public ApiResponseResult getList(String usercode) throws Exception {
 		// TODO Auto-generated method stub
-		List<Object> list = this.getRepairListPrc(usercode, "PRC_EQ_Repair_ServiceList");
+		List<Object> list = this.getListPrc(usercode, "PRC_EQ_Repair_ServiceList");
 		if (!list.get(0).toString().equals("0")) {// 存储过程调用失败 //判断返回标识
 			return ApiResponseResult.failure(list.get(1).toString());// 失败返回字段
 		}
 		return ApiResponseResult.success().data(list.get(2));// 返回数据集
 	}
 
-	private List getRepairListPrc(String usercode, String prc_name) throws Exception {
+	private List getListPrc(String usercode, String prc_name) throws Exception {
 		List resultList = (List) jdbcTemplate.execute(new CallableStatementCreator() {
 			@Override
 			public CallableStatement createCallableStatement(Connection con) throws SQLException {
@@ -83,7 +83,7 @@ public class DevRepairlmpl implements DevRepairService {
 		if (!list.get(0).toString().equals("0")) {// 存储过程调用失败 //判断返回标识
 			return ApiResponseResult.failure(list.get(1).toString());// 失败返回字段
 		}
-		return ApiResponseResult.success().data(list.get(1).toString());// 返回字段
+		return ApiResponseResult.success(list.get(1).toString());// 返回字段
 	}
 
 	private List respondPrc(String usercode,String id,String eq_code,String cause,
@@ -121,7 +121,7 @@ public class DevRepairlmpl implements DevRepairService {
 					if(!list.get(0).toString().equals("0")){//存储过程调用失败 //判断返回标识
 			            return ApiResponseResult.failure(list.get(1).toString());//失败返回字段
 			        }			
-					return ApiResponseResult.success().data(list.get(1).toString());//返回数据
+					return ApiResponseResult.success(list.get(1).toString());//返回数据
 		} 
 	 
 	 private List completePrc(String usercode,String id,String content,String results,String prc_name) throws Exception {

@@ -21,10 +21,10 @@ public class DevRepairController extends WebController  {
 	private DevRepairService devRepairService;
 	
 	@ApiOperation(value = "获取设备报修申请单列表及明细", notes = "获取设备报修申请单列表及明细")
-	@RequestMapping(value = "/getRepairList", method = RequestMethod.POST, produces = "application/json")
-	public ApiResponseResult getRepairList(@RequestParam(value = "usercode") String usercode) {
+	@RequestMapping(value = "/getList", method = RequestMethod.POST, produces = "application/json")
+	public ApiResponseResult getList(@RequestParam(value = "usercode") String usercode) {
 		try {
-			return devRepairService.getRepairList(usercode);
+			return devRepairService.getList(usercode);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ApiResponseResult.failure(e.toString());
