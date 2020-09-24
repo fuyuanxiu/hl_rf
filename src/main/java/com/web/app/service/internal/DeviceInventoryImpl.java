@@ -130,15 +130,20 @@ public class DeviceInventoryImpl implements DeviceInventoryService {
 			) throws Exception {
 		// TODO Auto-generated method stub
 		List<Object> list = this.judgeDevicePrc(usercode,check_id,eq_code,area,
-				"PRC_EQ_Stocktaking_Auto");  
-		if(!list.get(0).toString().equals("0")){
-            return ApiResponseResult.failure(list.get(1).toString());
-        }
+				"PRC_EQ_Stocktaking_Auto");
 		List<Map<String, Object>> l_last= new ArrayList<Map<String, Object>>();
 		Map<String, Object> m_new = new HashMap<String, Object>();
 		m_new.put("result", list.get(1).toString());
-		m_new.put("old_location", list.get(2).toString());
+		if(list.get(2)==null){
+			m_new.put("old_location", "");
+		}else{
+			m_new.put("old_location", list.get(2).toString());
+		}
 		l_last.add(m_new);
+		if(!list.get(0).toString().equals("0")){
+            return ApiResponseResult.failure().data(l_last);
+        }
+		
 		return ApiResponseResult.success().data(l_last);
 	}
     //执行

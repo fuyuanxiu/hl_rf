@@ -55,4 +55,13 @@ public class kanbanController extends WebController {
 		mav.setViewName("/kanban/hl_demo");//返回路径
 		return mav;
 	}
+	@RequestMapping(value = "/toHlArea", method = RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView toHlArea() {
+		String method = "/kanban/toHlArea";String methodName ="恒联区域看板";
+		ModelAndView mav=new ModelAndView();
+		//mav.addObject("pname", p);
+		mav.setViewName("/kanban/hl_area");//返回路径
+		return mav;
+	}
 }
