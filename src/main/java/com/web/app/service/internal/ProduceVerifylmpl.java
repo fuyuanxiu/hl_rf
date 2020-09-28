@@ -59,23 +59,23 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
 				if(l_new.get(j).get("TASK_NO").toString().equals(l.get(k).get("TASK_NO").toString())){
 					Map<String, Object> m = l.get(k);
 					Map<String, Object> m_new = new HashMap<String, Object>();
-					m_new.put("WORPROC_NAME", m.get("WORPROC_NAME").toString());
-					m_new.put("WORPROC_CODE", m.get("WORPROC_CODE").toString());
-					m_new.put("EQU_CODE", m.get("EQU_CODE").toString());//-
-					m_new.put("EQU_NAME", m.get("EQU_NAME").toString());//-
-					m_new.put("PRODUCE_STATE", m.get("PRODUCE_STATE").toString());
-					m_new.put("WORKSHOP_CENTER_NAME", m.get("WORKSHOP_CENTER_NAME").toString());
+					m_new.put("WORPROC_NAME", m.get("WORPROC_NAME"));
+					m_new.put("WORPROC_CODE", m.get("WORPROC_CODE"));
+					m_new.put("EQU_CODE", m.get("EQU_CODE"));//-
+					m_new.put("EQU_NAME", m.get("EQU_NAME"));//-
+					m_new.put("PRODUCE_STATE", m.get("PRODUCE_STATE"));
+					m_new.put("WORKSHOP_CENTER_NAME", m.get("WORKSHOP_CENTER_NAME"));
 					child.add(m_new);
 				}
 			}
 			Map<String, Object> m = l_new.get(j);
 			Map<String, Object> m_new = new HashMap<String, Object>();
-			m_new.put("TASK_NO", m.get("TASK_NO").toString());
+			m_new.put("TASK_NO", m.get("TASK_NO"));
 			//m_new.put("BOARD_ITEM", m.get("BOARD_ITEM").toString());
-			m_new.put("PRO_CODE", m.get("PRO_CODE").toString());
-			m_new.put("PLAN_QTY", m.get("PLAN_QTY").toString());
-			m_new.put("COMPLETE_QTY", m.get("COMPLETE_QTY").toString());
-			m_new.put("PRO_NAME", m.get("PRO_NAME").toString());
+			m_new.put("PRO_CODE", m.get("PRO_CODE"));
+			m_new.put("PLAN_QTY", m.get("PLAN_QTY"));
+			m_new.put("COMPLETE_QTY", m.get("COMPLETE_QTY"));
+			m_new.put("PRO_NAME", m.get("PRO_NAME"));
 			m_new.put("Child", child);
 			m_new.put("Role", list.get(2));
 			l_last.add(m_new);
