@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>恒联区域看板</title>
@@ -13,6 +13,37 @@
 <script src="../js/login/jquery.min.js"></script>
 <script src="../layuiadmin/lib/extend/echarts.js"></script>
 <style>
+.layui-table th{
+text-align:center;
+}
+.layui-badge-dot{
+width:25px;
+height:25px;
+font-size:22px;
+}
+
+.inner{
+  position:relative;
+  width:150px;
+  height:150px;
+  border-radius:75px;
+  background: linear-gradient(to top, silver, whitesmoke);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.inner .disc{
+  position:absolute;
+  width:80%;
+  height:80%;
+  border-radius:50%;
+   background:linear-gradient(silver,whitesmoke); 
+  /* background:linear-gradient(DarkSeaGreen,whitesmoke); */
+  line-height:120px;
+}
+.site-text{
+position:relative;
+}
 html {
 	height: 100%;
 	margin: 0;
@@ -21,7 +52,7 @@ html {
 body {
 	color: #000;
 	margin-top: 5px;
-	overflow: hidden;
+	/* overflow: hidden; */
 	/*background: #000033;*/
 	height: 100%;
 	margin: 0;
@@ -45,6 +76,46 @@ body {
 	/*border: 1px solid red;*/
 	margin-top: 2px;
 	text-align: center;
+}
+
+
+button {
+	outline: none;
+	border: 1px solid gray;
+	border-radius: 5px;
+}
+
+button.active {
+	background-color: #0099FF;
+}
+/*选项卡(底部部分)*/
+.right_vice_container{
+    text-align: center;
+	font-size: 20px;
+}
+
+.right_vice_container ul {
+    list-style: none;
+    margin-left: 10px;
+}
+ 
+.right_vice_container li {
+    display: inline;
+    line-height: 40px;
+    float:left
+}
+
+.right_main_container_div_active {
+	width: 800px;
+	height: 400px;
+	/*border: 1px solid red;*/
+	margin-top: 2px;
+	text-align: center;
+	font-size: 30px;
+}
+
+.div_none {
+	display: none;
 }
 </style>
 </head>
@@ -92,16 +163,17 @@ body {
 								<div class="grid-demo">生产任务信息</div>
 							</div>
 							<div class="layui-col-md11 div-boder">
+							
 								<div class="layui-form">
 									<table id="task_info" class="layui-table" lay-size="sm">
 										<thead>
 											<tr>
 												<th>待下发工单</th>
+												<th>产品编号</th>
 												<th>任务数</th>
-												<th>投料数</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody id="unTask">
 											<tr>
 												<td>12312336</td>
 												<td>5000</td>
@@ -128,19 +200,19 @@ body {
 			</div>
 			<div class="layui-col-md9 div-boder">
 				<div class="layui-row layui-col-space2">
-					<div class="layui-col-md10 div-boder">
-						<div class="layui-carousel" id="chart_list">
-							<div carousel-item>
-								<div>
-									<div class="div_chart" id="chart1"></div>
-									</div>
-									<div><div class="div_chart"
-										id="chart2"></div></div>
-									<div><div class="div_chart"
-										id="chart3"></div></div>
-									
-								
+					<div class="layui-col-md10">
+						<div  id="chart_list">
+						<div id="bottom_wrap">
+							<button >法</button>
+							<button>环</button>
+							<button class="active">测</button>
+							<div id="right_main_container">
+								<div class="right_main_container_div_active div_none" id="chart1"></div>
+								<div class="right_main_container_div_active div_none" id="chart2"></div>
+								<div class="right_main_container_div_active " id="chart3"></div>
 							</div>
+					     </div>
+
 						</div>
 					</div>
 					<div class="layui-col-md2 div-boder" align="center">
@@ -182,18 +254,68 @@ body {
 				</div>
 				<div class="layui-row layui-col-space2">
 					<div class="layui-col-md12 div-boder">
-						<div class="layui-carousel" id="status_list">
-							<div carousel-item>
-								<div id="chart1">条目1</div>
-								<div id="chart2">条目2</div>
-								<div id="chart3">条目3</div>
-							</div>
+						<div  id="status_list">
+							<button >人</button>
+								<button class="active">机</button>
+								<button >料</button>
+								<div class="right_vice_container">
+									<div class="div_none">内容一</div>
+									<!-- 机 -->
+									<div class="active">
+										<fieldset class="layui-elem-field layui-field-title site-title">
+									      <legend>
+									      <span class="layui-badge-dot layui-bg-green" id="kaiji">1</span>
+									      <a >开机</a>
+									      <span class="layui-badge-dot badge" id="weixiu">1</span>
+									      <a >维修</a>
+									      <span class="layui-badge-dot layui-bg-orange" id="xianzhi">1</span>
+									      <a >闲置</a>
+									      </legend>
+									    </fieldset>
+									    <ul id="ji">
+									      <!-- <li>
+									        <div class="inner">
+											  <div class="disc">
+											  </div>
+											</div>
+									      </li> -->
+									    </ul>
+									</div>
+									<!-- end-机 -->
+									<!-- 料 -->
+									<div class="div_none">
+									<table id="task_info"  class="layui-table" lay-size="sm">
+										<thead>
+											<tr>
+												<th>物料编号</th>
+												<th>物料名称</th>
+												<th>领料数量</th>
+												<th>需领用量</th>
+												<th>退料数量</th>
+												<th>已领用量</th>
+												<th>未领用量</th>
+												<th>单位</th>
+											</tr>
+										</thead>
+										<tbody id="liao">
+
+										</tbody>
+									</table>
+									</div>
+									<!-- end-料 -->
+								</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		<script src="/js/kanban/hl_area.js" th:src="@{/js/kanban/hl_area.js}"></script>
+		<script th:inline="javascript">
+        var permList=[[${line}]];
+        var woList = [[${WoList}]];
+        var KanbanList = [[${KanBanList}]];
+        console.log(KanbanList)
+       </script>
 	</div>
 </body>
 </html>

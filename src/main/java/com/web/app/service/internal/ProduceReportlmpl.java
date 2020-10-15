@@ -70,18 +70,18 @@ public class ProduceReportlmpl implements ProduceReportService {
 			}
 			Map<String, Object> m = l_new.get(j);
 			Map<String, Object> m_new = new HashMap<String, Object>();
-			m_new.put("WORL_SINGNUM", m.get("WORL_SINGNUM").toString());
-			m_new.put("PRO_NAME", m.get("PRO_NAME").toString());
-			m_new.put("PRO_CODE", m.get("PRO_CODE").toString());
-			m_new.put("PERSON_NAME", m.get("PERSON_NAME").toString());
-			m_new.put("PERSON_CODE", m.get("PERSON_CODE").toString());
-			m_new.put("PROD_DATE_END", m.get("PROD_DATE_END").toString());
-			m_new.put("PROD_DATE", m.get("PROD_DATE").toString());
-			m_new.put("OUTPUT_QTY", m.get("OUTPUT_QTY").toString());
-			m_new.put("BG_QTY", m.get("BG_QTY").toString());
-			m_new.put("HG_QTY", m.get("HG_QTY").toString());// 合格数量
-			m_new.put("LASTUPDATE_DATE", m.get("LASTUPDATE_DATE").toString());// 最后一次报数时间
-			m_new.put("BHG_QTY", m.get("BHG_QTY").toString());// 不合格数量
+			m_new.put("WORL_SINGNUM", m.get("WORL_SINGNUM"));
+			m_new.put("PRO_NAME", m.get("PRO_NAME"));
+			m_new.put("PRO_CODE", m.get("PRO_CODE"));
+			m_new.put("PERSON_NAME", m.get("PERSON_NAME"));
+			m_new.put("PERSON_CODE", m.get("PERSON_CODE"));
+			m_new.put("PROD_DATE_END", m.get("PROD_DATE_END"));
+			m_new.put("PROD_DATE", m.get("PROD_DATE"));
+			m_new.put("OUTPUT_QTY", m.get("OUTPUT_QTY"));
+			m_new.put("BG_QTY", m.get("BG_QTY"));
+			m_new.put("HG_QTY", m.get("HG_QTY"));// 合格数量
+			m_new.put("LASTUPDATE_DATE", m.get("LASTUPDATE_DATE"));// 最后一次报数时间
+			m_new.put("BHG_QTY", m.get("BHG_QTY"));// 不合格数量
 			m_new.put("Child", child);
 			l_last.add(m_new);
 		}
