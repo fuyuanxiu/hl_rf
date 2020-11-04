@@ -57,28 +57,36 @@ public class StartCheckImpl implements StartCheckService {
 				if(l_new.get(j).get("WORL_SINGNUM").toString().equals(l.get(k).get("WORL_SINGNUM").toString())){
 					Map<String, Object> m = l.get(k);
 					Map<String, Object> m_new = new HashMap<String, Object>();
-					m_new.put("WORKSHOP_CENTER_CODE", m.get("WORKSHOP_CENTER_CODE").toString());
-					m_new.put("WORPROC_CODE", m.get("WORPROC_CODE").toString());
-					m_new.put("WORPROC_NAME", m.get("WORPROC_NAME").toString());
-					m_new.put("EQU_CODE", m.get("EQU_CODE").toString());
-					m_new.put("EQU_NAME", m.get("EQU_NAME").toString());
-					m_new.put("STATUS", m.get("STATUS").toString());
+					m_new.put("WORKSHOP_CENTER_CODE", getNull(m.get("WORKSHOP_CENTER_CODE")));
+					m_new.put("WORPROC_CODE", getNull(m.get("WORPROC_CODE")));
+					m_new.put("WORPROC_NAME", getNull(m.get("WORPROC_NAME")));
+					m_new.put("EQU_CODE", getNull(m.get("EQU_CODE")));
+					m_new.put("EQU_NAME", getNull(m.get("EQU_NAME")));
+					m_new.put("TECHNICS_NAME", getNull(m.get("TECHNICS_NAME")));
+					m_new.put("STATUS", getNull(m.get("STATUS")));
 					child.add(m_new);
 				}
 			}
 			Map<String, Object> m = l_new.get(j);
 			Map<String, Object> m_new = new HashMap<String, Object>();
-			m_new.put("WORL_SINGNUM", m.get("WORL_SINGNUM").toString());
-			m_new.put("PRO_NAME", m.get("PRO_NAME").toString());
-			m_new.put("PRO_CODE", m.get("PRO_CODE").toString());
-			m_new.put("PROD_DATE_END", m.get("PROD_DATE_END").toString());
-			m_new.put("PROD_DATE", m.get("PROD_DATE").toString());
-			m_new.put("WORL_QTY", m.get("WORL_QTY").toString());
-			m_new.put("COMPLETE_QTY", m.get("COMPLETE_QTY").toString());
+			m_new.put("WORL_SINGNUM", getNull(m.get("WORL_SINGNUM")));
+			m_new.put("PRO_NAME", getNull(m.get("PRO_NAME")));
+			m_new.put("PRO_CODE", getNull(m.get("PRO_CODE")));
+			m_new.put("PROD_DATE_END", getNull(m.get("PROD_DATE_END")));
+			m_new.put("PROD_DATE", getNull(m.get("PROD_DATE")));
+			m_new.put("WORL_QTY", getNull(m.get("WORL_QTY")));
+			m_new.put("COMPLETE_QTY", getNull(m.get("COMPLETE_QTY")));
+			m_new.put("ID", getNull(m.get("ID")));
 			m_new.put("Child", child);
 			l_last.add(m_new);
 		}
 		return ApiResponseResult.success().data(l_last);//返回数据集
+	}
+	private String getNull(Object o){
+		if(o == null){
+			return "";
+		}
+		return o.toString();
 	}
 	//执行存储获取数据
     private List getStartListPrc(String usercode,String prc_name)throws Exception{
@@ -129,11 +137,11 @@ public class StartCheckImpl implements StartCheckService {
     		String taskNo,
     		String eq_code,
     		String staffNoInfo,
-    		String eq_id_Info
+    		String eq_id_Info,String pid
 			) throws Exception {
 		// TODO Auto-generated method stub
 		List<Object> list = this.addStartCheckPrc(usercode,proc,workCenter,taskNo,eq_code,
-				staffNoInfo,eq_id_Info, "PRC_Produce_Authorization");  
+				staffNoInfo,eq_id_Info,pid, "PRC_Produce_Authorization");  
 		if(!list.get(0).toString().equals("0")){
             return ApiResponseResult.failure(list.get(1).toString());
         }
@@ -147,11 +155,11 @@ public class StartCheckImpl implements StartCheckService {
     		String taskNo,
     		String eq_code,
     		String staffNoInfo,
-    		String eq_id_Info,String prc_name)throws Exception{
+    		String eq_id_Info,String pid,String prc_name)throws Exception{
         List resultList = (List) jdbcTemplate.execute(new CallableStatementCreator() {
             @Override
             public CallableStatement createCallableStatement(Connection con) throws SQLException {
-                String storedProc = "{call "+prc_name+"(?,?,?,?,?,?,?,?,?)}";// 调用的sql
+                String storedProc = "{call "+prc_name+"(?,?,?,?,?,?,?,?,?,?)}";// 调用的sql
                 CallableStatement cs = con.prepareCall(storedProc);
                 cs.setString(1, usercode);// 账号
                 cs.setString(2, proc);// 工序
@@ -160,8 +168,9 @@ public class StartCheckImpl implements StartCheckService {
                 cs.setString(5, eq_code);// 设备编号
                 cs.setString(6, staffNoInfo);// 工号信息
                 cs.setString(7, eq_id_Info);// 设备ID
-                cs.registerOutParameter(8,java.sql.Types.INTEGER);// 返回标识
-                cs.registerOutParameter(9,java.sql.Types.VARCHAR);// 输出参数 
+                cs.setString(8, pid);// 排产计划ID
+                cs.registerOutParameter(9,java.sql.Types.INTEGER);// 返回标识
+                cs.registerOutParameter(10,java.sql.Types.VARCHAR);// 输出参数 
                 return cs;
             }
         }, new CallableStatementCallback() {
@@ -169,8 +178,8 @@ public class StartCheckImpl implements StartCheckService {
                 List<Object> result = new ArrayList<>();
 //                List<Map<String, Object>> l = new ArrayList();
                 cs.execute();
-                result.add(cs.getString(8));
                 result.add(cs.getString(9));
+                result.add(cs.getString(10));
                 return result;
             }
         });

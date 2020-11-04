@@ -36,10 +36,12 @@ public class ProduceVerifyController extends WebController {
 	public ApiResponseResult getProduceVerifyDetail(@RequestParam(value = "usercode") String usercode, // 用户ID
 			@RequestParam(value = "proc") String proc, // 工序
 			@RequestParam(value = "taskNo") String taskNo, // 工单号
-			@RequestParam(value = "eq_code") String eq_code)// 设备编号
+			@RequestParam(value = "eq_code") String eq_code,// 设备编号
+			@RequestParam(value = "tcode") String tcode //工艺编码
+			)
 	{
 		try {
-			return createService.getProduceVerifyDetail(usercode, proc, taskNo, eq_code);
+			return createService.getProduceVerifyDetail(usercode, proc, taskNo, eq_code,tcode);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ApiResponseResult.failure(e.toString());
@@ -53,9 +55,11 @@ public class ProduceVerifyController extends WebController {
     		@RequestParam(value = "proc") String proc,
     		@RequestParam(value = "task_no") String task_no,
     		@RequestParam(value = "eq_code") String eq_code,
-    		@RequestParam(value = "role") String role){
+    		@RequestParam(value = "role") String role,
+    		@RequestParam(value = "tcode") String tcode //工艺编码
+    		){
         try{
-            return createService.sumbitProduceVerify(usercode,proc,task_no,eq_code,role);
+            return createService.sumbitProduceVerify(usercode,proc,task_no,eq_code,role,tcode);
         }catch (Exception e){
             e.printStackTrace();
             return ApiResponseResult.failure(e.toString());
@@ -65,9 +69,10 @@ public class ProduceVerifyController extends WebController {
 	@ApiOperation(value = "个人报工明细", notes = "获取个人明细")
 	@RequestMapping(value = "/getProduceRecordDetail", method = RequestMethod.POST, produces = "application/json")
 	public ApiResponseResult getProduceRecordDetail(@RequestParam(value = "usercode") String usercode,
-			@RequestParam(value = "plan_id") String plan_id, @RequestParam(value = "role") String role) {
+			@RequestParam(value = "plan_id") String plan_id, @RequestParam(value = "role") String role,
+			@RequestParam(value = "aid") String aid) {
 		try {
-			return createService.getProduceRecordDetail(usercode, plan_id, role);
+			return createService.getProduceRecordDetail(usercode, plan_id, role,aid);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ApiResponseResult.failure(e.toString());
@@ -79,9 +84,9 @@ public class ProduceVerifyController extends WebController {
 	public ApiResponseResult sumbitProduceRecordDetail(@RequestParam(value = "usercode") String usercode,
 			@RequestParam(value = "proc") String proc, @RequestParam(value = "task_no") String task_no,
 			@RequestParam(value = "eq_code") String eq_code, @RequestParam(value = "reportInfo") String reportInfo,
-			@RequestParam(value = "role") String role) {
+			@RequestParam(value = "role") String role,@RequestParam(value = "tcode") String tcode) {
 		try {
-			return createService.sumbitProduceRecordDetail(usercode, proc, task_no, eq_code, reportInfo, role);
+			return createService.sumbitProduceRecordDetail(usercode, proc, task_no, eq_code, reportInfo, role,tcode);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ApiResponseResult.failure(e.toString());

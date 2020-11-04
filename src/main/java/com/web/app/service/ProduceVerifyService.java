@@ -10,18 +10,18 @@ public interface ProduceVerifyService {
     		String usercode,
     		String proc,
     		String taskNo,
-    		String eq_code) throws Exception;
+    		String eq_code,String tcode) throws Exception;
     //提交审核信息
     public ApiResponseResult sumbitProduceVerify(
     		String usercode,
     		String proc,
     		String task_no,
     		String eq_code,
-    		String role
+    		String role,String tcode
     		) throws Exception;
     //获取个人报工详情的明细
     public ApiResponseResult getProduceRecordDetail(
-    		String usercode,String plan_id,String role
+    		String usercode,String plan_id,String role,String aid
     		) throws Exception;
     
     //提交修改过的报工明细
@@ -31,7 +31,7 @@ public interface ProduceVerifyService {
     		String task_no,
     		String eq_code,
     		String reportInfo,
-    		String role
+    		String role,String tcode
     		) throws Exception;
 }
 

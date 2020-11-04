@@ -15,6 +15,6 @@ public interface StartCheckService {
     		String taskNo,
     		String eq_code,
     		String staffNoInfo,
-    		String eq_id_Info
+    		String eq_id_Info,String pid
     		) throws Exception;
 }

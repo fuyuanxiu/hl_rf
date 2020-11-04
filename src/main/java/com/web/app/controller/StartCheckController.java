@@ -38,11 +38,12 @@ public class StartCheckController extends WebController {
     		@RequestParam(value = "taskNo") String taskNo,
     		@RequestParam(value = "eq_code") String eq_code,
     		@RequestParam(value = "staffNoInfo") String staffNoInfo,
-    		@RequestParam(value = "eq_id_Info") String eq_id_Info
+    		@RequestParam(value = "eq_id_Info") String eq_id_Info,
+    		@RequestParam(value = "pid") String pid
     		){
         try{
             return createService.addStartCheck(usercode,proc,workCenter,taskNo,eq_code,
-    				staffNoInfo,eq_id_Info);
+    				staffNoInfo,eq_id_Info,pid);
         }catch (Exception e){
             e.printStackTrace();
             return ApiResponseResult.failure(e.toString());
