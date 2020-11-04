@@ -9,9 +9,12 @@ $(function() {
 	
 	getChart1("chart1");
 	getChart2("chart2");
-	getChart3(KanbanList.CE);
+	getChart3(KanbanList.CE);//测
 	//getKanBanList(permList,woList[0].TASK_NO,woList[0].PRO_CODE);
 	
+	doYCBJ();//异常报警
+	
+	doTask();//在制工单
 	doUnTask();//生产任务信息
 	
 	doJi();//机
@@ -356,7 +359,51 @@ function getKanBanList(area,taskNo,itemNo){
         }
     });
 }
+function doTask(){
+	var obj=KanbanList.Task;
+	if(obj[0]){
+		$("#task_no").html(obj[0].TASK_NO);
+		$("#xh").html(obj[0].BOARD_TYPE);
+		$("#jzsj").html(obj[0].DATE_END);
+		//$("#wlsm").html(obj[0].TASK_NO);????存储过程未返回
+		$("#rws").html(obj[0].PLAN_QTY);
+		
+		$("#tlsl").html(obj[0].OUTTL_QTY);
+		$("#ywcsl").html(obj[0].FISH_QTY);
+		$("#zhsl").html(obj[0].PRODU_QTY);
+		//$("#tksl").html(obj[0].PLAN_QTY);????存储过程未返回
+		//$("#bfsl").html(obj[0].PLAN_QTY);????存储过程未返回
+		//$("#bfsl").html(obj[0].PLAN_QTY);????存储过程未返回
+		//$("#srksl").html(obj[0].PLAN_QTY);????存储过程未返回
+	}
+} 
 
+//异常报警
+function doYCBJ(){
+	var obj=KanbanList.XC;	
+	$("#yc_zl li").remove();
+	$("#yc_sb li").remove();
+	for (var i = 0; i < obj.length; i++) {	 
+		if(obj[i].DATATYPE == 'Q'){
+			var newRow = '';
+			if(obj[i].COLOR == 'red'){
+				newRow="<li><span class='layui-badge'>"+obj[i].PROBLEM_TIME+"</span></li>";	
+			}else{
+				newRow="<li><span class='layui-badge layui-bg-orange'>"+obj[i].PROBLEM_TIME+"</span></li>";
+			}
+	        $("#yc_zl").append(newRow);
+		}else{
+			var newRow = '';
+			if(obj[i].COLOR == 'red'){
+				newRow="<li><span class='layui-badge'>"+obj[i].PROBLEM_TIME+"</span></li>";	
+			}else{
+				newRow="<li><span class='layui-badge layui-bg-orange'>"+obj[i].PROBLEM_TIME+"</span></li>";
+			}
+	        $("#yc_sb").append(newRow);
+		}
+		
+    }	
+}
 //生产任务信息
 function doUnTask(){
 	var obj=KanbanList.UnTask;	

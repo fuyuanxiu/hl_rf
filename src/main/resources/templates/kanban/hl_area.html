@@ -21,7 +21,38 @@ width:25px;
 height:25px;
 font-size:22px;
 }
-
+.layui-form-label{
+padding:0px;
+font-weight:none;
+line-height:none;
+text-align:left;
+width:60px;
+color:#666666;
+}
+.layui-form-item{
+margin-bottom:5px;
+}
+.layui-form-item .layui-input-inline{
+width:80px;
+margin-right:0px;
+}
+.layui-form-item .layui-inline{
+margin-right:0px;
+}
+.task_ul ul {
+    list-style: none;
+    margin-left: 10px;
+}
+ 
+.task_ul li {
+    display: inline;
+    line-height: 40px;
+    float:left
+}
+.li-inline {
+	float: left;
+	width: 45%;
+}
 .inner{
   position:relative;
   width:150px;
@@ -60,6 +91,7 @@ body {
 
 .div-boder {
 	border: 1px solid #000000;
+	font-size:20px;
 	/*background: #000033;*/
 }
 
@@ -144,14 +176,29 @@ button.active {
 							<div class="layui-col-md1 div-boder">
 								异常报警
 							</div>
-							<div class="layui-col-md5 div-boder">
-								<div class="layui-col-md12 div-boder">1</div>
-								<div class="layui-col-md12 div-boder">1</div>
+							<div class="layui-col-md11">
+								<div class="layui-col-md6">
+									<div class="layui-col-md12">
+									  <fieldset style="margin-bottom:5px;" class="layui-elem-field layui-field-title">
+								        <legend style="font-size:16px;"><a >质量</a></legend>
+								      </fieldset>
+								      <ul id="yc_zl">
+								        <li><span class="layui-badge">31645.63分钟</span></li>
+								      </ul>
+									</div>
+								</div>
+								<div class="layui-col-md6">
+									<div class="layui-col-md12 ">
+									   <fieldset style="margin-bottom:5px;" class="layui-elem-field layui-field-title">
+								        <legend style="font-size:16px;"><a >设备</a></legend>
+								      </fieldset>
+								      <ul id="yc_sb">
+								        <li><span class="layui-badge">31645.63分钟</span></li>
+								      </ul>
+									</div>
+								</div>
 							</div>
-							<div class="layui-col-md6 div-boder">
-								<div class="layui-col-md12 div-boder">1</div>
-								<div class="layui-col-md12 div-boder">1</div>
-							</div>
+							
 						</div>
 					</div>
 					<div class="layui-col-md12 div-boder">
@@ -160,11 +207,121 @@ button.active {
 								生产任务信息
 							</div>
 							<div class="layui-col-md11 div-boder">
-								<div class="grid-demo">生产任务信息</div>
-							</div>
-							<div class="layui-col-md11 div-boder">
-							
-								<div class="layui-form">
+								<div style="font-size:18px;">生产任务信息</div>
+								<fieldset  class="layui-elem-field layui-field-title">
+							      <legend style="font-size:16px;"><a >在制工单</a></legend>
+							    </fieldset>
+							    <div style=" font-size:14px;" >
+							    <form class="layui-form" action="">
+								  <div class="layui-form-item">
+								    <div class="layui-inline">
+								      <label class="layui-form-label">工单号</label>
+								      <div class="layui-input-inline">
+								        <span id="task_no"></span>
+								      </div>
+								    </div>
+								    <div class="layui-inline">
+								      <label class="layui-form-label">型号</label>
+								      <div class="layui-input-inline">
+								        <span id="xh"></span>
+								      </div>
+								    </div>
+								  </div>
+								  <div class="layui-form-item">
+								    <div class="layui-inline">
+								      <label class="layui-form-label">截止时间</label>
+								      <div class="layui-input-inline">
+								        <span id="jzsj"></span>
+								      </div>
+								    </div>
+								    <div class="layui-inline">
+								      <label class="layui-form-label">物料说明</label>
+								      <div class="layui-input-inline">
+								        <span id="wlsm"></span>
+								      </div>
+								    </div>
+								  </div>
+								  <div class="layui-form-item">
+								    <div class="layui-inline">
+								      <label class="layui-form-label">任务数</label>
+								      <div class="layui-input-inline">
+								        <span id="rws"></span>
+								      </div>
+								    </div>
+								    <div class="layui-inline">
+								      <label class="layui-form-label"></label>
+								      <div class="layui-input-inline">
+								        <span ></span>
+								      </div>
+								    </div>
+								  </div>
+								  
+								  <div class="layui-form-item">
+								    <div class="layui-inline">
+								      <label class="layui-form-label">投料数量</label>
+								      <div class="layui-input-inline">
+								        <span id="tlsl"></span>
+								      </div>
+								    </div>
+								    <div class="layui-inline">
+								      <label class="layui-form-label">已完成数</label>
+								      <div class="layui-input-inline">
+								        <span id="ywcsl"></span>
+								      </div>
+								    </div>
+								  </div>
+								  <div class="layui-form-item">
+								    <div class="layui-inline">
+								      <label class="layui-form-label">在制数量</label>
+								      <div class="layui-input-inline">
+								        <span id="zhsl"></span>
+								      </div>
+								    </div>
+								    <div class="layui-inline">
+								      <label class="layui-form-label">退库数量</label>
+								      <div class="layui-input-inline">
+								        <span id="tksl"></span>
+								      </div>
+								    </div>
+								  </div>
+								  <div class="layui-form-item">
+								    <div class="layui-inline">
+								      <label class="layui-form-label">报废数量</label>
+								      <div class="layui-input-inline">
+								        <span id="bfsl"></span>
+								      </div>
+								    </div>
+								    <div class="layui-inline">
+								      <label class="layui-form-label">待入库数</label>
+								      <div class="layui-input-inline">
+								        <span id="srksl"></span>
+								      </div>
+								    </div>
+								  </div>
+								  </form>
+								       <!--  <ul >
+											<li  style="float:left;width:100%">工单号：<span id="task_no"></span></li>
+											<li style="float:left;width:50%">型号：<span id="xh"></span></li>
+											<li style="float:left;width:50%">截止时间：<span id="jzsj"></span></li>
+											<li style="float:left;width:50%">物料说明：<span id="wlsm"></span></li>
+											<li style="float:left;width:50%;">任务数：<span id="rws"></span></li>
+										</ul>
+									
+									 <ul style="margin-top: 10px;width:100%">
+										<li class="li-inline">投料数量：</li>
+										<li class="li-inline">已完成数量：</li>
+										<li class="li-inline">______</li>
+										<li class="li-inline">______</li>
+										<li class="li-inline">在制数量：</li>
+										<li class="li-inline">退库数量：</li>
+										<li class="li-inline">______</li>
+										<li class="li-inline">______</li>
+										<li class="li-inline">报废数量：</li>
+										<li class="li-inline">待入库数量：</li>
+										<li class="li-inline">______</li>
+										<li class="li-inline">______</li>
+									</ul> -->
+									
 									<table id="task_info" class="layui-table" lay-size="sm">
 										<thead>
 											<tr>
@@ -174,26 +331,12 @@ button.active {
 											</tr>
 										</thead>
 										<tbody id="unTask">
-											<tr>
-												<td>12312336</td>
-												<td>5000</td>
-												<td>5000</td>
-											</tr>
-											<tr>
-												<td>12312336</td>
-												<td>5000</td>
-												<td>5000</td>
-											</tr>
-											<tr>
-												<td>12312336</td>
-												<td>5000</td>
-												<td>5000</td>
-											</tr>
-
 										</tbody>
 									</table>
+									
 								</div>
 							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -273,12 +416,6 @@ button.active {
 									      </legend>
 									    </fieldset>
 									    <ul id="ji">
-									      <!-- <li>
-									        <div class="inner">
-											  <div class="disc">
-											  </div>
-											</div>
-									      </li> -->
 									    </ul>
 									</div>
 									<!-- end-机 -->
