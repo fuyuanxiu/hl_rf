@@ -49,6 +49,7 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
 			String task_no1 = map1.get("TASK_NO").toString();
 			if(!task_no0.equals(task_no1)){
 				l_new.add(map1);
+				System.out.println(map1.get("TASK_NO").toString());
 			}
 		}
 		//挨个获取新的TASK_NO的字数据
@@ -71,7 +72,6 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
 			Map<String, Object> m = l_new.get(j);
 			Map<String, Object> m_new = new HashMap<String, Object>();
 			m_new.put("TASK_NO", m.get("TASK_NO"));
-			//m_new.put("BOARD_ITEM", m.get("BOARD_ITEM").toString());
 			m_new.put("PRO_CODE", m.get("PRO_CODE"));
 			m_new.put("PLAN_QTY", m.get("PLAN_QTY"));
 			m_new.put("COMPLETE_QTY", m.get("COMPLETE_QTY"));
@@ -80,6 +80,7 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
 			m_new.put("Role", list.get(2));
 			l_last.add(m_new);
 		}
+		System.out.println(l_last);
 		return ApiResponseResult.success().data(l_last);//返回数据集
 	}
 	//执行存储过程，获取工单信息
