@@ -47,9 +47,10 @@ public class DevReApplyController extends WebController  {
 	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json")
 	public ApiResponseResult add(@RequestParam(value = "usercode") String usercode,
 			@RequestParam(value = "eq_code") String eq_code,
-			@RequestParam(value = "fault_des") String fault_des) {
+			@RequestParam(value = "fault_des") String fault_des,
+			@RequestParam(value = "break_type") String break_type) {
 		try {
-			return devReApplyService.add(usercode,eq_code,fault_des);
+			return devReApplyService.add(usercode,eq_code,fault_des,break_type);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ApiResponseResult.failure(e.toString());

@@ -24,6 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.app.base.data.ApiResponseResult;
 import com.web.app.service.ProduceVerifyService;
 
+/**
+ * 报工审核
+ * */
 @Service(value = "ProduceVerifyService")
 @Transactional(propagation = Propagation.REQUIRED)
 public class ProduceVerifylmpl implements ProduceVerifyService {
@@ -67,6 +70,7 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
 					m_new.put("PRODUCE_STATE", m.get("PRODUCE_STATE"));
 					m_new.put("WORKSHOP_CENTER_NAME", m.get("WORKSHOP_CENTER_NAME"));
 					m_new.put("TECHNICS_NAME", m.get("TECHNICS_NAME"));
+					m_new.put("TECHNICS_CODE", m.get("TECHNICS_CODE"));//工艺编码
 					child.add(m_new);
 				}
 			}
@@ -79,8 +83,6 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
 			m_new.put("PRO_NAME", m.get("PRO_NAME"));
 			m_new.put("Child", child);
 			m_new.put("Role", list.get(2));
-			m_new.put("TECHNICS_NAME", m.get("TECHNICS_NAME"));
-			m_new.put("TECHNICS_CODE", m.get("TECHNICS_CODE"));//工艺编码
 			l_last.add(m_new);
 		}
 		System.out.println(l_last);

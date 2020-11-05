@@ -35,4 +35,7 @@ public interface ProduceReportService {
     		String unqua_Qty,  // 不合格品数量
     		String qua_Qty//合格数量 
     		) throws Exception;
+    
+    //暂停报工
+    public ApiResponseResult suspendReport(String usercode,String plan_id)throws Exception;
 }

@@ -20,7 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.app.base.data.ApiResponseResult;
 import com.web.app.service.DevReHandleService;
-
+/**
+ * 报修委派
+ * */
 @Service(value = "DevReHandleService")
 @Transactional(propagation = Propagation.REQUIRED)
 public class DevReHandlelmpl implements DevReHandleService {
@@ -156,7 +158,8 @@ public class DevReHandlelmpl implements DevReHandleService {
 		Map<String, Object> m_new = new HashMap<String, Object>();
 		m_new.put("FettlerInfo", list.get(2));
 		m_new.put("Programme", list.get(3));
-		m_new.put("Result", list.get(4));
+		m_new.put("BreakdownType", list.get(4));
+		m_new.put("Result", list.get(5));
 		l_new.add(m_new);
 		return ApiResponseResult.success().data(l_new);// 返回数字集合
 	}
@@ -165,13 +168,14 @@ public class DevReHandlelmpl implements DevReHandleService {
 		List resultList = (List) jdbcTemplate.execute(new CallableStatementCreator() {
 			@Override
 			public CallableStatement createCallableStatement(Connection con) throws SQLException {
-				String storedProc = "{call " + prc_name + "(?,?,?,?,?)}";// 调用的sql
+				String storedProc = "{call " + prc_name + "(?,?,?,?,?,?)}";// 调用的sql
 				CallableStatement cs = con.prepareCall(storedProc);
 				cs.registerOutParameter(1, java.sql.Types.INTEGER);// 输出参数 返回标识
 				cs.registerOutParameter(2, java.sql.Types.VARCHAR);// 输出参数 返回字段
 				cs.registerOutParameter(3, -10);// 输出参数 追溯数据 维修员数据集合
 				cs.registerOutParameter(4, -10);// 输出参数 追溯数据 维修方案数据集合
-				cs.registerOutParameter(5, -10);// 输出参数 追溯数据 维修结果数据集合
+				cs.registerOutParameter(5, -10);// 输出参数 追溯数据 维修故障类型数据集合--new
+				cs.registerOutParameter(6, -10);// 输出参数 追溯数据 维修结果数据集合
 				return cs;
 			}
 		}, new CallableStatementCallback() {
@@ -182,7 +186,7 @@ public class DevReHandlelmpl implements DevReHandleService {
 				result.add(cs.getString(2));
 				if (cs.getString(1).toString().equals("0")) {
 					// 游标处理
-					for(int i=3;i<6;i++){			
+					for(int i=3;i<7;i++){			
 						List<Map<String, Object>> l = new ArrayList();
 						ResultSet rs = (ResultSet) cs.getObject(i);
 						try {

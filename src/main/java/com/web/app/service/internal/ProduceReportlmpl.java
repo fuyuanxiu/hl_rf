@@ -22,6 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.app.base.data.ApiResponseResult;
 import com.web.app.service.ProduceReportService;
 
+/**
+ * 生产报工
+ * */
 @Service(value = "ProduceReportService")
 @Transactional(propagation = Propagation.REQUIRED)
 public class ProduceReportlmpl implements ProduceReportService {
@@ -61,7 +64,8 @@ public class ProduceReportlmpl implements ProduceReportService {
 					Map<String, Object> m_new = new HashMap<String, Object>();
 					m_new.put("ID", m.get("ID").toString());
 					m_new.put("WORPROC_CODE", m.get("WORPROC_CODE").toString());
-					m_new.put("WORPROC_NAME", m.get("WORPROC_NAME").toString());
+				//	m_new.put("WORPROC_NAME", m.get("WORPROC_NAME").toString());替换为TECHNICS_NAME
+					m_new.put("TECHNICS_NAME", m.get("TECHNICS_NAME").toString());
 					m_new.put("EQU_CODE", m.get("EQU_CODE").toString());
 					m_new.put("EQU_NAME", m.get("EQU_NAME").toString());
 					m_new.put("STATUS", m.get("STATUS").toString());
@@ -277,6 +281,43 @@ public class ProduceReportlmpl implements ProduceReportService {
 		});
 		return resultList;
 	}
+	
+	//暂停报工-返回结果
+		public ApiResponseResult suspendReport(String usercode, String plan_ID
+	    		) throws Exception{
+			// TODO Auto-generated method stub
+					List<Object> list = this.suspendReportPrc(usercode, plan_ID, "PRC_Produce_BG_Suspension");
+					if (!list.get(0).toString().equals("0")) {// 存储过程调用失败 //判断返回标识
+						return ApiResponseResult.failure(list.get(1).toString());// 失败返回字段
+					}
+					return ApiResponseResult.success(list.get(1).toString());// 返回判断字段数据
+		}
+		
+		private List suspendReportPrc(String usercode, String plan_ID,String prc_name) throws Exception {
+			List resultList = (List) jdbcTemplate.execute(new CallableStatementCreator() {
+				@Override
+				public CallableStatement createCallableStatement(Connection con) throws SQLException {
+					String storedProc = "{call " + prc_name + "(?,?,?,?)}";// 调用的sql
+					CallableStatement cs = con.prepareCall(storedProc);
+					cs.setString(1, usercode);// 账号
+					cs.setString(2, plan_ID);// 排产计划ID
+					cs.registerOutParameter(3, java.sql.Types.INTEGER);// 输出参数 返回标识
+					cs.registerOutParameter(4, java.sql.Types.VARCHAR);// 输出参数 返回标识
+					return cs;
+				}
+			}, new CallableStatementCallback() {
+				public Object doInCallableStatement(CallableStatement cs) throws SQLException, DataAccessException {
+					List<Object> result = new ArrayList<>();
+					cs.execute();
+					result.add(cs.getString(3));// （标识）
+					result.add(cs.getString(4));// 返回信息
+					System.out.print(result);
+					;
+					return result;
+				}
+			});
+			return resultList;
+		}
 	
 	
 	// 值为"null"或者null转换成""

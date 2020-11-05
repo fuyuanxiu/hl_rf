@@ -1,7 +1,7 @@
 package com.web.app.service.internal;
 
 import com.app.base.data.ApiResponseResult;
-import com.web.app.service.StartCheckService;
+import com.web.app.service.ProduceSuspendService;
 import com.web.report.service.internal.ImpUtils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -21,69 +21,24 @@ import java.sql.SQLException;
 import java.util.*;
 
 /**
- * 开工授权
+ * 生产停工
  * */
-@Service(value = "StartCheckService")
+@Service(value = "ProduceSuspendService")
 @Transactional(propagation = Propagation.REQUIRED)
-public class StartCheckImpl implements StartCheckService {
+public class ProduceSuspendImpl implements ProduceSuspendService {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
 	@Override
-	public ApiResponseResult getStartList(String usercode) throws Exception {
+	public ApiResponseResult getList(String usercode) throws Exception {
 		// TODO Auto-generated method stub
-		List<Object> list = this.getStartListPrc(usercode, "PRC_Produce_GetWOInfo");
+		List<Object> list = this.getStartListPrc(usercode, "PRC_Produce_WO_GetInfo");
         
 		if(!list.get(0).toString().equals("0")){
             return ApiResponseResult.failure(list.get(1).toString());
         }
-		List<Map<String, Object>> l = (List<Map<String, Object>>) list.get(2);
-		//处理数据
-		//去掉重复的WORL_SINGNUM的记录
-		List<Map<String, Object>> l_new = new ArrayList<Map<String, Object>>();
-		l_new.add(l.get(0));
-		for(int i=1;i<l.size();i++){
-			Map<String, Object> map0 = l.get(i-1);
-			Map<String, Object> map1 = l.get(i);
-			String task_no0 = map0.get("WORL_SINGNUM").toString();
-			String task_no1 = map1.get("WORL_SINGNUM").toString();
-			if(!task_no0.equals(task_no1)){
-				l_new.add(map1);
-			}
-		}
-		//挨个获取新的WORL_SINGNUM的字数据
-		List<Map<String, Object>> l_last= new ArrayList<Map<String, Object>>();
-		for(int j=0;j<l_new.size();j++){
-			List<Map<String, Object>> child = new ArrayList<Map<String, Object>>();
-			for(int k=0;k<l.size();k++){
-				if(l_new.get(j).get("WORL_SINGNUM").toString().equals(l.get(k).get("WORL_SINGNUM").toString())){
-					Map<String, Object> m = l.get(k);
-					Map<String, Object> m_new = new HashMap<String, Object>();
-					m_new.put("WORKSHOP_CENTER_CODE", getNull(m.get("WORKSHOP_CENTER_CODE")));
-					m_new.put("WORPROC_CODE", getNull(m.get("WORPROC_CODE")));
-					m_new.put("WORPROC_NAME", getNull(m.get("WORPROC_NAME")));
-					m_new.put("EQU_CODE", getNull(m.get("EQU_CODE")));
-					m_new.put("EQU_NAME", getNull(m.get("EQU_NAME")));
-					m_new.put("TECHNICS_NAME", getNull(m.get("TECHNICS_NAME")));
-					m_new.put("STATUS", getNull(m.get("STATUS")));
-					child.add(m_new);
-				}
-			}
-			Map<String, Object> m = l_new.get(j);
-			Map<String, Object> m_new = new HashMap<String, Object>();
-			m_new.put("WORL_SINGNUM", getNull(m.get("WORL_SINGNUM")));
-			m_new.put("PRO_NAME", getNull(m.get("PRO_NAME")));
-			m_new.put("PRO_CODE", getNull(m.get("PRO_CODE")));
-			m_new.put("PROD_DATE_END", getNull(m.get("PROD_DATE_END")));
-			m_new.put("PROD_DATE", getNull(m.get("PROD_DATE")));
-			m_new.put("WORL_QTY", getNull(m.get("WORL_QTY")));
-			m_new.put("COMPLETE_QTY", getNull(m.get("COMPLETE_QTY")));
-			m_new.put("ID", getNull(m.get("ID")));
-			m_new.put("Child", child);
-			l_last.add(m_new);
-		}
-		return ApiResponseResult.success().data(l_last);//返回数据集
+		return ApiResponseResult.success().data(list.get(2));//返回数据集
 	}
 	private String getNull(Object o){
 		if(o == null){
@@ -133,47 +88,40 @@ public class StartCheckImpl implements StartCheckService {
     }
    
     @Override
-	public ApiResponseResult addStartCheck( //开工授权
+	public ApiResponseResult changeStatus( //开工授权
 			String usercode,
-    		String proc,
-    		String workCenter,
     		String taskNo,
-    		String eq_code,
-    		String staffNoInfo,
-    		String eq_id_Info,String pid
-			) throws Exception {
+    		String itemNo,
+    		String plan_id,
+    		String status
+    		) throws Exception {
 		// TODO Auto-generated method stub
-		List<Object> list = this.addStartCheckPrc(usercode,proc,workCenter,taskNo,eq_code,
-				staffNoInfo,eq_id_Info,pid, "PRC_Produce_Authorization");  
+		List<Object> list = this.changeStatusPrc(usercode,taskNo,itemNo,plan_id,status,
+				"PRC_Produce_WO_ChangeStatus");  
 		if(!list.get(0).toString().equals("0")){
             return ApiResponseResult.failure(list.get(1).toString());
         }
 		return ApiResponseResult.success(list.get(1).toString());
 	}
     //执行开工授权存储过程
-    private List addStartCheckPrc(
+    private List changeStatusPrc(
     		String usercode,
-    		String proc,
-    		String workCenter,
     		String taskNo,
-    		String eq_code,
-    		String staffNoInfo,
-    		String eq_id_Info,String pid,String prc_name)throws Exception{
+    		String itemNo,
+    		String plan_id,
+    		String status,String prc_name)throws Exception{
         List resultList = (List) jdbcTemplate.execute(new CallableStatementCreator() {
             @Override
             public CallableStatement createCallableStatement(Connection con) throws SQLException {
-                String storedProc = "{call "+prc_name+"(?,?,?,?,?,?,?,?,?,?)}";// 调用的sql
+                String storedProc = "{call "+prc_name+"(?,?,?,?,?,?,?)}";// 调用的sql
                 CallableStatement cs = con.prepareCall(storedProc);
                 cs.setString(1, usercode);// 账号
-                cs.setString(2, proc);// 工序
-                cs.setString(3, workCenter);// 工作中心
-                cs.setString(4, taskNo);// 工单
-                cs.setString(5, eq_code);// 设备编号
-                cs.setString(6, staffNoInfo);// 工号信息
-                cs.setString(7, eq_id_Info);// 设备ID
-                cs.setString(8, pid);// 排产计划ID
-                cs.registerOutParameter(9,java.sql.Types.INTEGER);// 返回标识
-                cs.registerOutParameter(10,java.sql.Types.VARCHAR);// 输出参数 
+                cs.setString(2, taskNo);// 工序
+                cs.setString(3, itemNo);// 工作中心
+                cs.setString(4, plan_id);// 工单
+                cs.setString(5, status);// 设备编号
+                cs.registerOutParameter(7,java.sql.Types.INTEGER);// 返回标识
+                cs.registerOutParameter(8,java.sql.Types.VARCHAR);// 输出参数 
                 return cs;
             }
         }, new CallableStatementCallback() {
@@ -181,8 +129,8 @@ public class StartCheckImpl implements StartCheckService {
                 List<Object> result = new ArrayList<>();
 //                List<Map<String, Object>> l = new ArrayList();
                 cs.execute();
-                result.add(cs.getString(9));
-                result.add(cs.getString(10));
+                result.add(cs.getString(7));
+                result.add(cs.getString(8));
                 return result;
             }
         });
