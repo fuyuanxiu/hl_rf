@@ -119,9 +119,9 @@ public class ProduceSuspendImpl implements ProduceSuspendService {
                 cs.setString(2, taskNo);// 工序
                 cs.setString(3, itemNo);// 工作中心
                 cs.setString(4, plan_id);// 工单
-                cs.setString(5, status);// 设备编号
-                cs.registerOutParameter(7,java.sql.Types.INTEGER);// 返回标识
-                cs.registerOutParameter(8,java.sql.Types.VARCHAR);// 输出参数 
+                cs.setString(5, status);//状态
+                cs.registerOutParameter(6,java.sql.Types.INTEGER);// 返回标识
+                cs.registerOutParameter(7,java.sql.Types.VARCHAR);// 输出参数 
                 return cs;
             }
         }, new CallableStatementCallback() {
@@ -129,8 +129,8 @@ public class ProduceSuspendImpl implements ProduceSuspendService {
                 List<Object> result = new ArrayList<>();
 //                List<Map<String, Object>> l = new ArrayList();
                 cs.execute();
+                result.add(cs.getString(6));
                 result.add(cs.getString(7));
-                result.add(cs.getString(8));
                 return result;
             }
         });
