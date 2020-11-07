@@ -62,36 +62,42 @@ public class ProduceReportlmpl implements ProduceReportService {
 				if (l_new.get(j).get("WORL_SINGNUM").toString().equals(l.get(k).get("WORL_SINGNUM").toString())) {
 					Map<String, Object> m = l.get(k);
 					Map<String, Object> m_new = new HashMap<String, Object>();
-					m_new.put("ID", m.get("ID").toString());
-					m_new.put("WORPROC_CODE", m.get("WORPROC_CODE").toString());
+					m_new.put("ID",  getNull(m.get("ID")));
+					m_new.put("WORPROC_CODE",  getNull(m.get("WORPROC_CODE")));
 				//	m_new.put("WORPROC_NAME", m.get("WORPROC_NAME").toString());替换为TECHNICS_NAME
-					m_new.put("TECHNICS_NAME", m.get("TECHNICS_NAME").toString());
-					m_new.put("EQU_CODE", m.get("EQU_CODE").toString());
-					m_new.put("EQU_NAME", m.get("EQU_NAME").toString());
-					m_new.put("STATUS", m.get("STATUS").toString());
+					m_new.put("TECHNICS_NAME", getNull(m.get("TECHNICS_NAME")));
+					m_new.put("EQU_CODE", getNull(m.get("EQU_CODE")));
+					m_new.put("EQU_NAME", getNull(m.get("EQU_NAME")));
+					m_new.put("STATUS", getNull(m.get("STATUS")));
 					child.add(m_new);
 				}
 			}
 			Map<String, Object> m = l_new.get(j);
 			Map<String, Object> m_new = new HashMap<String, Object>();
-			m_new.put("WORL_SINGNUM", m.get("WORL_SINGNUM"));
-			m_new.put("PRO_NAME", m.get("PRO_NAME"));
-			m_new.put("PRO_CODE", m.get("PRO_CODE"));
-			m_new.put("PERSON_NAME", m.get("PERSON_NAME"));
-			m_new.put("PERSON_CODE", m.get("PERSON_CODE"));
-			m_new.put("PROD_DATE_END", m.get("PROD_DATE_END"));
-			m_new.put("PROD_DATE", m.get("PROD_DATE"));
-			m_new.put("OUTPUT_QTY", m.get("OUTPUT_QTY"));
-			m_new.put("BG_QTY", m.get("BG_QTY"));
-			m_new.put("HG_QTY", m.get("HG_QTY"));// 合格数量
-			m_new.put("LASTUPDATE_DATE", m.get("LASTUPDATE_DATE"));// 最后一次报数时间
-			m_new.put("BHG_QTY", m.get("BHG_QTY"));// 不合格数量
+			m_new.put("WORL_SINGNUM", getNull(m.get("WORL_SINGNUM")));
+			m_new.put("PRO_NAME", getNull(m.get("PRO_NAME")));
+			m_new.put("PRO_CODE", getNull(m.get("PRO_CODE")));
+			m_new.put("PERSON_NAME", getNull(m.get("PERSON_NAME")));
+			m_new.put("PERSON_CODE", getNull(m.get("PERSON_CODE")));
+			m_new.put("PROD_DATE_END", getNull(m.get("PROD_DATE_END")));
+			m_new.put("PROD_DATE", getNull(m.get("PROD_DATE")));
+			m_new.put("OUTPUT_QTY",getNull( m.get("OUTPUT_QTY")));
+			m_new.put("BG_QTY", getNull(m.get("BG_QTY")));
+			m_new.put("HG_QTY", getNull(m.get("HG_QTY")));// 合格数量
+			m_new.put("LASTUPDATE_DATE",getNull( m.get("LASTUPDATE_DATE")));// 最后一次报数时间
+			m_new.put("BHG_QTY", getNull(m.get("BHG_QTY")));// 不合格数量
 			m_new.put("Child", child);
 			l_last.add(m_new);
 		}
 		return ApiResponseResult.success().data(l_last);// 返回数据集
 	}
-
+	
+	private String getNull(Object o){
+		if(o == null){
+			return "";
+		}
+		return o.toString();
+	}
 	// 执行存储获取数据
 	private List getProduceListPrc(String usercode, String prc_name) throws Exception {
 		List resultList = (List) jdbcTemplate.execute(new CallableStatementCreator() {
