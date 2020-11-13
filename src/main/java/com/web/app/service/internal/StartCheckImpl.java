@@ -66,6 +66,7 @@ public class StartCheckImpl implements StartCheckService {
 					m_new.put("EQU_CODE", getNull(m.get("EQU_CODE")));
 					m_new.put("EQU_NAME", getNull(m.get("EQU_NAME")));
 					m_new.put("TECHNICS_NAME", getNull(m.get("TECHNICS_NAME")));
+					m_new.put("ID", getNull(m.get("ID")));
 					m_new.put("STATUS", getNull(m.get("STATUS")));
 					child.add(m_new);
 				}
@@ -79,7 +80,7 @@ public class StartCheckImpl implements StartCheckService {
 			m_new.put("PROD_DATE", getNull(m.get("PROD_DATE")));
 			m_new.put("WORL_QTY", getNull(m.get("WORL_QTY")));
 			m_new.put("COMPLETE_QTY", getNull(m.get("COMPLETE_QTY")));
-			m_new.put("ID", getNull(m.get("ID")));
+			//m_new.put("ID", getNull(m.get("ID")));
 			m_new.put("Child", child);
 			l_last.add(m_new);
 		}
@@ -126,7 +127,6 @@ public class StartCheckImpl implements StartCheckService {
                 System.out.println(l);
                 return result;
             }
-
         });
 
         return resultList;
