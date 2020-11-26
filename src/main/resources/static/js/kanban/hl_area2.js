@@ -1,43 +1,25 @@
-
 /**
  * 区域看板
  */
-var time1=0,time2=0;
+var pageCurr;
 $(function() {
 	if(KanbanList.CN != null || KanbanList.CN != 'null'){
 		getProWarn(KanbanList.CN);
 	}
 	
-	//getChart1("div_li_fa");
-	doFa();
-	//getChart2("div_li_huan");
-	doHuan();
+	getChart1("chart1");
+	getChart2("chart2");
 	getChart3(KanbanList.CE);//测
 	//getKanBanList(permList,woList[0].TASK_NO,woList[0].PRO_CODE);
-	
-	doGLZ();//管理者照片
 	
 	doYCBJ();//异常报警
 	
 	doTask();//在制工单
 	doUnTask();//生产任务信息
 	
-	doRen();//人
 	doJi();//机
 	doLiao();//料
 });
-function doFa(){
-	var obj=KanbanList.FA;
-	if(obj){
-		$("#div_li_fa_img").attr('src',"../downImages/"+obj+".png");
-	}
-}
-function doHuan(){
-	var obj=KanbanList.HUAN;
-	if(obj){
-		$("#div_li_huan_img").attr('src',"../downImages/"+obj+".png");
-	}
-}
 /*产能预警仪表盘*/
 function getProWarn(cn) {
 	option1 = {
@@ -48,11 +30,10 @@ function getProWarn(cn) {
 		            min : 0,
 					max : 100,
 					
-					radius: '70%',
+					radius: '80%',
 					axisLine : { // 坐标轴线
 						lineStyle : { // 属性lineStyle控制线条样式
-							width : 10,
-							color: [[0.25, 'red'], [0.5, '#FFFF00'], [0.75, '#008000'], [1, '#0000FF']]
+							width : 10
 						}
 					},
 					 axisLabel: {            // 刻度标签。
@@ -94,7 +75,7 @@ function getProWarn(cn) {
 						}
 					},
 		            detail: {formatter: '{value}%'},
-		            data: [{value: cn}]
+		            data: [{value: 0}]
 		        }
 		    ]
 		};
@@ -266,9 +247,6 @@ function getChart2(chart) {
 //测
 function getChart3(list) {
 	var xa = []; var da = [];var line=[];
-	if(!list.xAxis){
-		return;
-	}
 	//定义数组
 	for(var i=0;i<list.xAxis.length;i++){
 		xa[i] = list.xAxis[i]
@@ -281,26 +259,27 @@ function getChart3(list) {
 	}
 	option = {
 		    title : {
-					text : '不良柏拉图',
-					textStyle:{
-				        color:'#fff'
-				    }
+					text : '不良柏拉图'
 				},
 		    tooltip: {
 		        trigger: 'axis',
 		        axisPointer: {
 		            type: 'cross',
 		            crossStyle: {
-		                color: '#fff'
+		                color: '#999'
 		            }
 		        }
 		    },
+		    toolbox: {
+		        feature: {
+		            dataView: {show: true, readOnly: false},
+		            magicType: {show: true, type: ['line', 'bar']},
+		            restore: {show: true},
+		            saveAsImage: {show: true}
+		        }
+		    },
 		    legend: {
-		        data: [],
-		        textStyle:{
-                    //fontSize: 18,//字体大小
-                    color: '#ffffff'//字体颜色
-                },
+		        data: []
 		    },
 		    xAxis: [
 		        {
@@ -309,13 +288,7 @@ function getChart3(list) {
 		            data:xa,
 		            axisPointer: {
 		                type: 'shadow'
-		            },
-		            axisLabel: {
-                        show: true,
-                        textStyle: {
-                            color: '#ffffff'
-                        }
-                    }
+		            }
 		        }
 		    ],
 		    yAxis: [
@@ -324,34 +297,20 @@ function getChart3(list) {
 		            name: '生产数量',
 		            /*min: 0,
 		            max: 250,*/
-		            //interval: 50,
+		            interval: 50,
 		            axisLabel: {
-		                formatter: '{value}',
-		                textStyle: {
-                            color: '#ffffff'
-                        }
-		            }, splitLine:{
-                        show:false
-                    },nameTextStyle:{
-                        color:"#fff"
-                    }
+		                formatter: '{value}'
+		            }
 		        },
 		        {
 		            type: 'value',
 		            name: '合格率',
 		            min: 0,
 		            max: 100,
-		            interval: 20,
+		            interval: 5,
 		            axisLabel: {
-		                formatter: '{value}%',
-		                textStyle: {
-                            color: '#ffffff'
-                        }
-		            }, splitLine:{
-                        show:false
-                    },nameTextStyle:{
-                        color:"#fff"
-                    }
+		                formatter: '{value}%'
+		            }
 		        }
 		    ],
 		    series: [
@@ -365,13 +324,13 @@ function getChart3(list) {
 		            name: '合格率',
 		            type: 'line',
 		            yAxisIndex: 1,
-		            data: line,
-		            lineStyle:{ color:'#FFEA51' }
+		            data: line
 		            //data: ["72.83", "85.11", "90.88", "95.88", "99.25", "99.7", "99.95", "100"]
 		        }
 		    ]
 		};
-	var chart = echarts.init(document.getElementById("div_li_ce"));
+
+	var chart = echarts.init(document.getElementById("chart3"));
 	chart.setOption(option);
 }
 
@@ -406,18 +365,16 @@ function doTask(){
 		$("#task_no").html(obj[0].TASK_NO);
 		$("#xh").html(obj[0].BOARD_TYPE);
 		$("#jzsj").html(obj[0].DATE_END);
-		$("#cpmc").html(obj[0].BOARD_NAME);//产品名称
+		//$("#wlsm").html(obj[0].TASK_NO);????存储过程未返回
 		$("#rws").html(obj[0].PLAN_QTY);
 		
 		$("#tlsl").html(obj[0].OUTTL_QTY);
 		$("#ywcsl").html(obj[0].FISH_QTY);
 		$("#zhsl").html(obj[0].PRODU_QTY);
-		$("#tuilsl").html(obj[0].INTL_QTY);//退料数量
-		$("#bhgs").html(obj[0].NG_QTY);//不合格数量
-		$("#rks").html(obj[0].INDEPOT_QTY);//入库数量
-		
-		$("#zt").html(obj[0].STATUS);//状态
-
+		//$("#tksl").html(obj[0].PLAN_QTY);????存储过程未返回
+		//$("#bfsl").html(obj[0].PLAN_QTY);????存储过程未返回
+		//$("#bfsl").html(obj[0].PLAN_QTY);????存储过程未返回
+		//$("#srksl").html(obj[0].PLAN_QTY);????存储过程未返回
 	}
 } 
 
@@ -430,21 +387,19 @@ function doYCBJ(){
 		if(obj[i].DATATYPE == 'Q'){
 			var newRow = '';
 			if(obj[i].COLOR == 'red'){
-				newRow=""+obj[i].PROBLEM_TIME+"";	
-				$("#yc_zl").css("color",obj[i].COLOR); 
+				newRow="<li><span class='layui-badge'>"+obj[i].PROBLEM_TIME+"</span></li>";	
 			}else{
-				newRow=""+obj[i].PROBLEM_TIME+"";
+				newRow="<li><span class='layui-badge layui-bg-orange'>"+obj[i].PROBLEM_TIME+"</span></li>";
 			}
-	        $("#yc_zl").html(newRow);
+	        $("#yc_zl").append(newRow);
 		}else{
 			var newRow = '';
 			if(obj[i].COLOR == 'red'){
-				newRow=""+obj[i].PROBLEM_TIME+"";	
-				$("#yc_sb").css("color",obj[i].COLOR);
+				newRow="<li><span class='layui-badge'>"+obj[i].PROBLEM_TIME+"</span></li>";	
 			}else{
-				newRow=""+obj[i].PROBLEM_TIME+"";
+				newRow="<li><span class='layui-badge layui-bg-orange'>"+obj[i].PROBLEM_TIME+"</span></li>";
 			}
-	        $("#yc_sb").html(newRow);
+	        $("#yc_sb").append(newRow);
 		}
 		
     }	
@@ -453,84 +408,36 @@ function doYCBJ(){
 function doUnTask(){
 	var obj=KanbanList.UnTask;	
 	$("#unTask tr").remove();
-	for (var i = 0; i < obj.length; i++) {	
-		if(i>5){
-			return;
-		}
-		var newRow="<tr >"+
-				   "<td>"+obj[i].TASK_NO+"</td>"+
+	for (var i = 0; i < obj.length; i++) {	 
+		var newRow="<tr ><td>"+obj[i].TASK_NO+"</td>"+
 				   "<td>"+obj[i].PRO_CODE+"</td>"+
 				   "<td>"+obj[i].PLAN_QTY+"</td>"+
 		           "</tr>";	
 	   	$("#unTask").append(newRow);
-    }		
-}
-//人
-function doRen(){
-	var obj=KanbanList.REN;	var kaiji=0;var xianzhi=0;var weixiu=0;
-	$("#ren tr").remove();
-	$("#ren_head td").remove();
-	var newRow_img,newRow_name,newRow_proc,head_td;
-	for (var i = 0; i < obj.length; i++) {	
-		if(i>7){
-			continue;
-		}
-		newRow_img +="<td><img  src='../downImages/"+obj[i].FCODE+".png' class='img-glz' alt=''></td>";
-		
-		newRow_name +="<td>"+obj[i].FNAME+"</td>";
-		newRow_proc +="<td>"+obj[i].WORPROC_NAME+"</td>";
-		
-		head_td += "<td><span class='speed-line'><span class='speed-num' style='background-color: "+obj[i].IS_COLOR+"; width: 80%;'></span><span class='numText'>"+obj[i].PERCENTAGE+"%</span></span></td>"
-    }
-	$("#ren_head").append(head_td);
-
-	$("#ren").append("<tr >"+newRow_img+"</tr>");
-	$("#ren").append("<tr >"+newRow_name+"</tr>");
-	$("#ren").append("<tr >"+newRow_proc+"</tr>");
+    }	
 }
 //机
 function doJi(){
 	var obj=KanbanList.JI;	var kaiji=0;var xianzhi=0;var weixiu=0;
-	$("#ji tr").remove();
-	var newRow_icon,newRow_name,newRow_code;
+	$("#ji li").remove();
 	for (var i = 0; i < obj.length; i++) {	
-		var color = '';
-		if(i>9){
-			continue;
-		}
+		var newRow= '';
 		if(obj[i].EQ_STATUS == '开机'){
-			color="Green";
+			kaiji += 1;
+			newRow="<li><div class='inner'><div class='disc' style='background:linear-gradient(DarkSeaGreen,whitesmoke)'>"+obj[i].EQ_NAME+"</div></div></li>";
 		}else if(obj[i].EQ_STATUS == '闲置'){
-			color="Yellow";
-		}else if(obj[i].EQ_STATUS == '维修'){
-			color="Red";
-		}
-		var icon = getIcon(obj[i].EQ_NAME);
-		newRow_icon +="<td><i class='ji-icon  iconfont "+icon+"' style='color:"+color+";font-size:56px;' ></i></td>";
-		
-		newRow_name +="<td>"+obj[i].EQ_NAME+"</td>";
-		newRow_code +="<td>"+obj[i].EQ_CODE+"</td>";
-    }
-
-	$("#ji").append("<tr >"+newRow_icon+"</tr>");
-	$("#ji").append("<tr >"+newRow_name+"</tr>");
-	$("#ji").append("<tr >"+newRow_code+"</tr>");
-}
-//管理者照片
-function doGLZ(){
-	var obj = KanbanList.GLZ;
-	for (var i = 0; i < obj.length; i++) {	
-		if(obj[i].GENRE == '0'){
-			$("#jl_name").html(obj[i].FNAME);//车间经理
-			$("#jl_img").attr('src',"../downImages/"+obj[i].FCODE+".png");
-		}else if(obj[i].GENRE == '1'){
-			$("#zz_name").html(obj[i].FNAME);//组长
-			$("#zz_img").attr('src',"../downImages/"+obj[i].FCODE+".png");
-		}else if(obj[i].GENRE == '2'){
-			$("#zjy_name").html(obj[i].FNAME);//质检员
-			$("#zjy_img").attr('src',"../downImages/"+obj[i].FCODE+".png");
-		}
-	}
+			xianzhi += 1;
+			newRow="<li><div class='inner'><div class='disc' style='background:linear-gradient(Yellow,whitesmoke)'>"+obj[i].EQ_NAME+"</div></div></li>";
+		}else{
+			weixiu += 1;
+			newRow="<li><div class='inner'><div class='disc' style='background:linear-gradient(PeachPuff,whitesmoke)'>"+obj[i].EQ_NAME+"</div></div></li>";
+		}	
+	   	$("#ji").append(newRow);
+	   	
+		$("#kaiji").html(kaiji);
+		$("#xianzhi").html(xianzhi);
+		$("#weixiu").html(weixiu);
+    }	
 }
 //料
 function doLiao(){
@@ -545,90 +452,4 @@ function doLiao(){
 		           "</tr>";	
 	   	$("#liao").append(newRow);
     }	
-}
-//切换-法环测
-$(".ul1 li").click(function() {
-    //$(this).siblings('li').removeClass('active');  // 删除其他兄弟元素的样式
-    //$(this).addClass('active');                    // 添加当前元素的样式
-    chang_div1($(this).attr('id'))
-});
-var li_1=['li_fa','li_huan','li_ce'];
-var div_1=['div_li_fa','div_li_huan','div_li_ce'];
-//每隔1000ms执行一次
-var test1 = setInterval(function(){
-	if(time1>2){
-		time1 = 0;
-	}
-	chang_div1(li_1[time1]);
-	time1++;
-},1000*20);
-//清除Interval的定时器,传入变量名(创建Interval定时器时定义的变量名)
-//clearInterval(test1);
-function chang_div1(li_name){
-	for (var i = 0; i < li_1.length; i++) {	
-		if(li_1[i] == li_name){
-			$("#"+li_1[i]).attr("class","active");
-			
-			$("#div_"+li_1[i]).attr("class","");
-		}else{
-			$("#"+li_1[i]).attr("class","");
-			
-			$("#div_"+li_1[i]).attr("class","div_none");
-		}
-	}
-}
-
-//切换-人机料
-$(".ul2 li").click(function() {
-    //$(this).siblings('li').removeClass('active');  // 删除其他兄弟元素的样式
-    //$(this).addClass('active');                    // 添加当前元素的样式
-    chang_div2($(this).attr('id'))
-});
-var li_2=['li_ren','li_ji','li_liao'];
-var div_2=['div_li_ren','div_li_ji','div_li_liao'];
-var test2 = setInterval(function(){
-	if(time2>2){
-		time2 = 0;
-	}
-	chang_div2(li_2[time2]);
-	time2++;
-},1000*20);
-function chang_div2(li_name){
-	for (var i = 0; i < li_2.length; i++) {	 
-		if(li_2[i] == li_name){
-			$("#"+li_2[i]).attr("class","active");
-			
-			$("#div_"+li_2[i]).attr("class","");
-		}else{
-			$("#"+li_2[i]).attr("class","");
-			
-			$("#div_"+li_2[i]).attr("class","div_none");
-		}
-	}
-}
-
-function getIcon(name){
-	if(name == '攻丝机'){
-		return 'icon-xianweijing';
-	}else if(name == '金属圆锯机'){
-		return 'icon-yuanju';
-	}else if(name == '切管机'){
-		return 'icon-qieguan';
-	}else if(name == '砂带机'){
-		return 'icon-shiyongdamoguodaotideshadaidamojueyuana';
-	}else if(name == '台钻'){
-		return 'icon-jixiediandonggongjumechanical-xiaotaizuan';
-	}else if(name == '冲床'){
-		return 'icon-chongchuang';
-	}else if(name == '油压机'){
-		return 'icon-jiyouyali';
-	}else if(name == '机器人焊接设备'){
-		return 'icon-jiqiren-copy-copy-copy';
-	}else if(name == '氩弧焊机'){
-		return 'icon-huhanicon';
-	}else if(name == '烟尘净化器'){
-		return 'icon-icon-test-copy';
-	}else if(name == '工作台'){
-		return 'icon-weibiaoti-';
-	}
 }

@@ -43,7 +43,13 @@ public class kanbanController extends WebController {
 	public ModelAndView toIndex() {
 		String method = "/kanban/toIndex";String methodName ="看板demo";
 		ModelAndView mav=new ModelAndView();
-		//mav.addObject("pname", p);
+		try {
+			mav.addObject("area", kanbanService.getAreaList());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			mav.addObject("area", null);
+		}
 		mav.setViewName("/kanban/index");//返回路径
 		return mav;
 	}
@@ -87,6 +93,30 @@ public class kanbanController extends WebController {
 		}
 		
 		mav.setViewName("/kanban/hl_area");//返回路径
+		return mav;
+	}
+	
+	@RequestMapping(value = "/toHlArea1", method = RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView toHlArea1(String line)  {
+		String method = "/kanban/toHlArea";String methodName ="恒联区域看板";
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("line", line);
+		try{
+			Object object = kanbanService.getWoList(line).getData();
+			mav.addObject("WoList", object);
+			if(object != null){
+				List<Map<String, Object>> lm = (List<Map<String, Object>>) object;
+				System.out.println(lm.get(0).get("TASK_NO"));
+				mav.addObject("KanBanList", kanbanService.getKanbanList(line, lm.get(0).get("TASK_NO").toString(), lm.get(0).get("PRO_CODE").toString()).getData());
+			}
+		}catch(Exception e){
+			System.out.println(e.toString());
+			mav.addObject("WoList", null);
+			mav.addObject("KanBanList", null);
+		}
+		
+		mav.setViewName("/kanban/hl_area2");//返回路径
 		return mav;
 	}
 	

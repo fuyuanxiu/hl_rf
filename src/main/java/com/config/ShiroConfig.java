@@ -91,6 +91,7 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/js/*/*/*", "anon");
 		filterChainDefinitionMap.put("/img/*", "anon");
 		filterChainDefinitionMap.put("/images/*/**", "anon");
+		filterChainDefinitionMap.put("/downImages/*", "anon");
 		filterChainDefinitionMap.put("/layui/*", "anon");
 		filterChainDefinitionMap.put("/layui/*/**", "anon");
 		filterChainDefinitionMap.put("/layuiadmin/*", "anon");
@@ -104,6 +105,8 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/layout", "anon");
 		
 		filterChainDefinitionMap.put("/kanban/*", "anon");//看板demo
+		filterChainDefinitionMap.put("/kanban/*/*", "anon");
+		filterChainDefinitionMap.put("/kanban/*/*/*", "anon");
 
 		filterChainDefinitionMap.put("/user/sendMsg", "anon");
 		filterChainDefinitionMap.put("/user/login", "anon");

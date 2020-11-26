@@ -1,5 +1,10 @@
 package com.web.kanban.service.internal;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -19,6 +24,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ClassUtils;
 
 import com.app.base.data.ApiResponseResult;
 import com.web.kanban.service.KanbanService;
@@ -26,7 +32,7 @@ import com.web.report.service.internal.ImpUtils;
 
 @Service(value = "KanbanService")
 @Transactional(propagation = Propagation.REQUIRED)
-public class KanbanImpl  implements KanbanService {
+public class KanbanImpl extends ReportPrcUtils implements KanbanService {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -154,16 +160,16 @@ public class KanbanImpl  implements KanbanService {
 				return ApiResponseResult.failure(list.get(1).toString());
 			}
 			Map map = new HashMap();
-			map.put("CN", list.get(2));//
-			map.put("XC", list.get(3));
-			map.put("Task", list.get(4));
-			map.put("UnTask", list.get(5));
-			map.put("GLZ", list.get(6));
-			map.put("REN", list.get(7));
-			map.put("JI", list.get(8));
-			map.put("LIAO", list.get(9));
-			map.put("FA", list.get(10));
-			map.put("HUAN", list.get(11));
+			map.put("CN", list.get(2));//产能预警
+			map.put("XC", list.get(3));//异常警报（质量&设备）
+			map.put("Task", list.get(4));//当前工单信息
+			map.put("UnTask", list.get(5));//待下发工单
+			map.put("GLZ", list.get(6));//管理者信息（车间经理，班组长，检验员）
+			map.put("REN", list.get(7));//【人】（当前区域工单生产人员）
+			map.put("JI", list.get(8));//【机】（当前区域工单生产设备）
+			map.put("LIAO", list.get(9));//【料】（当前区域工单生产物料）
+			map.put("FA", list.get(10));//【法】（当前区域工单产品SOP 图纸）
+			map.put("HUAN", list.get(11));//【环】（当前区域分部示意图）
 			try{
 				 Map m12 = new HashMap();
 					if(list.get(12) != null){
@@ -185,13 +191,13 @@ public class KanbanImpl  implements KanbanService {
 							m12.put("data_line", data_line);
 						} 
 					}
-					map.put("CE", m12);
+					map.put("CE", m12);//【测】（当前区域工单产品不良柏拉图）
 			}catch(Exception e){
 				 Map m12 = new HashMap();
 				 m12.put("xAxis", null);
 					m12.put("data", null);
 					m12.put("data_line", null);
-				map.put("CE", m12);
+				map.put("CE", m12);//【测】（当前区域工单产品不良柏拉图）
 			}
 			//测
 		   
@@ -224,7 +230,7 @@ public class KanbanImpl  implements KanbanService {
 			}, new CallableStatementCallback() {
 				public Object doInCallableStatement(CallableStatement cs) throws SQLException, DataAccessException {
 					List<Object> result = new ArrayList<>();
-					List<Map<String, Object>> l = new ArrayList();
+					
 					cs.execute();
 					result.add(cs.getInt(4));
 					result.add(cs.getString(5));
@@ -261,13 +267,40 @@ public class KanbanImpl  implements KanbanService {
 							result.add(null);
 						}
 						try {
-							result.add(fitMap(rs10));
+							List<Map<String, Object>> l = new ArrayList();
+							//result.add(fitMap(rs10));
+							while(rs10.next()){
+		                        Map m = new HashMap();
+		                        m.put("FCODE", getEmpty(rs10.getString("FCODE")));
+		                        m.put("FNAME", getEmpty(rs10.getString("FNAME")));
+		                        m.put("GENRE", getEmpty(rs10.getString("GENRE")));
+		                        l.add(m);
+		                        getUserImg(rs10.getString("FCODE"));
+		                        //saveImg(inputStream,getEmpty(rs10.getString("FCODE")));
+		                        /*InputStream inputStream = rs10.getBinaryStream("EXP_FIELD3");
+		                        saveImg(inputStream,getEmpty(rs10.getString("FCODE")));*/
+		                        
+		                    }
+		                    result.add(l);
 						} catch (Exception e) {
 							System.out.println(e.toString());
 							result.add(null);
 						}
 						try {
-							result.add(fitMap(rs11));
+							List<Map<String, Object>> l = new ArrayList();
+							//result.add(fitMap(rs10));
+							while(rs11.next()){
+		                        Map m = new HashMap();
+		                        m.put("FCODE", getEmpty(rs11.getString("FCODE")));
+		                        m.put("FNAME", getEmpty(rs11.getString("FNAME")));
+		                        m.put("WORPROC_NAME", getEmpty(rs11.getString("WORPROC_NAME")));
+		                        m.put("BG_QTY", getEmpty(rs11.getString("BG_QTY")));
+		                        m.put("PERCENTAGE", getEmpty(rs11.getString("PERCENTAGE")));
+		                        m.put("IS_COLOR", getEmpty(rs11.getString("IS_COLOR")));
+		                        l.add(m);
+		                        getUserImg(rs11.getString("FCODE"));
+		                    }
+		                    result.add(l);
 						} catch (Exception e) {
 							System.out.println(e.toString());
 							result.add(null);
@@ -285,13 +318,17 @@ public class KanbanImpl  implements KanbanService {
 							result.add(null);
 						}
 						try {
-							result.add(fitMap(rs14));
+							//result.add(fitMap(rs14));
+							getFaImg(itemNo);
+							result.add(itemNo);
 						} catch (Exception e) {
 							System.out.println(e.toString());
 							result.add(null);
 						}
 						try {
-							result.add(fitMap(rs15));
+							//result.add(fitMap(rs15));
+							getHuanImg(area);
+							result.add(area);
 						} catch (Exception e) {
 							System.out.println(e.toString());
 							result.add(null);
@@ -304,7 +341,6 @@ public class KanbanImpl  implements KanbanService {
 						}
 						
 					}
-					System.out.println(l);
 					return result;
 				}
 
@@ -359,4 +395,23 @@ public class KanbanImpl  implements KanbanService {
 			});
 			return resultList;
 		}
+		
+		
+		//值为"null"或者null转换成""
+	    private String getEmpty(String str){
+	        if(str == null){
+	            return "";
+	        }
+	        if(StringUtils.equals("null", str)){
+	            return "";
+	        }
+
+	        String[] strs = str.split("\\.");
+	        if(strs.length > 0){
+	        	if(strs[0].equals("") || strs[0]==null){
+	        		return "0"+str;
+	        	}
+	        }
+	        return str;
+	    }
 }

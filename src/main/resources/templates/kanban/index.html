@@ -1,73 +1,121 @@
-<!DOCTYPE html>
-<html>
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>恒联看板-区域</title>
-<meta name="renderer" content="webkit">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>恒联看板-区域</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="../kanban/css/base.css">
+    <link rel="stylesheet" href="../kanban/css/index.css">
+    <link href="../css/icon/iconfont.css" th:href="@{../css/icon/iconfont.css}" rel="stylesheet" type="text/css" />
 
-
-<link rel="stylesheet" href="../css/jquery.mobile-1.4.5.min.css" /> 
-        <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script> 
-        <script type="text/javascript" src="../js/jquery.mobile-1.4.5.min.js"></script>
-
-<style>
-
-</style>
+    <style>
+        .t_title{
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            font-size: 2.5em;
+            line-height: 80px;
+            color: #fff;
+        }
+        #chart_map{
+            cursor: pointer;
+        }
+        .t_show{
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-radius: 2px;
+            background: #2C58A6;
+            padding: 2px 5px;
+            color: #fff;
+            cursor: pointer;
+        }
+        .ul_area a{
+	        color:#fff;
+	        font-size:18px;
+        }
+    </style>
 </head>
 <body>
-	<div class="div-boder">
-		<!--<img src="img/title_2.png" style="height: 30px;margin: 1px 1px 1px 500px;">-->
-		<h2 style="height: 30px; margin: 1px" align="center">数字化工厂信息中心</h2>
-		<span
-			style="color: #FFFFFF; float: right; font-size: 16px; margin: 10px 15px 0 0; display: inline;">2020-08-09
-			09:19</span>
-	</div>
-	<div data-role="page" id="firstPage">
-			<div data-role="header" data-theme="b">
-				<h1>看板目录</h1>
-			</div>
-			<div data-role="controlgroup"  >
-				<div class="ui-controlgroup-controls " id="list">
-					<!-- <a href="/report/kanban01.html?line=XK019" data-role="button" target="_blank" class="ui-link ui-btn ui-shadow ui-corner-all ui-first-child ui-last-child" role="button">看板1</a> -->
-				</div>
-			</div>
-			<div data-role="footer"  data-theme="b" data-position="fixed">
-				<h4>&copy;朋乐信息</h4>
-			</div>
-		</div>
 
-	<script type="text/javascript">
-	 $.ajax({
-         url:  '/kanban/getAreaList',
-         cache: false,
-         async: true ,
-         data: {},
-         type: "POST",
-         contentType:  'application/json; charset=UTF-8',
-         dataType: "json",
-         beforeSend: function(request) {
+<!--header-->
+<div class="header">
+    <div class="bg_header">
+        <div class="header_nav fl t_title">
+            数字化工厂信息中心
+        </div> 
+    </div>
+</div>
 
-         },
-         success: function (res) {
-             console.log(res)
-             if(res.result){
-            	 res.data.forEach(function(element) {
-            		  console.log(element);
-            		  var html = '<a href="/kanban/toHlArea?line='+element.FCODE+'"  data-role="button" target="_blank" class="ui-link ui-btn ui-shadow ui-corner-all ui-first-child ui-last-child" role="button" >'+element.FNAME+'</a>'
-            		  $("#list").append(html)	
-            	 }); 
-            	 //$("#list").load( $("#list").html()); 
-             }else{
-            	 alert(res.msg)
-             }
-         },
-         error:function (XMLHttpRequest, textStatus, errorThrown) {
-        	 alert("服务器好像除了点问题！请稍后试试");
-         }
-     });
-	</script>
+<!--main-->
+<div class="data_content">
+
+    <div class="data_main">
+        <div  style="width:100%;margin:10px;color:#fff" id="div_li_ce">
+                <ul class="ul_area" id="list">
+
+		        </ul>
+                </div>
+        <div class="main_center fl" style="width:100%;">
+          
+
+        </div>
+
+    </div>
+</div>
 </body>
+<script src="../kanban/scripts/jquery-2.2.1.min.js"></script>
+<script src="../kanban/scripts/bootstrap.min.js"></script>
+<script src="../kanban/scripts/common.js"></script>
+<script src="../kanban/scripts/echarts.min.js"></script>
+<script src="../kanban/scripts/datatool.js"></script>
+<!-- <script src="../kanban/scripts/index.js"></script> -->
+<!-- <script src="../kanban/scripts/guangxi.js"></script> -->
+<!-- <script src="/js/kanban/hl_area.js" th:src="@{/js/kanban/hl_area.js}"></script> -->
+<script th:inline="javascript">
+var context = [[@{/}]];
+
+
+var areaList=[[${area}]];
+if(areaList.result){
+	
+	areaList.data.forEach(function(element) {
+  		  //var html = '<a href="/kanban/toHlArea?line='+element.FCODE+'"  data-role="button" target="_blank" class="ui-link ui-btn ui-shadow ui-corner-all ui-first-child ui-last-child" role="button" >'+element.FNAME+'</a>'
+  		  var html = '<li class="bg" style="height:30px;line-height:29px;text-align:center;" id="'+element.FCODE+'"><a href="'+context+'kanban/toHlArea?line='+element.FCODE+'"   target="_blank" >'+element.FNAME+'</a></li>';
+  				  $("#list").append(html)	
+  	 });
+}
+/* $.ajax({
+    url:  '/kanban/getAreaList',
+    cache: false,
+    async: true ,
+    data: {},
+    type: "POST",
+    contentType:  'application/json; charset=UTF-8',
+    dataType: "json",
+    beforeSend: function(request) {
+
+    },
+    success: function (res) {
+        if(res.result){
+        	
+       	 res.data.forEach(function(element) {
+       		  //var html = '<a href="/kanban/toHlArea?line='+element.FCODE+'"  data-role="button" target="_blank" class="ui-link ui-btn ui-shadow ui-corner-all ui-first-child ui-last-child" role="button" >'+element.FNAME+'</a>'
+       		  var html = '<li class="bg" style="height:30px;line-height:29px;text-align:center;" id="'+element.FCODE+'"><a href="/kanban/toHlArea?line='+element.FCODE+'"   target="_blank" >'+element.FNAME+'</a></li>';
+       				  $("#list").append(html)	
+       	 }); 
+       	 //$("#list").load( $("#list").html()); 
+        }else{
+       	 alert(res.msg)
+        }
+    },
+    error:function (XMLHttpRequest, textStatus, errorThrown) {
+   	 alert("服务器好像除了点问题！请稍后试试");
+    }
+}); */
+
+
+</script>
 </html>

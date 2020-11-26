@@ -1,458 +1,390 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>恒联区域看板</title>
-<meta name="renderer" content="webkit">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-<link rel="stylesheet" href="../layuiadmin/layui/css/layui.css"
-	media="all">
-<script src="../layui/layui.js"></script>
-<script src="../js/login/jquery.min.js"></script>
-<script src="../layuiadmin/lib/extend/echarts.js"></script>
-<style>
-.layui-table th{
-text-align:center;
-}
-.layui-badge-dot{
-width:25px;
-height:25px;
-font-size:22px;
-}
-.layui-form-label{
-padding:0px;
-font-weight:none;
-line-height:none;
-text-align:left;
-width:60px;
-color:#666666;
-}
-.layui-form-item{
-margin-bottom:5px;
-}
-.layui-form-item .layui-input-inline{
-width:80px;
-margin-right:0px;
-}
-.layui-form-item .layui-inline{
-margin-right:0px;
-}
-.task_ul ul {
-    list-style: none;
-    margin-left: 10px;
-}
- 
-.task_ul li {
-    display: inline;
-    line-height: 40px;
-    float:left
-}
-.li-inline {
-	float: left;
-	width: 45%;
-}
-.inner{
-  position:relative;
-  width:150px;
-  height:150px;
-  border-radius:75px;
-  background: linear-gradient(to top, silver, whitesmoke);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-.inner .disc{
-  position:absolute;
-  width:80%;
-  height:80%;
-  border-radius:50%;
-   background:linear-gradient(silver,whitesmoke); 
-  /* background:linear-gradient(DarkSeaGreen,whitesmoke); */
-  line-height:120px;
-}
-.site-text{
-position:relative;
-}
-html {
-	height: 100%;
-	margin: 0;
-}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    
+    <title>数字化工厂信息中心</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="../kanban/css/base.css">
+    <link rel="stylesheet" href="../kanban/css/index.css">
+    <link href="../css/icon/iconfont.css" th:href="@{../css/icon/iconfont.css}" rel="stylesheet" type="text/css" />
 
-body {
-	color: #000;
-	margin-top: 5px;
-	/* overflow: hidden; */
-	/*background: #000033;*/
-	height: 100%;
-	margin: 0;
-}
-
-.div-boder {
-	border: 1px solid #000000;
-	font-size:20px;
-	/*background: #000033;*/
-}
-
-.div_chart {
-	width: 100%;
-	height: 60px;
-	/*border: 1px solid red;*/
-	margin-top: 2px;
-	text-align: center;
-}
-.div_gauge {
-	
-	height: 150px;
-	/*border: 1px solid red;*/
-	margin-top: 2px;
-	text-align: center;
-}
-
-
-button {
-	outline: none;
-	border: 1px solid gray;
-	border-radius: 5px;
-}
-
-button.active {
-	background-color: #0099FF;
-}
-/*选项卡(底部部分)*/
-.right_vice_container{
-    text-align: center;
-	font-size: 20px;
-}
-
-.right_vice_container ul {
-    list-style: none;
-    margin-left: 10px;
-}
- 
-.right_vice_container li {
-    display: inline;
-    line-height: 40px;
-    float:left
-}
-
-.right_main_container_div_active {
-	width: 800px;
-	height: 400px;
-	/*border: 1px solid red;*/
-	margin-top: 2px;
-	text-align: center;
-	font-size: 30px;
-}
-
-.div_none {
-	display: none;
-}
-</style>
+    <style>
+        .t_title{
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            font-size: 2.5em;
+            line-height: 80px;
+            color: #fff;
+        }
+        #chart_map{
+            cursor: pointer;
+        }
+        .t_show{
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-radius: 2px;
+            background: #2C58A6;
+            padding: 2px 5px;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
 </head>
-<body>
-	<div class="layui-fluid">
-		<div class="layui-row layui-col-space5">
-			<div class="layui-col-md12 div-boder">
-				<h2 style="height: 30px; margin: 1px" align="center">数字化工厂信息中心</h2>
-			</div>
-		</div>
-		<div class="layui-row layui-col-space5">
-			<div class="layui-col-md3 div-boder">
-				<div class="layui-row" align="center">
-					<div class="layui-col-md12 div-boder">
-						<div class="layui-row layui-col-space2">
-							<div class="layui-col-md1 div-boder">
-								产能预警
-							</div>
-							<div class="layui-col-md11" >
-								 <div class="div_gauge" id="pro_warn"></div>
-							</div>
-						</div>
-					</div>
-					<div class="layui-col-md12 div-boder">
-						<div class="layui-row layui-col-space2">
-							<div class="layui-col-md1 div-boder">
-								异常报警
-							</div>
-							<div class="layui-col-md11">
-								<div class="layui-col-md6">
-									<div class="layui-col-md12">
-									  <fieldset style="margin-bottom:5px;" class="layui-elem-field layui-field-title">
-								        <legend style="font-size:16px;"><a >质量</a></legend>
-								      </fieldset>
-								      <ul id="yc_zl">
-								        <li><span class="layui-badge">31645.63分钟</span></li>
-								      </ul>
-									</div>
-								</div>
-								<div class="layui-col-md6">
-									<div class="layui-col-md12 ">
-									   <fieldset style="margin-bottom:5px;" class="layui-elem-field layui-field-title">
-								        <legend style="font-size:16px;"><a >设备</a></legend>
-								      </fieldset>
-								      <ul id="yc_sb">
-								        <li><span class="layui-badge">31645.63分钟</span></li>
-								      </ul>
-									</div>
-								</div>
-							</div>
-							
-						</div>
-					</div>
-					<div class="layui-col-md12 div-boder">
-						<div class="layui-row layui-col-space2">
-							<div class="layui-col-md1 div-boder">
-								生产任务信息
-							</div>
-							<div class="layui-col-md11 div-boder">
-								<div style="font-size:18px;">生产任务信息</div>
-								<fieldset  class="layui-elem-field layui-field-title">
-							      <legend style="font-size:16px;"><a >在制工单</a></legend>
-							    </fieldset>
-							    <div style=" font-size:14px;" >
-							    <form class="layui-form" action="">
-								  <div class="layui-form-item">
-								    <div class="layui-inline">
-								      <label class="layui-form-label">工单号</label>
-								      <div class="layui-input-inline">
-								        <span id="task_no"></span>
-								      </div>
-								    </div>
-								    <div class="layui-inline">
-								      <label class="layui-form-label">型号</label>
-								      <div class="layui-input-inline">
-								        <span id="xh"></span>
-								      </div>
-								    </div>
-								  </div>
-								  <div class="layui-form-item">
-								    <div class="layui-inline">
-								      <label class="layui-form-label">截止时间</label>
-								      <div class="layui-input-inline">
-								        <span id="jzsj"></span>
-								      </div>
-								    </div>
-								    <div class="layui-inline">
-								      <label class="layui-form-label">物料说明</label>
-								      <div class="layui-input-inline">
-								        <span id="wlsm"></span>
-								      </div>
-								    </div>
-								  </div>
-								  <div class="layui-form-item">
-								    <div class="layui-inline">
-								      <label class="layui-form-label">任务数</label>
-								      <div class="layui-input-inline">
-								        <span id="rws"></span>
-								      </div>
-								    </div>
-								    <div class="layui-inline">
-								      <label class="layui-form-label"></label>
-								      <div class="layui-input-inline">
-								        <span ></span>
-								      </div>
-								    </div>
-								  </div>
-								  
-								  <div class="layui-form-item">
-								    <div class="layui-inline">
-								      <label class="layui-form-label">投料数量</label>
-								      <div class="layui-input-inline">
-								        <span id="tlsl"></span>
-								      </div>
-								    </div>
-								    <div class="layui-inline">
-								      <label class="layui-form-label">已完成数</label>
-								      <div class="layui-input-inline">
-								        <span id="ywcsl"></span>
-								      </div>
-								    </div>
-								  </div>
-								  <div class="layui-form-item">
-								    <div class="layui-inline">
-								      <label class="layui-form-label">在制数量</label>
-								      <div class="layui-input-inline">
-								        <span id="zhsl"></span>
-								      </div>
-								    </div>
-								    <div class="layui-inline">
-								      <label class="layui-form-label">退库数量</label>
-								      <div class="layui-input-inline">
-								        <span id="tksl"></span>
-								      </div>
-								    </div>
-								  </div>
-								  <div class="layui-form-item">
-								    <div class="layui-inline">
-								      <label class="layui-form-label">报废数量</label>
-								      <div class="layui-input-inline">
-								        <span id="bfsl"></span>
-								      </div>
-								    </div>
-								    <div class="layui-inline">
-								      <label class="layui-form-label">待入库数</label>
-								      <div class="layui-input-inline">
-								        <span id="srksl"></span>
-								      </div>
-								    </div>
-								  </div>
-								  </form>
-								       <!--  <ul >
-											<li  style="float:left;width:100%">工单号：<span id="task_no"></span></li>
-											<li style="float:left;width:50%">型号：<span id="xh"></span></li>
-											<li style="float:left;width:50%">截止时间：<span id="jzsj"></span></li>
-											<li style="float:left;width:50%">物料说明：<span id="wlsm"></span></li>
-											<li style="float:left;width:50%;">任务数：<span id="rws"></span></li>
-										</ul>
-									
-									 <ul style="margin-top: 10px;width:100%">
-										<li class="li-inline">投料数量：</li>
-										<li class="li-inline">已完成数量：</li>
-										<li class="li-inline">______</li>
-										<li class="li-inline">______</li>
-										<li class="li-inline">在制数量：</li>
-										<li class="li-inline">退库数量：</li>
-										<li class="li-inline">______</li>
-										<li class="li-inline">______</li>
-										<li class="li-inline">报废数量：</li>
-										<li class="li-inline">待入库数量：</li>
-										<li class="li-inline">______</li>
-										<li class="li-inline">______</li>
-									</ul> -->
-									
-									<table id="task_info" class="layui-table" lay-size="sm">
-										<thead>
-											<tr>
-												<th>待下发工单</th>
-												<th>产品编号</th>
-												<th>任务数</th>
-											</tr>
-										</thead>
-										<tbody id="unTask">
-										</tbody>
-									</table>
-									
-								</div>
-							</div>
-							
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="layui-col-md9 div-boder">
-				<div class="layui-row layui-col-space2">
-					<div class="layui-col-md10">
-						<div  id="chart_list">
-						<div id="bottom_wrap">
-							<button >法</button>
-							<button>环</button>
-							<button class="active">测</button>
-							<div id="right_main_container">
-								<div class="right_main_container_div_active div_none" id="chart1"></div>
-								<div class="right_main_container_div_active div_none" id="chart2"></div>
-								<div class="right_main_container_div_active " id="chart3"></div>
-							</div>
-					     </div>
+<body topmargin=0 leftmargin=10>
 
-						</div>
-					</div>
-					<div class="layui-col-md2 div-boder" align="center">
-						<div class="layui-col-md12 div-boder">
-							<div class="layui-col-md12">
-								<img src="../images/portrait.png" style="width: 82px;">
-							</div>
-							<div class="layui-col-md12">
-								<ul>
-									<li>姓名：张大强</li>
-									<li>职务：车间经理</li>
-								</ul>
-							</div>
-						</div>
-						<div class="layui-col-md12 div-boder">
-							<div class="layui-col-md12">
-								<img src="../images/portrait.png" style="width: 82px;">
-							</div>
-							<div class="layui-col-md12">
-								<ul>
-									<li>姓名：王达达</li>
-									<li>职务：线长</li>
-								</ul>
-							</div>
-						</div>
-						<div class="layui-col-md12 div-boder">
-							<div class="layui-col-md12">
-								<img src="../images/portrait.png" style="width: 82px;">
-							</div>
-							<div class="layui-col-md12">
-								<ul>
-									<li>姓名：李四</li>
-									<li>职务：质检员</li>
-								</ul>
-							</div>
-						</div>
+<!--header-->
+<div class="header">
+    <div class="bg_header">
+        <div class="header_nav fl t_title">
+            数字化工厂信息中心
+        </div> 
+    </div>
+</div>
 
-					</div>
-				</div>
-				<div class="layui-row layui-col-space2">
-					<div class="layui-col-md12 div-boder">
-						<div  id="status_list">
-							<button >人</button>
-								<button class="active">机</button>
-								<button >料</button>
-								<div class="right_vice_container">
-									<div class="div_none">内容一</div>
-									<!-- 机 -->
-									<div class="active">
-										<fieldset class="layui-elem-field layui-field-title site-title">
-									      <legend>
-									      <span class="layui-badge-dot layui-bg-green" id="kaiji">1</span>
-									      <a >开机</a>
-									      <span class="layui-badge-dot badge" id="weixiu">1</span>
-									      <a >维修</a>
-									      <span class="layui-badge-dot layui-bg-orange" id="xianzhi">1</span>
-									      <a >闲置</a>
-									      </legend>
-									    </fieldset>
-									    <ul id="ji">
-									    </ul>
-									</div>
-									<!-- end-机 -->
-									<!-- 料 -->
-									<div class="div_none">
-									<table id="task_info"  class="layui-table" lay-size="sm">
-										<thead>
-											<tr>
-												<th>物料编号</th>
-												<th>物料名称</th>
-												<th>领料数量</th>
-												<th>需领用量</th>
-												<th>退料数量</th>
-												<th>已领用量</th>
-												<th>未领用量</th>
-												<th>单位</th>
-											</tr>
-										</thead>
-										<tbody id="liao">
+<!--main-->
+<div class="data_content">
 
-										</tbody>
-									</table>
-									</div>
-									<!-- end-料 -->
-								</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<script src="/js/kanban/hl_area.js" th:src="@{/js/kanban/hl_area.js}"></script>
-		<script th:inline="javascript">
-        var permList=[[${line}]];
-        var woList = [[${WoList}]];
-        var KanbanList = [[${KanBanList}]];
-        console.log(KanbanList)
-       </script>
-	</div>
+    <div class="data_main">
+        <div class="main_left fl">
+            <div class="left_1 t_btn6" style="cursor: pointer;height:210px;">
+                <!--左上边框-->
+                <div class="t_line_box">
+                    <i class="t_l_line"></i> 
+                    <i class="l_t_line"></i> 
+                </div> 
+                <!--右上边框-->
+                <div class="t_line_box">
+                    <i class="t_r_line"></i> 
+                    <i class="r_t_line"></i> 
+                </div> 
+                <!--左下边框-->
+                <div class="t_line_box">
+                    <i class="l_b_line"></i> 
+                    <i class="b_l_line"></i> 
+                </div> 
+                    <!--右下边框-->
+                    <div class="t_line_box">
+                    <i class="r_b_line"></i> 
+                    <i class="b_r_line"></i> 
+                </div> 
+                <div class="main_title">
+                    <img src="picture/t_1.png" alt="">
+                    产能预警
+                </div>
+                <div  id="pro_warn" class="chart" style="width:100%;height: 260px;"></div>
+            </div>
+            <div class="left_2 " style="cursor: pointer;height:120px;margin-bottom:20px;">
+                <div class="t_line_box">
+                    <i class="t_l_line"></i> 
+                    <i class="l_t_line"></i> 
+                </div> 
+                <div class="t_line_box">
+                    <i class="t_r_line"></i> 
+                    <i class="r_t_line"></i> 
+                </div> 
+                <div class="t_line_box">
+                    <i class="l_b_line"></i> 
+                    <i class="b_l_line"></i> 
+                </div> 
+                    <div class="t_line_box">
+                    <i class="r_b_line"></i> 
+                    <i class="b_r_line"></i> 
+                </div> 
+                <div class="main_title">
+                    <img src="picture/t_2.png" alt="">异常报警
+                </div>
+                <div class="main_table t_btn8">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>质量</th>
+                            <th>设备</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr style="height:40px;">
+                            <td ><span id="yc_zl"></span></td>
+                            <td ><span id="yc_sb"></span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="left_3" style="cursor: pointer;height:230px;">
+                <div class="t_line_box">
+                    <i class="t_l_line"></i> 
+                    <i class="l_t_line"></i> 
+                </div> 
+                <div class="t_line_box">
+                    <i class="t_r_line"></i> 
+                    <i class="r_t_line"></i> 
+                </div> 
+                <div class="t_line_box">
+                    <i class="l_b_line"></i> 
+                    <i class="b_l_line"></i> 
+                </div> 
+                    <div class="t_line_box">
+                    <i class="r_b_line"></i> 
+                    <i class="b_r_line"></i> 
+                </div> 
+                <div class="main_title">
+                    <img src="picture/t_2.png" alt="">管理者信息
+                </div>
+                <div class="main_table t_btn8">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>车间经理</th>
+                            <th>组        长</th>
+                            <th>质  检   员</th>
+                        </tr>
+                        </thead>
+                        <tbody >
+                        <tr>
+                            <th ><img id="jl_img" src="../images/portrait.png" class="img-glz" alt=""></th>
+                            <th ><img id="zz_img" src="../images/portrait.png" class="img-glz"  alt=""></th>
+                            <th ><img id="zjy_img" src="../images/portrait.png" class="img-glz"  alt=""></th>
+                        </tr>
+                         <tr>
+                            <th id="jl_name"></th>
+                            <th id="zz_name"></th>
+                            <th id="zjy_name"></th>
+                        </tr>
+	                    </tbody>
+                    </table>
+                </div>
+                <!-- <div id="chart_2" class="chart t_btn9" style="width:100%;height: 280px;"></div> -->
+            </div>
+        </div>
+        <div class="main_center fl">
+            <div class="center_text" style="position: relative;">
+                <!--左上边框-->
+                <div class="t_line_box">
+                    <i class="t_l_line"></i> 
+                    <i class="l_t_line"></i> 
+                </div> 
+                <!--右上边框-->
+                <div class="t_line_box">
+                    <i class="t_r_line"></i> 
+                    <i class="r_t_line"></i> 
+                </div> 
+                <!--左下边框-->
+                <div class="t_line_box">
+                    <i class="l_b_line"></i> 
+                    <i class="b_l_line"></i> 
+                </div> 
+                 <!--右下边框-->
+                 <div class="t_line_box">
+                    <i class="r_b_line"></i> 
+                    <i class="b_r_line"></i> 
+                </div> 
+                <div class="main_title" style="width: 230px;">
+                    <img src="picture/t_3.png" alt="">
+                    <div class="main_title_text">
+                       <ul class="ul1">
+				          <li class="bg" id="li_fa">法</li>
+				          <li></li>
+				          <li class="bg" id="li_huan">环</li>
+				          <li></li>
+				          <li class="active" id="li_ce">测</li>
+				          <li></li>
+				        </ul>
+                     </div>
+                </div>
+                <!-- 法 -start-->
+                <div class="chart_main div_none"  id="div_li_fa">
+                   <img id="div_li_fa_img" src="" style="width:100%;height: 348px;padding:10px;padding-top:20px;">
+                </div>
+                <!-- 法 -end-->
+                <!-- 环 -start-->
+                <div class="chart_main div_none"  id="div_li_huan">
+                    <img id="div_li_huan_img" src="" style="width:100%;height: 348px;padding:10px;padding-top:20px;">
+                </div>
+                <!-- 环  -end-->
+                <div class="chart_main " style="width:666px;height: 350px;margin:10px;color:#fff" id="div_li_ce">3</div>
+            </div>
+            <div class="center_text1" style="position: relative;">
+                <!--左上边框-->
+                <div class="t_line_box">
+                    <i class="t_l_line"></i> 
+                    <i class="l_t_line"></i> 
+                </div> 
+                <!--右上边框-->
+                <div class="t_line_box">
+                    <i class="t_r_line"></i> 
+                    <i class="r_t_line"></i> 
+                </div> 
+                <!--左下边框-->
+                <div class="t_line_box">
+                    <i class="l_b_line"></i> 
+                    <i class="b_l_line"></i> 
+                </div> 
+                 <!--右下边框-->
+                 <div class="t_line_box">
+                    <i class="r_b_line"></i> 
+                    <i class="b_r_line"></i> 
+                </div> 
+                <div class="main_title" style="width: 230px;">
+                    <img src="picture/t_3.png" alt="">
+                     <div class="main_title_text">
+                       <ul class="ul2">
+				          <li id="li_ren" class="active">人</li>
+				          <li></li>
+				          <li  id="li_ji" class="">机</li>
+				          <li></li>
+				          <li id="li_liao" class="">料</li>
+				          <li></li>
+				        </ul>
+                     </div>
+                     
+                </div>
+                <!--人 -start-->
+                <div class="" id="div_li_ren">
+                   <div class="main_table t_btn8">
+	                    <table>
+	                    <thead>
+                        <tr id="ren_head">
+                        <!-- <td><span class="speed-line"><span class="speed-num" style="background-color: rgb(24, 100, 227); width: 70%;"></span><span class="numText">70%</span></span></td> -->
+                        </tr>
+                        </thead>
+	                        <tbody id="ren">
+	                        </tbody>
+	                    </table>
+	                </div>
+                </div>
+                <!--人 -end-->
+                <!--机 -start-->
+                <div id="div_li_ji" class="div_none">
+                <!-- <i class="iconfont icon-xianweijing" style="color:green;font-size:20px;"></i>  -->
+                <div class="main_table">
+	                    <table>
+	                    <thead>
+                        <tr>
+                            <th><span class="green-legend">开机</span><span style="color:#fff">开机</span></th>
+					        <th><span class="red-legend">维修</span><span style="color:#fff">维修</span></th>
+			                <th><span class="yellow-legend">闲置</span><span style="color:#fff">闲置</span></th>
+                        </tr>
+                        </thead>
+	                        <tbody id="ji">
+	                        </tbody>
+	                    </table>
+	                </div>
+                </div>
+                 <!--机 -end-->
+                 <!--料 -start-->
+                <div class="div_none"  id="div_li_liao">
+                  <div class="main_table t_btn8">
+	                    <table>
+	                        <thead>
+	                        <tr>
+	                            <th>物料编号</th>
+								<th>物料名称</th>
+								<th>领料数量</th>
+								<th>需领用量</th>
+								<th>退料数量</th>
+								<th>已领用量</th>
+								<th>未领用量</th>
+								<th>单位</th>
+	                        </tr>
+	                        </thead>
+	                        <tbody id="liao">
+	                        </tbody>
+	                    </table>
+	                </div>
+                </div>
+                <!--料-end -->
+            </div>
+        </div>
+        <div class="main_right fr">
+            <div class="right_1" style="height:600px">
+                <!--左上边框-->
+                <div class="t_line_box">
+                    <i class="t_l_line"></i> 
+                    <i class="l_t_line"></i> 
+                </div> 
+                <!--右上边框-->
+                <div class="t_line_box">
+                    <i class="t_r_line"></i> 
+                    <i class="r_t_line"></i> 
+                </div> 
+                <!--左下边框-->
+                <div class="t_line_box">
+                    <i class="l_b_line"></i> 
+                    <i class="b_l_line"></i> 
+                </div> 
+                    <!--右下边框-->
+                    <div class="t_line_box">
+                    <i class="r_b_line"></i> 
+                    <i class="b_r_line"></i> 
+                </div> 
+                <div class="main_title" style="width:220px;">
+                    <img src="picture/t_4.png" alt="">生产任务信息
+                </div>
+                <div class="table-bordered-div">
+                <div style="width:100%;text-align:center;color:#fff;margin-bottom:5px;"><span>在制工单</span></div>
+                <table class="table-bordered">
+                       <tbody>
+                       <tr>
+                           <td style="width:25%"></td><td style="width:25%"></td><td style="width:25%"></td><td style="width:25%"></td>
+                       </tr>
+                       <tr>
+                           <td>工单号</td><td id="task_no"></td><td>产品编码</td><td id="xh"></td>
+                       </tr>
+                       <tr>
+                           <td>截止时间</td><td id="jzsj"></td><td>产品名称</td><td id="cpmc"></td>
+                       </tr>
+                       <tr>
+                           <td>任务数</td><td colspan="3" id="rws"></td>
+                       </tr>
+                       <tr>
+                           <td>投料数</td><td id="tlsl"></td><td>完工数</td><td id="ywcsl"></td>
+                       </tr>
+                       <tr>
+                           <td>状态</td><td id="zt"></td><td>退料数</td><td id="tuilsl"></td>
+                       </tr>
+                       <tr>
+                           <td>不合格数</td><td id="bhgs"></td><td>入库数</td><td id="rks"></td>
+                       </tr>
+                       </tbody>
+                  </table>
+                  <div style="width:100%;text-align:center;color:#fff;margin-bottom:5px;"><span>待下发工单</span></div>
+	                 <table class="table-bordered table-line">
+		                 <thead>
+	                        <tr >
+	                            <th>工单号</th>
+	                            <th>产品</th>
+	                            <th>计划数数</th>
+	                        </tr>
+	                       </thead>
+	                       <tbody id="unTask">
+	                       </tbody>
+	                  </table>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
+<script src="../kanban/scripts/jquery-2.2.1.min.js"></script>
+<script src="../kanban/scripts/bootstrap.min.js"></script>
+<script src="../kanban/scripts/common.js"></script>
+<script src="../kanban/scripts/echarts.min.js"></script>
+<script src="../kanban/scripts/datatool.js"></script>
+<!-- <script src="../kanban/scripts/index.js"></script> -->
+<!-- <script src="../kanban/scripts/guangxi.js"></script> -->
+<script src="/js/kanban/hl_area.js" th:src="@{/js/kanban/hl_area.js}"></script>
+<script th:inline="javascript">
+var permList=[[${line}]];
+var woList = [[${WoList}]];
+var KanbanList = [[${KanBanList}]];
+console.log(KanbanList)
+</script>
 </html>
