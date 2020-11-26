@@ -124,36 +124,37 @@ public class DevReApplylmpl implements DevReApplyService {
 	}
 	
 	 @Override
-		public ApiResponseResult add(String usercode,String eq_code,String fault_des) throws Exception {
+		public ApiResponseResult add(String usercode,String eq_code,String fault_des,String breakType) throws Exception {
 			// TODO Auto-generated method stub
-					List<Object> list = this.addPrc(usercode,eq_code,fault_des,"PRC_EQ_Repair_AddApply");	        
+					List<Object> list = this.addPrc(usercode,eq_code,fault_des,breakType,"PRC_EQ_Repair_AddApply");	        
 					if(!list.get(0).toString().equals("0")){//存储过程调用失败 //判断返回标识
 			            return ApiResponseResult.failure(list.get(1).toString());//失败返回字段
 			        }			
 					return ApiResponseResult.success(list.get(1).toString());//返回数据
 		} 
 	 
-	 private List addPrc(String usercode,String eq_code,String fault_des,String prc_name) throws Exception {
+	 private List addPrc(String usercode,String eq_code,String fault_des,String breakType,String prc_name) throws Exception {
 			List resultList = (List) jdbcTemplate.execute(new CallableStatementCreator() {
 				@Override
 				public CallableStatement createCallableStatement(Connection con) throws SQLException {
-					String storedProc = "{call " + prc_name + "(?,?,?,?,?,?)}";// 调用的sql
+					String storedProc = "{call " + prc_name + "(?,?,?,?,?,?,?)}";// 调用的sql
 					CallableStatement cs = con.prepareCall(storedProc);
 					cs.setString(1, usercode);// 账号
 					cs.setString(2, eq_code);// 设备编号
 					cs.setString(3, fault_des);// 故障描述
-					cs.registerOutParameter(4, java.sql.Types.INTEGER);// 输出参数 返回标识
-					cs.registerOutParameter(5, java.sql.Types.VARCHAR);// 输出参数  返回字段
-					cs.registerOutParameter(6,java.sql.Types.VARCHAR);//  返回字段-设备位置
+					cs.setString(4, breakType);// 故障类型
+					cs.registerOutParameter(5, java.sql.Types.INTEGER);// 输出参数 返回标识
+					cs.registerOutParameter(6, java.sql.Types.VARCHAR);// 输出参数  返回字段
+					cs.registerOutParameter(7,java.sql.Types.VARCHAR);//  返回字段-设备位置
 					return cs;
 				}
 			}, new CallableStatementCallback() {
 				public Object doInCallableStatement(CallableStatement cs) throws SQLException, DataAccessException {
 					List<Object> result = new ArrayList<>();
 					cs.execute();
-					result.add(cs.getInt(4));
-					result.add(cs.getString(5));
+					result.add(cs.getInt(5));
 					result.add(cs.getString(6));
+					result.add(cs.getString(7));
 					return result;
 				}
 			});

@@ -24,6 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.app.base.data.ApiResponseResult;
 import com.web.app.service.ProduceVerifyService;
 
+/**
+ * 报工审核
+ * */
 @Service(value = "ProduceVerifyService")
 @Transactional(propagation = Propagation.REQUIRED)
 public class ProduceVerifylmpl implements ProduceVerifyService {
@@ -60,31 +63,37 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
 				if(l_new.get(j).get("TASK_NO").toString().equals(l.get(k).get("TASK_NO").toString())){
 					Map<String, Object> m = l.get(k);
 					Map<String, Object> m_new = new HashMap<String, Object>();
-					m_new.put("WORPROC_NAME", m.get("WORPROC_NAME"));
-					m_new.put("WORPROC_CODE", m.get("WORPROC_CODE"));
-					m_new.put("EQU_CODE", m.get("EQU_CODE"));//-
-					m_new.put("EQU_NAME", m.get("EQU_NAME"));//-
-					m_new.put("PRODUCE_STATE", m.get("PRODUCE_STATE"));
-					m_new.put("WORKSHOP_CENTER_NAME", m.get("WORKSHOP_CENTER_NAME"));
-					m_new.put("TECHNICS_NAME", m.get("TECHNICS_NAME"));
+					m_new.put("WORPROC_NAME", getNull(m.get("WORPROC_NAME")));
+					m_new.put("WORPROC_CODE", getNull(m.get("WORPROC_CODE")));
+					m_new.put("EQU_CODE", getNull(m.get("EQU_CODE")));//-
+					m_new.put("EQU_NAME", getNull(m.get("EQU_NAME")));//-
+					m_new.put("PRODUCE_STATE", getNull(m.get("PRODUCE_STATE")));
+					m_new.put("WORKSHOP_CENTER_NAME", getNull(m.get("WORKSHOP_CENTER_NAME")));
+					m_new.put("TECHNICS_NAME", getNull(m.get("TECHNICS_NAME")));
+					m_new.put("TECHNICS_CODE", getNull(m.get("TECHNICS_CODE")));//工艺编码
 					child.add(m_new);
 				}
 			}
 			Map<String, Object> m = l_new.get(j);
 			Map<String, Object> m_new = new HashMap<String, Object>();
-			m_new.put("TASK_NO", m.get("TASK_NO"));
-			m_new.put("PRO_CODE", m.get("PRO_CODE"));
-			m_new.put("PLAN_QTY", m.get("PLAN_QTY"));
-			m_new.put("COMPLETE_QTY", m.get("COMPLETE_QTY"));
-			m_new.put("PRO_NAME", m.get("PRO_NAME"));
+			m_new.put("TASK_NO", getNull(m.get("TASK_NO")));
+			m_new.put("PRO_CODE", getNull(m.get("PRO_CODE")));
+			m_new.put("PLAN_QTY", getNull(m.get("PLAN_QTY")));
+			m_new.put("COMPLETE_QTY",getNull( m.get("COMPLETE_QTY")));
+			m_new.put("PRO_NAME", getNull(m.get("PRO_NAME")));
 			m_new.put("Child", child);
 			m_new.put("Role", list.get(2));
-			m_new.put("TECHNICS_NAME", m.get("TECHNICS_NAME"));
-			m_new.put("TECHNICS_CODE", m.get("TECHNICS_CODE"));//工艺编码
 			l_last.add(m_new);
 		}
 		System.out.println(l_last);
 		return ApiResponseResult.success().data(l_last);//返回数据集
+	}
+	
+	private String getNull(Object o){
+		if(o == null){
+			return "";
+		}
+		return o.toString();
 	}
 	//执行存储过程，获取工单信息
 	private List getProduceVerifyListPrc(String usercode,String prc_name)throws Exception{
@@ -304,7 +313,8 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
 	    		String role,String tcode
 	    		) throws Exception {
 			// TODO Auto-generated method stub
-					List<Object> list = this.sumbitProduceRecordDetailPrc(usercode,proc,task_no,eq_code,reportInfo,role, tcode,"PRC_Produce_BGVerify_Save");	        
+					List<Object> list = this.sumbitProduceRecordDetailPrc(usercode,proc,task_no,eq_code,
+							reportInfo,role, tcode,"PRC_Produce_BGVerify_Save");	        
 					if(!list.get(0).toString().equals("0")){//存储过程调用失败 //判断返回标识
 			            return ApiResponseResult.failure(list.get(1).toString());//失败返回字段
 			        }
@@ -318,7 +328,7 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
 		        List resultList = (List) jdbcTemplate.execute(new CallableStatementCreator() {
 		            @Override
 		            public CallableStatement createCallableStatement(Connection con) throws SQLException {
-		                String storedProc = "{call "+prc_name+"(?,?,?,?,?,?,?,?,?,?)}";// 调用的sql
+		                String storedProc = "{call "+prc_name+"(?,?,?,?,?,?,?,?,?)}";// 调用的sql
 		                CallableStatement cs = con.prepareCall(storedProc);
 		                cs.setString(1, usercode);// 账号
 		                cs.setString(2, proc);//工序

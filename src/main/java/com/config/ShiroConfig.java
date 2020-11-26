@@ -131,6 +131,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/dev_handle/*", "anon");
         filterChainDefinitionMap.put("/dev_apply/*", "anon");
         filterChainDefinitionMap.put("/dev_repair/*", "anon");
+        filterChainDefinitionMap.put("/suspend/*", "anon");
 
         filterChainDefinitionMap.put("/wd_rf/login1", "anon");
         filterChainDefinitionMap.put("/wd_rf/queryPurview", "anon");

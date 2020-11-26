@@ -22,6 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.app.base.data.ApiResponseResult;
 import com.web.app.service.ProduceReportService;
 
+/**
+ * 生产报工
+ * */
 @Service(value = "ProduceReportService")
 @Transactional(propagation = Propagation.REQUIRED)
 public class ProduceReportlmpl implements ProduceReportService {
@@ -59,6 +62,7 @@ public class ProduceReportlmpl implements ProduceReportService {
 				if (l_new.get(j).get("WORL_SINGNUM").toString().equals(l.get(k).get("WORL_SINGNUM").toString())) {
 					Map<String, Object> m = l.get(k);
 					Map<String, Object> m_new = new HashMap<String, Object>();
+
 					m_new.put("ID", m.get("ID").toString());
 					m_new.put("WORPROC_CODE", m.get("WORPROC_CODE").toString());
 					m_new.put("WORPROC_NAME", m.get("WORPROC_NAME").toString());
@@ -67,23 +71,24 @@ public class ProduceReportlmpl implements ProduceReportService {
 					m_new.put("STATUS", m.get("STATUS").toString());
 					m_new.put("TECHNICS_NAME", m.get("TECHNICS_NAME"));
 					m_new.put("TECHNICS_CODE", m.get("TECHNICS_CODE"));//工艺编码
+
 					child.add(m_new);
 				}
 			}
 			Map<String, Object> m = l_new.get(j);
 			Map<String, Object> m_new = new HashMap<String, Object>();
-			m_new.put("WORL_SINGNUM", m.get("WORL_SINGNUM"));
-			m_new.put("PRO_NAME", m.get("PRO_NAME"));
-			m_new.put("PRO_CODE", m.get("PRO_CODE"));
-			m_new.put("PERSON_NAME", m.get("PERSON_NAME"));
-			m_new.put("PERSON_CODE", m.get("PERSON_CODE"));
-			m_new.put("PROD_DATE_END", m.get("PROD_DATE_END"));
-			m_new.put("PROD_DATE", m.get("PROD_DATE"));
-			m_new.put("OUTPUT_QTY", m.get("OUTPUT_QTY"));
-			m_new.put("BG_QTY", m.get("BG_QTY"));
-			m_new.put("HG_QTY", m.get("HG_QTY"));// 合格数量
-			m_new.put("LASTUPDATE_DATE", m.get("LASTUPDATE_DATE"));// 最后一次报数时间
-			m_new.put("BHG_QTY", m.get("BHG_QTY"));// 不合格数量
+			m_new.put("WORL_SINGNUM", getNull(m.get("WORL_SINGNUM")));
+			m_new.put("PRO_NAME", getNull(m.get("PRO_NAME")));
+			m_new.put("PRO_CODE", getNull(m.get("PRO_CODE")));
+			m_new.put("PERSON_NAME", getNull(m.get("PERSON_NAME")));
+			m_new.put("PERSON_CODE", getNull(m.get("PERSON_CODE")));
+			m_new.put("PROD_DATE_END", getNull(m.get("PROD_DATE_END")));
+			m_new.put("PROD_DATE", getNull(m.get("PROD_DATE")));
+			m_new.put("OUTPUT_QTY",getNull( m.get("OUTPUT_QTY")));
+			m_new.put("BG_QTY", getNull(m.get("BG_QTY")));
+			m_new.put("HG_QTY", getNull(m.get("HG_QTY")));// 合格数量
+			m_new.put("LASTUPDATE_DATE",getNull( m.get("LASTUPDATE_DATE")));// 最后一次报数时间
+			m_new.put("BHG_QTY", getNull(m.get("BHG_QTY")));// 不合格数量
 			m_new.put("Child", child);
 			m_new.put("TECHNICS_NAME", m.get("TECHNICS_NAME"));
 			m_new.put("TECHNICS_CODE", m.get("TECHNICS_CODE"));//工艺编码
@@ -91,7 +96,13 @@ public class ProduceReportlmpl implements ProduceReportService {
 		}
 		return ApiResponseResult.success().data(l_last);// 返回数据集
 	}
-
+	
+	private String getNull(Object o){
+		if(o == null){
+			return "";
+		}
+		return o.toString();
+	}
 	// 执行存储获取数据
 	private List getProduceListPrc(String usercode, String prc_name) throws Exception {
 		List resultList = (List) jdbcTemplate.execute(new CallableStatementCreator() {
@@ -281,6 +292,43 @@ public class ProduceReportlmpl implements ProduceReportService {
 		});
 		return resultList;
 	}
+	
+	//暂停报工-返回结果
+		public ApiResponseResult suspendReport(String usercode, String plan_ID
+	    		) throws Exception{
+			// TODO Auto-generated method stub
+					List<Object> list = this.suspendReportPrc(usercode, plan_ID, "PRC_Produce_BG_Suspension");
+					if (!list.get(0).toString().equals("0")) {// 存储过程调用失败 //判断返回标识
+						return ApiResponseResult.failure(list.get(1).toString());// 失败返回字段
+					}
+					return ApiResponseResult.success(list.get(1).toString());// 返回判断字段数据
+		}
+		
+		private List suspendReportPrc(String usercode, String plan_ID,String prc_name) throws Exception {
+			List resultList = (List) jdbcTemplate.execute(new CallableStatementCreator() {
+				@Override
+				public CallableStatement createCallableStatement(Connection con) throws SQLException {
+					String storedProc = "{call " + prc_name + "(?,?,?,?)}";// 调用的sql
+					CallableStatement cs = con.prepareCall(storedProc);
+					cs.setString(1, usercode);// 账号
+					cs.setString(2, plan_ID);// 排产计划ID
+					cs.registerOutParameter(3, java.sql.Types.INTEGER);// 输出参数 返回标识
+					cs.registerOutParameter(4, java.sql.Types.VARCHAR);// 输出参数 返回标识
+					return cs;
+				}
+			}, new CallableStatementCallback() {
+				public Object doInCallableStatement(CallableStatement cs) throws SQLException, DataAccessException {
+					List<Object> result = new ArrayList<>();
+					cs.execute();
+					result.add(cs.getString(3));// （标识）
+					result.add(cs.getString(4));// 返回信息
+					System.out.print(result);
+					;
+					return result;
+				}
+			});
+			return resultList;
+		}
 	
 	
 	// 值为"null"或者null转换成""
