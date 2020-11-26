@@ -62,17 +62,15 @@ public class ProduceReportlmpl implements ProduceReportService {
 				if (l_new.get(j).get("WORL_SINGNUM").toString().equals(l.get(k).get("WORL_SINGNUM").toString())) {
 					Map<String, Object> m = l.get(k);
 					Map<String, Object> m_new = new HashMap<String, Object>();
-
-					m_new.put("ID", m.get("ID").toString());
-					m_new.put("WORPROC_CODE", m.get("WORPROC_CODE").toString());
-					m_new.put("WORPROC_NAME", m.get("WORPROC_NAME").toString());
-					m_new.put("EQU_CODE", m.get("EQU_CODE").toString());
-					m_new.put("EQU_NAME", m.get("EQU_NAME").toString());
-					m_new.put("STATUS", m.get("STATUS").toString());
-					m_new.put("TECHNICS_NAME", m.get("TECHNICS_NAME"));
-					m_new.put("TECHNICS_CODE", m.get("TECHNICS_CODE"));//工艺编码
-
-					child.add(m_new);
+					
+					m_new.put("ID",  getNull(m.get("ID")));
+					m_new.put("WORPROC_CODE",  getNull(m.get("WORPROC_CODE")));
+				//	m_new.put("WORPROC_NAME", m.get("WORPROC_NAME").toString());替换为TECHNICS_NAME
+					m_new.put("TECHNICS_NAME", getNull(m.get("TECHNICS_NAME")));
+					m_new.put("EQU_CODE", getNull(m.get("EQU_CODE")));
+					m_new.put("EQU_NAME", getNull(m.get("EQU_NAME")));
+					m_new.put("STATUS", getNull(m.get("STATUS")));
+					child.add(m_new);//-20201126
 				}
 			}
 			Map<String, Object> m = l_new.get(j);
