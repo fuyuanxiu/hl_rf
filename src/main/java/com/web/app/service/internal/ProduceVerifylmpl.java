@@ -71,6 +71,7 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
 					m_new.put("WORKSHOP_CENTER_NAME", getNull(m.get("WORKSHOP_CENTER_NAME")));
 					m_new.put("TECHNICS_NAME", getNull(m.get("TECHNICS_NAME")));
 					m_new.put("TECHNICS_CODE", getNull(m.get("TECHNICS_CODE")));//工艺编码
+					m_new.put("COMPLETE_QTY",getNull( m.get("COMPLETE_QTY")));//20201127-add
 					child.add(m_new);
 				}
 			}
@@ -79,7 +80,7 @@ public class ProduceVerifylmpl implements ProduceVerifyService {
 			m_new.put("TASK_NO", getNull(m.get("TASK_NO")));
 			m_new.put("PRO_CODE", getNull(m.get("PRO_CODE")));
 			m_new.put("PLAN_QTY", getNull(m.get("PLAN_QTY")));
-			m_new.put("COMPLETE_QTY",getNull( m.get("COMPLETE_QTY")));
+			//m_new.put("COMPLETE_QTY",getNull( m.get("COMPLETE_QTY")));//20201127-delete
 			m_new.put("PRO_NAME", getNull(m.get("PRO_NAME")));
 			m_new.put("Child", child);
 			m_new.put("Role", list.get(2));

@@ -88,8 +88,8 @@ public class ProduceReportlmpl implements ProduceReportService {
 			m_new.put("LASTUPDATE_DATE",getNull( m.get("LASTUPDATE_DATE")));// 最后一次报数时间
 			m_new.put("BHG_QTY", getNull(m.get("BHG_QTY")));// 不合格数量
 			m_new.put("Child", child);
-			m_new.put("TECHNICS_NAME", m.get("TECHNICS_NAME"));
-			m_new.put("TECHNICS_CODE", m.get("TECHNICS_CODE"));//工艺编码
+			m_new.put("TECHNICS_NAME", getNull(m.get("TECHNICS_NAME")));
+			m_new.put("TECHNICS_CODE", getNull(m.get("TECHNICS_CODE")));//工艺编码
 			l_last.add(m_new);
 		}
 		return ApiResponseResult.success().data(l_last);// 返回数据集
