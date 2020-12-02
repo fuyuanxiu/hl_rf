@@ -7,10 +7,8 @@ $(function() {
 	if(KanbanList.CN != null || KanbanList.CN != 'null'){
 		getProWarn(KanbanList.CN);
 	}
-	
-	//getChart1("div_li_fa");
 	doFa();
-	//getChart2("div_li_huan");
+	//doFaImg();
 	doHuan();
 	getChart3(KanbanList.CE);//测
 	//getKanBanList(permList,woList[0].TASK_NO,woList[0].PRO_CODE);
@@ -27,6 +25,18 @@ $(function() {
 	doLiao();//料
 });
 function doFa(){
+	var obj=KanbanList.FA;
+	$("#fa tr").remove();
+	for (var i = 0; i < obj.length; i++) {	 
+		var newRow="<tr >"+
+				   "<td>"+obj[i].PROC_ORDER+"</td>"+
+				   "<td>"+obj[i].PROC_NAME+"</td>"+
+				   "<td>"+(obj[i].TECHNICS_DESCRIBE ? obj[i].TECHNICS_DESCRIBE:"")+"</td>"+
+		           "</tr>";	
+	   	$("#fa").append(newRow);
+    }
+}
+function doFaImg(){
 	var obj=KanbanList.FA;
 	if(obj){
 		$("#div_li_fa_img").attr('src',"../downImages/"+obj+".png");
@@ -45,14 +55,14 @@ function getProWarn(cn) {
 		        {
 		            name: '业务指标',
 		            type: 'gauge',
-		            min : 0,
-					max : 100,
-					
+		            min : 70,
+					max : 130,
+					splitNumber: 6, //刻度数量
 					radius: '70%',
 					axisLine : { // 坐标轴线
 						lineStyle : { // 属性lineStyle控制线条样式
 							width : 10,
-							color: [[0.25, 'red'], [0.5, '#FFFF00'], [0.75, '#008000'], [1, '#0000FF']]
+							color: [[0.16, 'red'], [0.5, '#FFFF00'], [0.84, '#008000'], [1, '#0000FF']]
 						}
 					},
 					 axisLabel: {            // 刻度标签。
@@ -454,7 +464,7 @@ function doUnTask(){
 	var obj=KanbanList.UnTask;	
 	$("#unTask tr").remove();
 	for (var i = 0; i < obj.length; i++) {	
-		if(i>5){
+		if(i>3){
 			return;
 		}
 		var newRow="<tr >"+
@@ -472,10 +482,10 @@ function doRen(){
 	$("#ren_head td").remove();
 	var newRow_img,newRow_name,newRow_proc,head_td;
 	for (var i = 0; i < obj.length; i++) {	
-		if(i>7){
+		if(i>11){
 			continue;
 		}
-		newRow_img +="<td><img  src='../downImages/"+obj[i].FCODE+".png' class='img-glz' alt=''></td>";
+		newRow_img +="<td style='width:85px;'><img  src='../downImages/"+obj[i].FCODE+".png' class='img-glz' alt=''></td>";
 		
 		newRow_name +="<td>"+obj[i].FNAME+"</td>";
 		newRow_proc +="<td>"+obj[i].WORPROC_NAME+"</td>";
@@ -501,7 +511,7 @@ function doJi(){
 		if(obj[i].EQ_STATUS == '开机'){
 			color="Green";
 		}else if(obj[i].EQ_STATUS == '闲置'){
-			color="Yellow";
+			color="#D3D3D3";
 		}else if(obj[i].EQ_STATUS == '维修'){
 			color="Red";
 		}

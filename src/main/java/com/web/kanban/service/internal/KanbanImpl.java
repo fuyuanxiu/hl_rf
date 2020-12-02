@@ -318,9 +318,9 @@ public class KanbanImpl extends ReportPrcUtils implements KanbanService {
 							result.add(null);
 						}
 						try {
-							//result.add(fitMap(rs14));
-							getFaImg(itemNo);
-							result.add(itemNo);
+							result.add(fitMap(rs14));
+							/*getFaImg(itemNo);
+							result.add(itemNo);*/
 						} catch (Exception e) {
 							System.out.println(e.toString());
 							result.add(null);

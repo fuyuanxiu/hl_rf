@@ -8,8 +8,9 @@ body,html{
     height: auto;
     color:#333;
     /* overflow: hidden;*/
-    background: url('../images/bg.jpg') no-repeat;
+   /*  background: url('../images/bg.jpg') no-repeat; */
     background-size: 100% 100%;
+    background-color:#074571;
 }
 /*各浏览器显示不同，去掉蓝色边框*/
 fieldset, img, input, button {
