@@ -69,7 +69,16 @@ public class kanbanController extends WebController {
 		String method = "/kanban/toHlDemo";String methodName ="恒联看板demo";
 		ModelAndView mav=new ModelAndView();
 		//mav.addObject("pname", p);
-		mav.setViewName("/kanban/hl_demo");//返回路径
+		mav.setViewName("/kanban/hl_area_50cun");//返回路径hl_demo
+		return mav;
+	}
+	@RequestMapping(value = "/toHlWorkShop", method = RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView toHlWorkShop() {
+		String method = "/kanban/toHlWorkShop";String methodName ="恒联车间看板";
+		ModelAndView mav=new ModelAndView();
+		//mav.addObject("pname", p);
+		mav.setViewName("/kanban/hl_workshop");//返回路径hl_demo
 		return mav;
 	}
 	@RequestMapping(value = "/toHlArea", method = RequestMethod.GET)
