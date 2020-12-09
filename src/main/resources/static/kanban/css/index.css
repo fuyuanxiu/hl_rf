@@ -587,6 +587,7 @@ li:hover{
     background-color: #D3D3D3;
     border-radius: 5px;
     color:rgba(0,0,0,0);
+    opacity:0.5;
 }
 
 

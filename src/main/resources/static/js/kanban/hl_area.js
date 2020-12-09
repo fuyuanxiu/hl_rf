@@ -501,8 +501,9 @@ function doRen(){
 //机
 function doJi(){
 	var obj=KanbanList.JI;	var kaiji=0;var xianzhi=0;var weixiu=0;
+	console.log(obj)
 	$("#ji tr").remove();
-	var newRow_icon,newRow_name,newRow_code;
+	var newRow_icon,newRow_name,newRow_code,opacity;
 	for (var i = 0; i < obj.length; i++) {	
 		var color = '';
 		if(i>9){
@@ -510,13 +511,17 @@ function doJi(){
 		}
 		if(obj[i].EQ_STATUS == '开机'){
 			color="Green";
-		}else if(obj[i].EQ_STATUS == '闲置'){
+			opacity=1;
+		}else if(obj[i].EQ_STATUS == '待机'){
 			color="#D3D3D3";
+			opacity=0.5;
 		}else if(obj[i].EQ_STATUS == '维修'){
 			color="Red";
+			opacity=1;
 		}
 		var icon = getIcon(obj[i].EQ_NAME);
-		newRow_icon +="<td><i class='ji-icon  iconfont "+icon+"' style='color:"+color+";font-size:56px;' ></i></td>";
+
+		newRow_icon +="<td><i class='ji-icon  iconfont "+icon+"' style='color:"+color+";font-size:56px;opacity:"+opacity+";' ></i></td>";
 		
 		newRow_name +="<td>"+obj[i].EQ_NAME+"</td>";
 		newRow_code +="<td>"+obj[i].EQ_CODE+"</td>";
