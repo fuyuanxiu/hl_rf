@@ -485,7 +485,7 @@ function doRen(){
 		if(i>11){
 			continue;
 		}
-		newRow_img +="<td style='width:85px;'><img  src='../downImages/"+obj[i].FCODE+".png' class='img-glz' alt=''></td>";
+		newRow_img +="<td style='width:70px;'><img  src='../downImages/"+obj[i].FCODE+".png' class='img-glz' alt=''></td>";
 		
 		newRow_name +="<td>"+obj[i].FNAME+"</td>";
 		newRow_proc +="<td>"+obj[i].WORPROC_NAME+"</td>";
