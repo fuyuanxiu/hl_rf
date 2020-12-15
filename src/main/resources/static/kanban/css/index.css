@@ -1,6 +1,6 @@
 .data_content{
     /*overflow-x: hidden;*/
-     min-width: 1263px; 
+    min-width: 1263px; 
     padding-top: 20px;
     padding-bottom: 20px;
 }
@@ -110,6 +110,7 @@
 }
 .data_content .data_main .main_left{
     width: 20%;
+    margin-left:15px;
 }
 .data_content .data_main .main_left>div{
     width: 100%;
@@ -264,7 +265,7 @@
 }
 
 .data_content .data_main .main_right{
-    width: 24%;
+    width: 23%;
 }
 .data_content .data_main .main_right>div{
     width: 98%;
