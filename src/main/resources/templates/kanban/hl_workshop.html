@@ -76,7 +76,7 @@
 						<img src="picture/t_9.png" alt=""> 车间状态
 					</div>
 					<!--内容-->
-					<div class="main_table t_btn8">
+					<div class="main_table t_btn8" style="width: 94%;margin-left:10px;">
 						<table>
 							<tbody>
 								<tr style="height: 40px;">
@@ -193,32 +193,32 @@
 					</div>
 					<div class="chart_main">
 						<div class="area_info_div">
-						<div class="area_info_chart" id="area_chart1"></div>
-						<div class="area_info_chart" id="area_chart2"></div>
-						<div class="area_info_chart" id="area_chart3"></div>
+							<div class="area_info_chart" id="area_chart1"></div>
+							<div class="area_info_chart" id="area_chart2"></div>
+							<div class="area_info_chart" id="area_chart3"></div>
 						</div>
-						<div class="main_table t_btn8" style="width:96%;">
-						<table>
-							<tbody>
-							<tr style="height: 30px;">
-									<th style="width: 33%"><span>设备报警区域</span></th>
-									<th style="width: 33%"><span>质量报警区域</span></th>
-									<th style="width: 33%"><span>欠料区域</span></th>
-								</tr>
-								<tr style="height: 30px;">
-									<td style="width: 33%"><span id="dev_warn_area1">区域A</span></td>
-									<td style="width: 33%"><span id="qual_warn_area1">区域A</span></td>
-									<td style="width: 33%"><span id="owe_warn_area1">区域A</span></td>
-								</tr>
-								<tr style="height: 30px;">
-									<td style="width: 33%"><span id="dev_warn_area2">区域2</span></td>
-									<td style="width: 33%"><span id="qual_warn_area2">区域2</span></td>
-									<td style="width: 33%"><span id="owe_warn_area2">区域2</span></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-						
+						<div class="main_table t_btn8" style="width: 96%;">
+							<table>
+								<tbody>
+									<tr style="height: 30px;">
+										<th style="width: 33%"><span>设备报警区域</span></th>
+										<th style="width: 33%"><span>质量报警区域</span></th>
+										<th style="width: 33%"><span>欠料区域</span></th>
+									</tr>
+									<tr style="height: 30px;">
+										<td style="width: 33%"><span id="dev_warn_area1">区域A</span></td>
+										<td style="width: 33%"><span id="qual_warn_area1">区域A</span></td>
+										<td style="width: 33%"><span id="owe_warn_area1">区域A</span></td>
+									</tr>
+									<tr style="height: 30px;">
+										<td style="width: 33%"><span id="dev_warn_area2">区域2</span></td>
+										<td style="width: 33%"><span id="qual_warn_area2">区域2</span></td>
+										<td style="width: 33%"><span id="owe_warn_area2">区域2</span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
 					</div>
 				</div>
 				<div class="center_text1" style="position: relative;">
@@ -241,8 +241,7 @@
 					<div class="main_title">
 						<img src="picture/t_4.png" alt=""><span>班组合格率</span>
 					</div>
-					<div class="center_chart" id="center_chart">			
-					</div>
+					<div class="center_chart" id="center_chart"></div>
 				</div>
 			</div>
 			<div class="main_right fr">
@@ -267,8 +266,13 @@
 						<img src="picture/t_4.png" alt=""><span>班组生产达标情况</span>
 					</div>
 					<div class="chart_main">
-					<div class="status_div" style="width: 66%;" id="status_chart"></div>
-					<div class="status_div" style="width: 32%;" id="pic_part"></div>
+						<div class="status_div" style="width: 70%;" id="status_chart"></div>
+						<div class="status_div" style="width: 29%; text-align:center;">
+							<img id="director_img" src="../images/portrait.png" style="width: 80%;margin-top:50%;" alt="">
+							<div style="text-align:center;margin-top:10%;">
+							<span style="color:#ffffff;font-size:16px;font-weight:bold;" id="director">车间负责人</span>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="right_1" style="height: 320px">
@@ -305,7 +309,8 @@
 <script src="../kanban/scripts/datatool.js"></script>
 <!-- <script src="../kanban/scripts/index.js"></script> -->
 <!-- <script src="../kanban/scripts/guangxi.js"></script> -->
- <script src="/js/kanban/hl_workshop.js" th:src="@{/js/kanban/hl_workshop.js}"></script> 
+<script src="/js/kanban/hl_workshop.js"
+	th:src="@{/js/kanban/hl_workshop.js}"></script>
 <script th:inline="javascript">
 	
 </script>

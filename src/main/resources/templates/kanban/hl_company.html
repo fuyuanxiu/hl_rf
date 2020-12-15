@@ -6,10 +6,10 @@
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
      <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
     
-    <title>生产区域看板</title>
+    <title>公司看板</title>
     <link href="css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="../kanban/css/base.css">
-    <link rel="stylesheet" href="../kanban/css/index.css">
+    <link rel="stylesheet" href="../kanban/css/company_index.css">
     <link href="../css/icon/iconfont.css" th:href="@{../css/icon/iconfont.css}" rel="stylesheet" type="text/css" />
 
     <style>
@@ -41,18 +41,16 @@
 <!--header-->
 <div class="header">
     <div class="bg_header">
-        <div class="header_nav fl t_title">
-            生产区域看板
+        <div class="header_nav fl t_title"> 公司看板
         </div> 
     </div>
 </div>
 
 <!--main-->
 <div class="data_content">
-
     <div class="data_main">
         <div class="main_left fl">
-            <div class="left_1 t_btn6" style="cursor: pointer;height:360px;">
+            <div class="left_1 t_btn6" style="cursor: pointer;height:210px;">
                 <!--左上边框-->
                 <div class="t_line_box">
                     <i class="t_l_line"></i> 
@@ -77,9 +75,9 @@
                     <img src="picture/t_1.png" alt="">
                     产能预警
                 </div>
-                <div  id="pro_warn" class="chart" style="width:100%;height: 360px;"></div>
+                <div  id="pro_warn" class="chart" style="width:100%;height: 260px;"></div>
             </div>
-            <div class="left_2 " style="cursor: pointer;height:270px;margin-bottom:20px;">
+            <div class="left_2 " style="cursor: pointer;height:120px;margin-bottom:20px;">
                 <div class="t_line_box">
                     <i class="t_l_line"></i> 
                     <i class="l_t_line"></i> 
@@ -97,27 +95,27 @@
                     <i class="b_r_line"></i> 
                 </div> 
                 <div class="main_title">
-                    <img src="picture/t_5.png" alt=""><span style="color:red;font-family:SimHei">异常报警</span>
+                    <img src="picture/t_5.png" alt=""><span style="color:red;">异常报警</span>
                 </div>
                 <div class="main_table t_btn8">
                     <table>
                         <thead>
                         <tr>
-                            <th style="font-family:SimHei">质量</th>
-                            <th style="font-family:SimHei">设备</th>
+                            <th>质量</th>
+                            <th>设备</th>
                         </tr>
                         </thead>
                         <tbody>
                       
                         <tr style="height:40px;">
-                            <td style="width:50%"><span id="yc_zl"  style="font-family:SimHei"></span></td>
-                            <td td style="width:50%"><span id="yc_sb"  style="font-family:SimHei"></span></td>
+                            <td style="width:50%"><span id="yc_zl"></span></td>
+                            <td td style="width:50%"><span id="yc_sb"></span></td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="left_3" style="cursor: pointer;height:315px;">
+            <div class="left_3" style="cursor: pointer;height:230px;">
                 <div class="t_line_box">
                     <i class="t_l_line"></i> 
                     <i class="l_t_line"></i> 
@@ -164,7 +162,7 @@
             </div>
         </div>
         <div class="main_center fl">
-            <div class="center_text" style="position: relative;height:650px;">
+            <div class="center_text" style="position: relative;">
                 <!--左上边框-->
                 <div class="t_line_box">
                     <i class="t_l_line"></i> 
@@ -218,12 +216,12 @@
                 <!-- 法 -end-->
                 <!-- 环 -start-->
                 <div class="chart_main div_none"  id="div_li_huan">
-                    <img id="div_li_huan_img" src="" style="width:100%;height: 648px;padding:10px;padding-top:20px;">
+                    <img id="div_li_huan_img" src="" style="width:100%;height: 348px;padding:10px;padding-top:20px;">
                 </div>
                 <!-- 环  -end-->
-                <div class="chart_main " style="width:666px;height: 650px;margin:10px;color:#fff" id="div_li_ce">3</div>
+                <div class="chart_main " style="width:666px;height: 350px;margin:10px;color:#fff" id="div_li_ce">3</div>
             </div>
-            <div class="center_text1" style="position: relative;width:1475px;height:315px;">
+            <div class="center_text1" style="position: relative;width:1095px;">
                 <!--左上边框-->
                 <div class="t_line_box">
                     <i class="t_l_line"></i> 
@@ -316,7 +314,7 @@
             </div>
         </div>
         <div class="main_right fr">
-            <div class="right_1" style="height:650px">
+            <div class="right_1" style="height:350px">
                 <!--左上边框-->
                 <div class="t_line_box">
                     <i class="t_l_line"></i> 
@@ -337,54 +335,12 @@
                     <i class="r_b_line"></i> 
                     <i class="b_r_line"></i> 
                 </div> 
-                <div class="main_title" style="width:220px;">
+                <!-- <div class="main_title" style="width:100px;">
                     <img src="picture/t_4.png" alt="">生产任务信息
-                </div>
-                <div class="table-bordered-div">
-                <div style="width:100%;text-align:center;color:#fff;margin-bottom:5px;"><span>在制工单</span></div>
-                <table class="table-bordered">
-                       <tbody>
-                       <tr>
-                           <td style="width:25%"></td><td style="width:25%"></td><td style="width:25%"></td><td style="width:25%"></td>
-                       </tr>
-                       <tr>
-                           <td>工单号</td><td id="task_no" colspan="3"></td>
-                       </tr>
-                       <tr>
-                           <td>产品编码</td><td id="xh"></td><td>截止时间</td><td id="jzsj"></td>
-                       </tr>
-                       <tr>
-                           <td>产品名称</td><td id="cpmc" colspan="3"></td>
-                       </tr>
-                       <tr>
-                           <td>任务数</td><td  id="rws"></td><td>状态</td><td id="zt"></td>
-                       </tr>
-                       <tr>
-                           <td>投料数</td><td id="tlsl"></td><td>入库数</td><td id="rks"></td>
-                       </tr>
-                       <tr>
-                           <td>完工数</td><td id="ywcsl"></td><td>不合格数</td><td id="bhgs"></td>
-                       </tr>
-                       </tbody>
-                  </table>
-                  <div style="width:100%;text-align:center;color:#fff;margin-bottom:5px;"><span>待下发工单</span></div>
-	                 <table class="table-bordered table-line">
-		                 <thead>
-	                        <tr >
-	                            <th>工单号</th>
-	                            <th>产品</th>
-	                            <th>数量</th>
-	                        </tr>
-	                       </thead>
-	                       <tbody id="unTask">
-	                       </tbody>
-	                  </table>
-                </div>
+                </div> -->
                 
             </div>
         </div>
-        
-        
     </div>
 </div>
 
@@ -394,13 +350,7 @@
 <script src="../kanban/scripts/common.js"></script>
 <script src="../kanban/scripts/echarts.min.js"></script>
 <script src="../kanban/scripts/datatool.js"></script>
-<!-- <script src="../kanban/scripts/index.js"></script> -->
-<!-- <script src="../kanban/scripts/guangxi.js"></script> -->
-<script src="/js/kanban/hl_area.js" th:src="@{/js/kanban/hl_area.js}"></script>
+<script src="/js/kanban/hl_company.js" th:src="@{/js/kanban/hl_company.js}"></script>
 <script th:inline="javascript">
-var permList=[[${line}]];
-var woList = [[${WoList}]];
-var KanbanList = [[${KanBanList}]];
-//console.log(KanbanList)
 </script>
 </html>

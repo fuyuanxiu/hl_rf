@@ -1,6 +1,6 @@
 .data_content{
     /*overflow-x: hidden;*/
-     min-width: 1263px; 
+    min-width: 1263px; 
     padding-top: 20px;
     padding-bottom: 20px;
 }
@@ -109,7 +109,7 @@
     /* margin-left: 20px; */
 }
 .data_content .data_main .main_left{
-    width: 26%;
+    width: 20%;
     margin-left:15px;
 }
 .data_content .data_main .main_left>div{
@@ -158,13 +158,13 @@
 
 
 .data_content .data_main .main_center{
-    width: 38%;
+    width: 56%;
     height: 610px;
 
 }
 .data_content .data_main .main_center .center_text{
-    width: calc(100% - 20px);
-    height: 260px;
+    width: calc(100% - 30px);
+    height: 350px;
     margin-left: 15px;
     margin-right: 15px;
     box-sizing: border-box;
@@ -174,8 +174,8 @@
     margin-bottom:20px;
 }
 .center_text1{
-    width: calc(100% - 20px);
-    height: 320px;
+    width: calc(100% - 30px);
+    height: 230px;
     margin-left: 15px;
     margin-right: 15px;
     box-sizing: border-box;
@@ -265,7 +265,7 @@
 }
 
 .data_content .data_main .main_right{
-    width: 34%;
+    width: 23%;
 }
 .data_content .data_main .main_right>div{
     width: 98%;
@@ -315,7 +315,7 @@
     font-weight: 600;
 }
 .data_content .data_main .main_right div:nth-child(1){
-    margin-bottom: 20px;
+    margin-bottom: 50px;
 }
 .data_content .data_main .main_right div .main_title{
     width: 180px;
@@ -473,7 +473,7 @@
 }
  .main_table td{
     color:#fff;
-    font-size: 14px;
+    font-size: 10px;
     text-align: center;
 }
 .main_table tbody tr:nth-child(1),
@@ -553,7 +553,7 @@ li:hover{
 }
 .chart_main{
 	width:100%;
-	height: 280px;
+	height: 350px;
 	margin:10px;
 }
 .img-glz{
@@ -591,6 +591,7 @@ li:hover{
     opacity:0.5;
 }
 
+
 .speed-line{
     background-color: #043037;
     height: 13px;
@@ -613,28 +614,4 @@ li:hover{
     font-size: 12px;
 }
 
-/***车间样式20201209***/
-.area_info_div{
-	width:99%;
-}
-.area_info_chart{
-	width:32%;
-	float:left;
-	height:125px;
-}
-.center_chart{
-    width: calc(100% - 10px);
-    height: 310px;
-    margin: 5px;
-    box-sizing: border-box;
-}
-.right_b_chart{
-	width: 98%;
-    height: 310px;
-    margin: 5px;
-    box-sizing: border-box;
-}
-.status_div{
-	height:240px;
-	float:left;
-}
+

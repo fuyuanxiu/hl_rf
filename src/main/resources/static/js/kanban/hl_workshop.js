@@ -4,14 +4,14 @@
 var time1 = 0, time2 = 0;
 $(function() {
 	getAreaChart();// 区域信息echarts图
-	getClassChart();
-	getProcChart();
-	getStatusChart();
+	getClassChart();//班组合格率图
+	getProcChart();//产品工序合格率
+	getStatusChart();//班组生产达标情况
 });
 function getAreaChart() {
 	getAreaCharts(52, 5, 91.22, "员工在岗率", '#00FF99', 'area_chart1')// （在线,缺席,比率，标题，颜色，divID）
 	getAreaCharts(20, 6, 76.92, "设备使用率", '#6699FF', 'area_chart2')// （开机数，停机数，比率,标题，颜色，divID）
-	getAreaCharts(102, 23, 81.6, "报工及时率", '#33FFFF', 'area_chart3')// (按时,不及时，比率，标题，颜色，divID)
+	getAreaCharts(102, 23, 81.6, "报工及时率", '#33FFFF', 'area_chart3')// (按时数,不及时数，比率，标题，颜色，divID)
 }
 
 // 获取员工在岗率-charts
@@ -61,7 +61,7 @@ function getAreaCharts(item_now, item_off, onRate, titleName, color, chartId) {
 }
 function getClassChart() {
 	option = {
-		color : [ '#CC3366', '#00FFCC' ],
+		color : [ '#CC00FF', '#00FFCC' ],
 		grid : {
 			x : 50,// 左边距
 			y : 30,// 上边距
@@ -152,7 +152,7 @@ function getClassChart() {
 
 function getProcChart() {
 	option = {
-		color : [ '#CC3366', '#00FFCC' ],
+		color : [ '#CC00FF', '#00FFCC' ],
 		grid : {
 			x : 50,// 左边距
 			y : 30,// 上边距
@@ -242,4 +242,91 @@ function getProcChart() {
 	myCharts1.setOption(option, true)
 }
 function getStatusChart() {
+	var xData = [ '一班', '二班', '三班', '四班', '五班', '六班', '七班', '八班','九班', '十班' ]
+	var yData = [ '72', '73', '76', '80', '85','90', '95', '96','97','98']
+	var colorList = [ '#2a5fcf', '#0093ff','#00deff', '#97e7ff', '#00CCCC', '#00CC99', '#00FFCC','#CCCC66']
+	var visualMapPiecesData = []
+	// visualMap: {
+	// pieces: [
+	// { value: 123, label: '123（自定义特殊颜色）', color: 'grey' }
+	// ]
+	// }
+	for (var i = 0; i < xData.length; i++) {
+		visualMapPiecesData.push({
+			value : yData[i],
+			label : xData[i],
+			color : colorList[i]
+		})
+	}
+	var option = {
+		angleAxis : {
+			axisLine : {
+				show : false
+			},
+			axisTick : {
+				show : false
+			},
+			axisLabel : {
+				show : false
+			},
+			splitLine : {
+				show : false
+			},
+			clockwise : true
+		},
+		radiusAxis : {
+			type : 'category',
+			data : xData,
+			z : 100,
+			axisLine : {
+				show : false
+			},
+			axisTick : {
+				show : false
+			},
+			axisLabel : {
+				show : false
+			},
+			splitLine : {
+				show : false
+			}
+		},
+		center: ['60%','55%'],
+		polar : {
+	        radius: [80]//半径大小
+		},
+		tooltip : {
+			trigger : 'item',
+			formatter : function(params, ticket, callback) {
+				return params.name + ' : ' + ' (' + params.data + '%)'
+			}
+		},
+		visualMap : {
+			top : 5,
+			x : 'left',
+			orient : 'vertical',
+			textStyle : {
+				color : '#ffffff'
+			},
+			pieces : visualMapPiecesData,
+			outOfRange : {
+				color : '#ffffff'
+			}
+		},
+		series : [ {
+			type : 'bar',
+			data : yData,
+			coordinateSystem : 'polar',
+			itemStyle : {
+				normal : {
+					// 定制显示（按顺序）
+					color : function(params) {
+						return colorList[params.dataIndex]
+					}
+				}
+			}
+		} ]
+	}
+	var myCharts1 = echarts.init(document.getElementById('status_chart'));
+	myCharts1.setOption(option, true)
 }
