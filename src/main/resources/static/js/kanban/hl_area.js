@@ -6,20 +6,39 @@
 var taskNo="";
 var area="";
 var itemNo="";
+var index =1;
+
+var action = true;
+var interval_do = null;// 定时器工单轮播刷新
+
+var interval_taxkNo = null;// 定时器刷新工单
 
 var time1=0,time2=0;
 
 $(function() {
 	
 	doData()
-	//for(var o=1;o<woList.length;o++){
-	//	taskNo=woList[o].TASK_NO;
-	//	area=woList[o].ARE_CODE
-	//	itemNo=woList.PRO_CODE
-	//}
+	
+	//interval_do = setInterval(getKanBanList, 10 * 1000); // 启动,执行默认参数
+	
 });
 
 function doData(){
+	/*if(woList.length>1){//至少两个工单
+		if(index<woList.length){
+			   //设置下个要播放的看板参数
+			   taskNo=woList[index].TASK_NO;//工单
+			   area=woList[index].ARE_CODE;//区域
+			   itemNo=woList[index].PRO_CODE;//产品编号
+			  
+			   if(index==woList.length-1){
+				  index=0;
+			   }  
+			   index++;
+			}
+	}*/
+	
+	
 	if(KanbanList.CN != null || KanbanList.CN != 'null'){
 		getProWarn(KanbanList.CN);
 	}
@@ -402,7 +421,7 @@ function getChart3(list) {
 	chart.setOption(option);
 }
 
-function getKanBanList(area,taskNo,itemNo){
+function getKanBanList(){
 	$.ajax({
         url:  '/kanban/getKanbanList',
         cache: false,
