@@ -79,11 +79,12 @@ var context = [[@{/}]];
 
 
 var areaList=[[${area}]];
+
 if(areaList.result){
 	
 	areaList.data.forEach(function(element) {
   		  //var html = '<a href="/kanban/toHlArea?line='+element.FCODE+'"  data-role="button" target="_blank" class="ui-link ui-btn ui-shadow ui-corner-all ui-first-child ui-last-child" role="button" >'+element.FNAME+'</a>'
-  		  var html = '<li class="bg" style="height:30px;line-height:29px;text-align:center;" id="'+element.FCODE+'"><a href="'+context+'kanban/toHlArea?line='+element.FCODE+'"   target="_blank" >'+element.FNAME+'</a></li>';
+  		  var html = '<li class="bg" style="height:30px;line-height:29px;text-align:center;" id="'+element.BOARD_CODE+'"><a href="'+context+'kanban/toHlArea?line='+element.BOARD_CODE+'"   target="_blank" >'+element.BOARD_NAME+'</a></li>';
   				  $("#list").append(html)	
   	 });
 }

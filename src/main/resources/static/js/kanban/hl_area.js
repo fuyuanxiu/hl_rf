@@ -2,8 +2,24 @@
 /**
  * 区域看板
  */
+
+var taskNo="";
+var area="";
+var itemNo="";
+
 var time1=0,time2=0;
+
 $(function() {
+	
+	doData()
+	//for(var o=1;o<woList.length;o++){
+	//	taskNo=woList[o].TASK_NO;
+	//	area=woList[o].ARE_CODE
+	//	itemNo=woList.PRO_CODE
+	//}
+});
+
+function doData(){
 	if(KanbanList.CN != null || KanbanList.CN != 'null'){
 		getProWarn(KanbanList.CN);
 	}
@@ -23,7 +39,8 @@ $(function() {
 	doRen();//人
 	doJi();//机
 	doLiao();//料
-});
+}
+
 function doFa(){
 	var obj=KanbanList.FA;
 	$("#fa tr").remove();
@@ -401,6 +418,9 @@ function getKanBanList(area,taskNo,itemNo){
             console.log(res)
             if(res.result){
            	
+            	//var permList=""
+            	//var woList = ""
+            	//var KanbanList = ""
             }else{
            	 alert(res.msg)
             }
@@ -501,7 +521,7 @@ function doRen(){
 //机
 function doJi(){
 	var obj=KanbanList.JI;	var kaiji=0;var xianzhi=0;var weixiu=0;
-	console.log(obj)
+	//console.log(obj)
 	$("#ji tr").remove();
 	var newRow_icon,newRow_name,newRow_code,opacity;
 	for (var i = 0; i < obj.length; i++) {	

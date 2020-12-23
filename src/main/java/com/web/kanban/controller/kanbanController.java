@@ -105,7 +105,8 @@ public class kanbanController extends WebController {
 			if(object != null){
 				List<Map<String, Object>> lm = (List<Map<String, Object>>) object;
 				System.out.println(lm.get(0).get("TASK_NO"));
-				mav.addObject("KanBanList", kanbanService.getKanbanList(line, lm.get(0).get("TASK_NO").toString(), lm.get(0).get("PRO_CODE").toString()).getData());
+				//mav.addObject("KanBanList", kanbanService.getKanbanList(line, lm.get(0).get("TASK_NO").toString(), lm.get(0).get("PRO_CODE").toString()).getData());
+				mav.addObject("KanBanList", kanbanService.getKanbanList(lm.get(0).get("ARE_CODE").toString(), lm.get(0).get("TASK_NO").toString(), lm.get(0).get("PRO_CODE").toString()).getData());
 			}
 		}catch(Exception e){
 			System.out.println(e.toString());
