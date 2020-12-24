@@ -9,9 +9,9 @@ var itemNo="";
 var index =1;
 
 var action = true;
-var interval_do = null;// 定时器工单轮播刷新
-
-var interval_taxkNo = null;// 定时器刷新工单
+var interval_do = null;// 定时器-工单轮播
+var taskNo_action=true;
+var interval_taskNo = null;// 定时器-更新工单
 
 var time1=0,time2=0;
 
@@ -19,12 +19,13 @@ $(function() {
 	
 	doData()
 	
-	//interval_do = setInterval(getKanBanList, 10 * 1000); // 启动,执行默认参数
-	
+	interval_do = setInterval(getKanBanList,120 * 1000); // -执行轮播 2分钟
+	interval_taskNo=setInterval(getWoList, 1500 * 1000)//-更新工单数据 -30分钟
 });
 
 function doData(){
-	/*if(woList.length>1){//至少两个工单
+	
+	if(woList.length>1){//至少两个工单
 		if(index<woList.length){
 			   //设置下个要播放的看板参数
 			   taskNo=woList[index].TASK_NO;//工单
@@ -33,10 +34,11 @@ function doData(){
 			  
 			   if(index==woList.length-1){
 				  index=0;
-			   }  
-			   index++;
+			   }else{
+				   index++;
+			   }
 			}
-	}*/
+	}
 	
 	
 	if(KanbanList.CN != null || KanbanList.CN != 'null'){
@@ -422,6 +424,7 @@ function getChart3(list) {
 }
 
 function getKanBanList(){
+	console.log(taskNo)
 	$.ajax({
         url:  '/kanban/getKanbanList',
         cache: false,
@@ -436,16 +439,47 @@ function getKanBanList(){
         success: function (res) {
             console.log(res)
             if(res.result){
-           	
-            	//var permList=""
-            	//var woList = ""
-            	//var KanbanList = ""
+            	KanbanList = res.data
+            	action = true;
+            	doData()
             }else{
+            	action = false;
+				clearInterval(interval_do);// 错误-关闭定时器
+           	    alert(res.msg)
+            }
+        },
+        error:function (XMLHttpRequest, textStatus, errorThrown) {
+       	 alert("服务器好像出了点问题！请稍后试试");
+        }
+    });
+}
+
+function getWoList(){
+	$.ajax({
+        url:  '/kanban/getWoList',
+        cache: false,
+        async: true ,
+        data: {"line":permList},
+        type: "GET",
+        contentType:  'application/json; charset=UTF-8',
+        dataType: "json",
+        beforeSend: function(request) {
+
+        },
+        success: function (res) {
+            console.log(res)
+            if(res.result){
+            	 taskNo_action = true;
+            	 woList =res.data
+            	 index=0;
+            }else{
+             taskNo_action = false;
+             clearInterval(interval_taskNo);// 错误-关闭定时器
            	 alert(res.msg)
             }
         },
         error:function (XMLHttpRequest, textStatus, errorThrown) {
-       	 alert("服务器好像除了点问题！请稍后试试");
+       	 alert("服务器好像出了点问题！请稍后试试");
         }
     });
 }

@@ -166,6 +166,18 @@ public class kanbanController extends WebController {
 			}
 	    }
 	   
+	   @ApiOperation(value = "根据区域获取工单", notes = "根据区域获取工单",hidden = true)
+	    @RequestMapping(value = "/getWoList", method = RequestMethod.GET)
+	    @ResponseBody
+	    public ApiResponseResult getWoList(String line) {
+			try {
+				return kanbanService.getWoList(line);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return ApiResponseResult.failure(e.toString());
+			}
+	    }
+	   
 	   @ApiOperation(value = "根据区域和工单获取看板信息", notes = "根据区域和工单获取看板信息",hidden = true)
 	    @RequestMapping(value = "/getKanbanList", method = RequestMethod.GET)
 	    @ResponseBody
