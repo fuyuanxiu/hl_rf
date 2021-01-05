@@ -15,4 +15,6 @@ public interface KanbanService {
 	public ApiResponseResult getKanbanList(String area,String taskNo,String itemNo) throws Exception;
 	
 	public ApiResponseResult getWoList(String area) throws Exception;
+	
+	public ApiResponseResult getImg()throws Exception;
 }

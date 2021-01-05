@@ -83,6 +83,7 @@ public class kanbanController extends WebController {
 		return mav;
 	}
 	
+	
 	@RequestMapping(value = "/toHlCompany", method = RequestMethod.GET)
 	@ResponseBody
 	public ModelAndView toHlCompany() {
@@ -170,12 +171,22 @@ public class kanbanController extends WebController {
 	    @RequestMapping(value = "/getWoList", method = RequestMethod.GET)
 	    @ResponseBody
 	    public ApiResponseResult getWoList(String line) {
+		   //定时下载所有员工照片-20210105-fyx
+		   try {
+				kanbanService.getImg();
+			} catch (Exception e) {
+				System.out.println(e.toString());
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		   //---end---
 			try {
 				return kanbanService.getWoList(line);
 			} catch (Exception e) {
 				e.printStackTrace();
 				return ApiResponseResult.failure(e.toString());
 			}
+			
 	    }
 	   
 	   @ApiOperation(value = "根据区域和工单获取看板信息", notes = "根据区域和工单获取看板信息",hidden = true)

@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ClassUtils;
 
 import com.app.base.data.ApiResponseResult;
+import com.system.user.dao.SysUserDao;
 import com.web.kanban.service.KanbanService;
 import com.web.report.service.internal.ImpUtils;
 
@@ -36,6 +37,8 @@ public class KanbanImpl extends ReportPrcUtils implements KanbanService {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private SysUserDao sysUserDao;
 
 	@Override
 	public ApiResponseResult getAreaList() throws Exception {
@@ -414,4 +417,13 @@ public class KanbanImpl extends ReportPrcUtils implements KanbanService {
 	        }
 	        return str;
 	    }
+		@Override
+		public ApiResponseResult getImg() throws Exception {
+			// TODO Auto-generated method stub
+			List<Map<String, Object>> lmp = sysUserDao.getImg();
+			for(Map<String, Object> map:lmp){
+				getUserImg(map.get("FCODE").toString());
+			}
+			return null;
+		}
 }

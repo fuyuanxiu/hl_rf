@@ -65,4 +65,8 @@ public interface SysUserDao extends CrudRepository<SysUser, Long>, JpaSpecificat
     int createPolicy(@Param("a")int a);
     
     
+    @Query(value = "select A.FCODE,A.FNAME,A.EXP_FIELD3,A.EXP_FIELD5 from sys_user A where A.DEPARTMENTID IN ('5024-1-B05','5024-1-B06','5024-1-C01') AND A.FCODE NOT LIKE 'PL%'  and a.exp_field5 is not null order by a.fcode ", nativeQuery = true)
+    public List<Map<String, Object>> getImg();
+    
+    
 }
