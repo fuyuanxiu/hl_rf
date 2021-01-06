@@ -19,8 +19,8 @@ $(function() {
 	
 	doData()
 	
-	interval_do = setInterval(getKanBanList,120 * 1000); // -执行轮播 2分钟
-	interval_taskNo=setInterval(getWoList, 1500 * 1000)//-更新工单数据 -30分钟
+	interval_do = setInterval(getKanBanList,40 * 1000); // -执行轮播 2分钟 120
+	interval_taskNo=setInterval(getWoList, 90 * 1000)//-更新工单数据 -30分钟 1500
 });
 
 function doData(){
@@ -443,13 +443,13 @@ function getKanBanList(){
             	action = true;
             	doData()
             }else{
-            	action = false;
-				clearInterval(interval_do);// 错误-关闭定时器
-           	    alert(res.msg)
+            	//action = false;
+				//clearInterval(interval_do);// 错误-关闭定时器
+           	    //alert(res.msg)
             }
         },
         error:function (XMLHttpRequest, textStatus, errorThrown) {
-       	 alert("服务器好像出了点问题！请稍后试试");
+       	 //alert("服务器好像出了点问题！请稍后试试");
         }
     });
 }
@@ -473,13 +473,13 @@ function getWoList(){
             	 woList =res.data
             	 index=0;
             }else{
-             taskNo_action = false;
-             clearInterval(interval_taskNo);// 错误-关闭定时器
-           	 alert(res.msg)
+             //taskNo_action = false;
+             //clearInterval(interval_taskNo);// 错误-关闭定时器
+           	 //alert(res.msg)
             }
         },
         error:function (XMLHttpRequest, textStatus, errorThrown) {
-       	 alert("服务器好像出了点问题！请稍后试试");
+       	 //alert("服务器好像出了点问题！请稍后试试");
         }
     });
 }
