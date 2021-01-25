@@ -102,7 +102,7 @@
 
 .data_content .data_main{
     /* width: calc(100% - 40px); */
-    width: calc(100% - 30px);
+    width: calc(100% - 5px);
     /* margin-bottom: 20px; */
     /* height: 615px; */
     height: 815px;
@@ -164,7 +164,7 @@
 }
 .data_content .data_main .main_center .center_text{
     width: calc(100% - 20px);
-    height: 260px;
+    height: 280px;
     margin-left: 15px;
     margin-right: 15px;
     box-sizing: border-box;
@@ -175,7 +175,7 @@
 }
 .center_text1{
     width: calc(100% - 20px);
-    height: 320px;
+    height: 370px;
     margin-left: 15px;
     margin-right: 15px;
     box-sizing: border-box;
@@ -545,6 +545,7 @@ li:hover{
     color:#fff;
     text-align: center;
 }
+
 .ul1{
 	margin-bottom:0px;
 }
@@ -620,21 +621,113 @@ li:hover{
 .area_info_chart{
 	width:32%;
 	float:left;
-	height:125px;
+	height:130px;
 }
 .center_chart{
     width: calc(100% - 10px);
-    height: 310px;
+    height: 365px;
     margin: 5px;
     box-sizing: border-box;
 }
 .right_b_chart{
 	width: 98%;
-    height: 310px;
+    height: 360px;
     margin: 5px;
     box-sizing: border-box;
 }
 .status_div{
-	height:240px;
+	height:270px;
 	float:left;
+}
+/**2021-01-20 任务汇总表格设置-start-**/
+
+.tablebox {
+	height:  460px;
+	overflow: hidden;
+	position: relative;
+	margin: 15px auto;
+	margin-left: 3px;
+	margin-right: 2px;
+}
+
+.tbl-header {
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 999;
+}
+
+.tbl-body {
+	width: inherit;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.tablebox table, .tablebox table tr td {
+	/*border: 1px solid #333399;*/
+	/*border: 1px solid #ffffff;*/
+	border-collapse: collapse;
+}
+
+.tablebox table {
+	width: 100%;
+}
+
+.tablebox table th, .tablebox table td {
+	text-align: center;
+	vertical-align: middle;
+	padding: 2px;
+	color: #FFFFFF;
+}
+
+.tablebox table tr th {
+	background: #074571;
+	cursor: pointer;
+}
+
+.tablebox th {
+	font-size: 12px;
+	/*border: 2px solid #333399;*/
+	/*border: 1px solid #ffffff;*/
+	border-collapse: collapse;
+	font-weight: normal;
+}
+
+.tablebox td {
+	font-size: 10px;
+}
+
+.tablebox tr:nth-child(even) td, .tbl-body1 tr:nth-child(even) td {
+	background-color: #333399;/*条纹样式*/
+}
+
+/**2021-01-20 任务汇总表格设置-end-**/
+.common_table tr{
+    height: 30px;
+    border: 2px solid #2C58A6;
+}
+ .common_table{
+    width: 100%;
+    margin-top: 25px;
+}
+.common_table table{
+    width: 100%;
+}
+.common_table thead tr{
+    height: 30px;
+}
+.common_table th{
+    font-size: 14px;
+    font-weight: 600;
+    color:#61d2f7;
+    text-align: center;
+    border: 2px solid #2C58A6;
+}
+ .common_table td{
+    color:#fff;
+    font-size: 14px;
+    text-align: center;
+    border: 2px solid #2C58A6;
 }

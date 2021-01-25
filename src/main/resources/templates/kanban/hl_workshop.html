@@ -15,6 +15,7 @@
 	th:href="@{../css/icon/iconfont.css}" rel="stylesheet" type="text/css" />
 
 <style>
+
 .t_title {
 	width: 100%;
 	height: 100%;
@@ -45,7 +46,7 @@
 	<!--header-->
 	<div class="header">
 		<div class="bg_header">
-			<div class="header_nav fl t_title">生产车间看板</div>
+			<div class="header_nav fl t_title"><span id="head_title">生产车间看板</span></div>
 		</div>
 	</div>
 
@@ -54,7 +55,7 @@
 
 		<div class="data_main">
 			<div class="main_left fl">
-				<div class="left_1 t_btn6" style="cursor: pointer; height: 180px;">
+				<div class="left_1 t_btn6" style="cursor: pointer; height: 170px;">
 					<!--左上边框-->
 					<div class="t_line_box">
 						<i class="t_l_line"></i> <i class="l_t_line"></i>
@@ -76,27 +77,28 @@
 						<img src="picture/t_9.png" alt=""> 车间状态
 					</div>
 					<!--内容-->
-					<div class="main_table t_btn8" style="width: 94%;margin-left:10px;">
+					<div class="main_table t_btn8"
+						style="width: 94%; margin-left: 10px;">
 						<table>
 							<tbody>
 								<tr style="height: 40px;">
 									<td style="width: 50%"><span>在编人数</span></td>
-									<td style="width: 50%"><span id="plan_emp">123</span></td>
+									<td style="width: 50%"><span id="plan_emp">1</span></td>
 								</tr>
 								<tr style="height: 40px;">
 									<td style="width: 50%"><span>在岗人数</span></td>
-									<td style="width: 50%"><span id="on_emp">111</span></td>
+									<td style="width: 50%"><span id="on_emp">1</span></td>
 								</tr>
 								<tr style="height: 40px;">
 									<td style="width: 50%"><span>工单任务数</span></td>
-									<td style="width: 50%"><span id="task_count">123</span></td>
+									<td style="width: 50%"><span id="task_count">1</span></td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
 				</div>
 				<div class="left_2 "
-					style="cursor: pointer; height: 400px; margin-bottom: 20px;">
+					style="cursor: pointer; height: 480px; margin-bottom: 20px;">
 					<div class="t_line_box">
 						<i class="t_l_line"></i> <i class="l_t_line"></i>
 					</div>
@@ -112,7 +114,7 @@
 					<div class="main_title">
 						<img src="picture/t_7.png" alt=""><span>任务汇总</span>
 					</div>
-					<div class="table-bordered-div">
+					<!-- <div class="table-bordered-div">
 						<table class="table-bordered table-line">
 							<thead>
 								<tr>
@@ -120,7 +122,7 @@
 									<th>产品编号</th>
 									<th>产品名称</th>
 									<th>工单数量</th>
-									<th>划壳成日</th>
+									<th>计划完成日期</th>
 									<th>是否延时</th>
 								</tr>
 							</thead>
@@ -132,42 +134,48 @@
 									<td>10000</td>
 									<td>2020-12-12</td>
 									<td>是</td>
-								</tr>
-								<tr>
-									<td>AB-123129837-2</td>
-									<td>AB-123129837-2</td>
-									<td>好多好多好多好多好多好多好多好多的字</td>
-									<td>10000</td>
-									<td>2020-12-12</td>
-									<td>是</td>
-								</tr>
-								<tr>
-									<td>AB-123129837-2</td>
-									<td>AB-123129837-2</td>
-									<td>好多好多好多好多好多好多好多好多的字</td>
-									<td>10000</td>
-									<td>2020-12-12</td>
-									<td>是</td>
-								</tr>
-								<tr>
-									<td>AB-123129837-2</td>
-									<td>AB-123129837-2</td>
-									<td>好多好多好多好多好多好多好多好多的字</td>
-									<td>10000</td>
-									<td>2020-12-12</td>
-									<td>是</td>
-								</tr>
-								<tr>
-									<td>AB-123129837-2</td>
-									<td>AB-123129837-2</td>
-									<td>好多好多好多好多好多好多好多好多的字</td>
-									<td>10000</td>
-									<td>2020-12-12</td>
-									<td>否</td>
-								</tr>
+								</tr>	
 							</tbody>
 						</table>
+					</div>-->
+
+					<div class="tablebox">
+						<div class="tbl-header">
+							<table>
+								<thead>
+									<tr>
+										<th>工单号</th>
+										<th>产品编号</th>
+										<th>产品名称</th>
+										<th>工单数量</th>
+										<th>计划完成日期</th>
+										<th>是否延时</th>
+									</tr>
+								</thead>
+								<tbody style="opacity: 0;" id="unTask1"></tbody>
+							</table>
+						</div>
+
+						<div class="tbl-body">
+							<table>
+								<thead>
+									<tr>
+										<th>工单号</th>
+										<th>产品编号</th>
+										<th>产品名称</th>
+										<th>工单数量</th>
+										<th>计划完成日期</th>
+										<th>是否延时</th>
+									</tr>
+								</thead>
+								<tbody id="unTask">
+
+								</tbody>
+							</table>
+						</div>
 					</div>
+
+
 				</div>
 			</div>
 			<div class="main_center fl">
@@ -197,23 +205,23 @@
 							<div class="area_info_chart" id="area_chart2"></div>
 							<div class="area_info_chart" id="area_chart3"></div>
 						</div>
-						<div class="main_table t_btn8" style="width: 96%;">
+						<div class="common_table t_btn8" style="width: 96%;">
 							<table>
 								<tbody>
-									<tr style="height: 30px;">
+									<tr style="height: 35px;">
 										<th style="width: 33%"><span>设备报警区域</span></th>
 										<th style="width: 33%"><span>质量报警区域</span></th>
 										<th style="width: 33%"><span>欠料区域</span></th>
 									</tr>
-									<tr style="height: 30px;">
-										<td style="width: 33%"><span id="dev_warn_area1">区域A</span></td>
-										<td style="width: 33%"><span id="qual_warn_area1">区域A</span></td>
-										<td style="width: 33%"><span id="owe_warn_area1">区域A</span></td>
+									<tr style="height: 35px;">
+										<td style="width: 33%"><span id="dev_warn_area1"></span></td>
+										<td style="width: 33%"><span id="qual_warn_area1"></span></td>
+										<td style="width: 33%"><span id="owe_warn_area1"></span></td>
 									</tr>
-									<tr style="height: 30px;">
-										<td style="width: 33%"><span id="dev_warn_area2">区域2</span></td>
-										<td style="width: 33%"><span id="qual_warn_area2">区域2</span></td>
-										<td style="width: 33%"><span id="owe_warn_area2">区域2</span></td>
+									<tr style="height: 35px;">
+										<td style="width: 33%"><span id="dev_warn_area2"></span></td>
+										<td style="width: 33%"><span id="qual_warn_area2"></span></td>
+										<td style="width: 33%"><span id="owe_warn_area2"></span></td>
 									</tr>
 								</tbody>
 							</table>
@@ -245,7 +253,7 @@
 				</div>
 			</div>
 			<div class="main_right fr">
-				<div class="right_1" style="height: 260px">
+				<div class="right_1" style="height: 280px">
 					<!--左上边框-->
 					<div class="t_line_box">
 						<i class="t_l_line"></i> <i class="l_t_line"></i>
@@ -267,15 +275,22 @@
 					</div>
 					<div class="chart_main">
 						<div class="status_div" style="width: 70%;" id="status_chart"></div>
-						<div class="status_div" style="width: 29%; text-align:center;">
-							<img id="director_img" src="../images/portrait.png" style="width: 80%;margin-top:50%;" alt="">
-							<div style="text-align:center;margin-top:10%;">
-							<span style="color:#ffffff;font-size:16px;font-weight:bold;" id="director">车间负责人</span>
+						<div class="status_div" style="width: 29%; text-align: center;">
+							<img id="director_img" src="../images/portrait.png"
+								style="width: 65%; height: 60; margin-top: 25%;" alt="">
+							<div style="text-align: center; margin-top: 5%;">
+								<span
+									style="color: #ffffff; font-size: 14px; font-weight: bold;">车间负责人</span>
+							</div>
+							<div style="text-align: center; margin-top: 1%;">
+								<span
+									style="color: #ffffff; font-size: 16px; font-weight: bold;"
+									id="director">车间负责人</span>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="right_1" style="height: 320px">
+				<div class="right_1" style="height: 370px">
 					<!--左上边框-->
 					<div class="t_line_box">
 						<i class="t_l_line"></i> <i class="l_t_line"></i>
@@ -312,6 +327,12 @@
 <script src="/js/kanban/hl_workshop.js"
 	th:src="@{/js/kanban/hl_workshop.js}"></script>
 <script th:inline="javascript">
-	
+var context = [[@{/}]];
+var kanbanData = [[${kanbanData}]];
+var workShopId =  [[${workShopId}]];
+var workShopName =  [[${workShopName}]];
+$("#head_title").text(workShopName)
+var rotime =  [[${rotime}]];
+console.log(kanbanData)
 </script>
 </html>

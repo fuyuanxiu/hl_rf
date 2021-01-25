@@ -1,356 +1,252 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
-     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
-    
-    <title>公司看板</title>
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link rel="stylesheet" href="../kanban/css/base.css">
-    <link rel="stylesheet" href="../kanban/css/company_index.css">
-    <link href="../css/icon/iconfont.css" th:href="@{../css/icon/iconfont.css}" rel="stylesheet" type="text/css" />
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+<meta name="viewport"
+	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
 
-    <style>
-        .t_title{
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            font-size: 2.5em;
-            line-height: 80px;
-            color: #fff;
-        }
-        #chart_map{
-            cursor: pointer;
-        }
-        .t_show{
-            position: absolute;
-            top: 0;
-            right: 0;
-            border-radius: 2px;
-            background: #2C58A6;
-            padding: 2px 5px;
-            color: #fff;
-            cursor: pointer;
-        }
-    </style>
+<title>公司看板</title>
+<link href="css/bootstrap.css" rel="stylesheet">
+<link rel="stylesheet" href="../kanban/css/base.css">
+<link rel="stylesheet" href="../kanban/css/company_index.css">
+<link href="../css/icon/iconfont.css"
+	th:href="@{../css/icon/iconfont.css}" rel="stylesheet" type="text/css" />
+
+<style>
+.t_title {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	font-size: 2.5em;
+	line-height: 80px;
+	color: #fff;
+}
+
+#chart_map {
+	cursor: pointer;
+}
+
+.t_show {
+	position: absolute;
+	top: 0;
+	right: 0;
+	border-radius: 2px;
+	background: #2C58A6;
+	padding: 2px 5px;
+	color: #fff;
+	cursor: pointer;
+}
+</style>
 </head>
 <body topmargin=0 leftmargin=10>
+	<!--header-->
+	<div class="header">
+		<div class="bg_header">
+			<div class="header_nav fl t_title">公司看板</div>
+		</div>
+	</div>
+	<!--main-->
+	<div class="data_content">
+		<div class="data_main">
+			<div class="main_left fl">
+				<div class="top_chart"
+					style="width: 73% ; height: 190px;">
+					<!--左上边框-->
+					<div class="t_line_box">
+						<i class="t_l_line"></i> <i class="l_t_line"></i>
+					</div>
+					<!--右上边框-->
+					<div class="t_line_box">
+						<i class="t_r_line"></i> <i class="r_t_line"></i>
+					</div>
+					<!--左下边框-->
+					<div class="t_line_box">
+						<i class="l_b_line"></i> <i class="b_l_line"></i>
+					</div>
+					<!--右下边框-->
+					<div class="t_line_box">
+						<i class="r_b_line"></i> <i class="b_r_line"></i>
+					</div>
+					<!--标题-->
+					<div class="main_title">
+						<img src="picture/t_4.png" alt=""> 客户端累计PPM
+					</div>
+					<!--内容-->
+					<div  style="width: 99%;height: 190px;" id="echarts_t1"></div>
+				</div>
+				<div class="top_chart"
+					style="width: 25% ; height: 190px;">
+					<!--左上边框-->
+					<div class="t_line_box">
+						<i class="t_l_line"></i> <i class="l_t_line"></i>
+					</div>
+					<!--右上边框-->
+					<div class="t_line_box">
+						<i class="t_r_line"></i> <i class="r_t_line"></i>
+					</div>
+					<!--左下边框-->
+					<div class="t_line_box">
+						<i class="l_b_line"></i> <i class="b_l_line"></i>
+					</div>
+					<!--右下边框-->
+					<div class="t_line_box">
+						<i class="r_b_line"></i> <i class="b_r_line"></i>
+					</div>
+					<!--标题-->
+					<div class="main_title">
+						<img src="picture/t_4.png" alt=""> 用户在线比例
+					</div>
+					<!--内容-->
+					<div  style="width: 99%;height:190px;" id="echarts_t2"></div>
+				</div>
+			</div>
 
-<!--header-->
-<div class="header">
-    <div class="bg_header">
-        <div class="header_nav fl t_title"> 公司看板
-        </div> 
-    </div>
-</div>
+			<div class="main_left fl">
+				<div class="top_chart"
+					style="width:32%; height: 190px;">
+					<!--左上边框-->
+					<div class="t_line_box">
+						<i class="t_l_line"></i> <i class="l_t_line"></i>
+					</div>
+					<!--右上边框-->
+					<div class="t_line_box">
+						<i class="t_r_line"></i> <i class="r_t_line"></i>
+					</div>
+					<!--左下边框-->
+					<div class="t_line_box">
+						<i class="l_b_line"></i> <i class="b_l_line"></i>
+					</div>
+					<!--右下边框-->
+					<div class="t_line_box">
+						<i class="r_b_line"></i> <i class="b_r_line"></i>
+					</div>
+					<!--标题-->
+					<div class="main_title">
+						<img src="picture/t_4.png" alt=""> 原料毛胚过程PPM
+					</div>
+					<!--内容-->
+					<div  style="width: 99%;height: 190px;" id="echarts_c1"></div>
+				</div>
+				<div class="top_chart"
+					style="width:33%; height: 190px;">
+					<!--左上边框-->
+					<div class="t_line_box">
+						<i class="t_l_line"></i> <i class="l_t_line"></i>
+					</div>
+					<!--右上边框-->
+					<div class="t_line_box">
+						<i class="t_r_line"></i> <i class="r_t_line"></i>
+					</div>
+					<!--左下边框-->
+					<div class="t_line_box">
+						<i class="l_b_line"></i> <i class="b_l_line"></i>
+					</div>
+					<!--右下边框-->
+					<div class="t_line_box">
+						<i class="r_b_line"></i> <i class="b_r_line"></i>
+					</div>
+					<!--标题-->
+					<div class="main_title">
+						<img src="picture/t_4.png" alt=""> 表面处理不合格率
+					</div>
+					<!--内容-->
+					<div  style="width: 99%;height: 190px;" id="echarts_c2"></div>
+				</div>
+				<div class="top_chart"
+					style="width:32%; height: 190px;">
+					<!--左上边框-->
+					<div class="t_line_box">
+						<i class="t_l_line"></i> <i class="l_t_line"></i>
+					</div>
+					<!--右上边框-->
+					<div class="t_line_box">
+						<i class="t_r_line"></i> <i class="r_t_line"></i>
+					</div>
+					<!--左下边框-->
+					<div class="t_line_box">
+						<i class="l_b_line"></i> <i class="b_l_line"></i>
+					</div>
+					<!--右下边框-->
+					<div class="t_line_box">
+						<i class="r_b_line"></i> <i class="b_r_line"></i>
+					</div>
+					<!--标题-->
+					<div class="main_title">
+						<img src="picture/t_4.png" alt=""> 外协过程PPM
+					</div>
+					<!--内容-->
+					<div  style="width: 99%;height: 190px;" id="echarts_c3"></div>
+				</div>
+			</div>
 
-<!--main-->
-<div class="data_content">
-    <div class="data_main">
-        <div class="main_left fl">
-            <div class="left_1 t_btn6" style="cursor: pointer;height:210px;">
-                <!--左上边框-->
-                <div class="t_line_box">
-                    <i class="t_l_line"></i> 
-                    <i class="l_t_line"></i> 
-                </div> 
-                <!--右上边框-->
-                <div class="t_line_box">
-                    <i class="t_r_line"></i> 
-                    <i class="r_t_line"></i> 
-                </div> 
-                <!--左下边框-->
-                <div class="t_line_box">
-                    <i class="l_b_line"></i> 
-                    <i class="b_l_line"></i> 
-                </div> 
-                    <!--右下边框-->
-                    <div class="t_line_box">
-                    <i class="r_b_line"></i> 
-                    <i class="b_r_line"></i> 
-                </div> 
-                <div class="main_title">
-                    <img src="picture/t_1.png" alt="">
-                    产能预警
-                </div>
-                <div  id="pro_warn" class="chart" style="width:100%;height: 260px;"></div>
-            </div>
-            <div class="left_2 " style="cursor: pointer;height:120px;margin-bottom:20px;">
-                <div class="t_line_box">
-                    <i class="t_l_line"></i> 
-                    <i class="l_t_line"></i> 
-                </div> 
-                <div class="t_line_box">
-                    <i class="t_r_line"></i> 
-                    <i class="r_t_line"></i> 
-                </div> 
-                <div class="t_line_box">
-                    <i class="l_b_line"></i> 
-                    <i class="b_l_line"></i> 
-                </div> 
-                    <div class="t_line_box">
-                    <i class="r_b_line"></i> 
-                    <i class="b_r_line"></i> 
-                </div> 
-                <div class="main_title">
-                    <img src="picture/t_5.png" alt=""><span style="color:red;">异常报警</span>
-                </div>
-                <div class="main_table t_btn8">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>质量</th>
-                            <th>设备</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                      
-                        <tr style="height:40px;">
-                            <td style="width:50%"><span id="yc_zl"></span></td>
-                            <td td style="width:50%"><span id="yc_sb"></span></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="left_3" style="cursor: pointer;height:230px;">
-                <div class="t_line_box">
-                    <i class="t_l_line"></i> 
-                    <i class="l_t_line"></i> 
-                </div> 
-                <div class="t_line_box">
-                    <i class="t_r_line"></i> 
-                    <i class="r_t_line"></i> 
-                </div> 
-                <div class="t_line_box">
-                    <i class="l_b_line"></i> 
-                    <i class="b_l_line"></i> 
-                </div> 
-                    <div class="t_line_box">
-                    <i class="r_b_line"></i> 
-                    <i class="b_r_line"></i> 
-                </div> 
-                <div class="main_title">
-                    <img src="picture/t_9.png" alt="" style="width:18px;">负责人
-                </div>
-                <div class="main_table t_btn8">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>车间负责人</th>
-                            <th>生产负责人</th>
-                            <th>质量负责人</th>
-                        </tr>
-                        </thead>
-                        <tbody >
-                        <tr>
-                            <th ><img id="jl_img" src="../images/portrait.png" class="img-glz" alt=""></th>
-                            <th ><img id="zz_img" src="../images/portrait.png" class="img-glz"  alt=""></th>
-                            <th ><img id="zjy_img" src="../images/portrait.png" class="img-glz"  alt=""></th>
-                        </tr>
-                         <tr>
-                            <th id="jl_name"></th>
-                            <th id="zz_name"></th>
-                            <th id="zjy_name"></th>
-                        </tr>
-	                    </tbody>
-                    </table>
-                </div>
-                <!-- <div id="chart_2" class="chart t_btn9" style="width:100%;height: 280px;"></div> -->
-            </div>
-        </div>
-        <div class="main_center fl">
-            <div class="center_text" style="position: relative;">
-                <!--左上边框-->
-                <div class="t_line_box">
-                    <i class="t_l_line"></i> 
-                    <i class="l_t_line"></i> 
-                </div> 
-                <!--右上边框-->
-                <div class="t_line_box">
-                    <i class="t_r_line"></i> 
-                    <i class="r_t_line"></i> 
-                </div> 
-                <!--左下边框-->
-                <div class="t_line_box">
-                    <i class="l_b_line"></i> 
-                    <i class="b_l_line"></i> 
-                </div> 
-                 <!--右下边框-->
-                 <div class="t_line_box">
-                    <i class="r_b_line"></i> 
-                    <i class="b_r_line"></i> 
-                </div> 
-                <div class="main_title" style="width: 230px;">
-                    <img src="picture/t_4.png" alt="">
-                    <div class="main_title_text">
-                       <ul class="ul1">
-				          <li class="bg" id="li_fa">法</li>
-				          <li></li>
-				          <li class="bg" id="li_huan">环</li>
-				          <li></li>
-				          <li class="active" id="li_ce">测</li>
-				          <li></li>
-				        </ul>
-                     </div>
-                </div>
-                <!-- 法 -start-->
-                <div class="chart_main div_none"  id="div_li_fa">
-                   <!-- <img id="div_li_fa_img" src="" style="width:100%;height: 348px;padding:10px;padding-top:20px;"> -->
-                   <div class="main_table t_btn8">
-	                    <table>
-	                        <thead>
-	                        <tr>
-	                            <th>工序顺序号</th>
-								<th>工序名称</th>
-								<th>工艺描述</th>
-	                        </tr>
-	                        </thead>
-	                        <tbody id="fa">
-	                        </tbody>
-	                    </table>
-	                </div>
-                </div>
-                <!-- 法 -end-->
-                <!-- 环 -start-->
-                <div class="chart_main div_none"  id="div_li_huan">
-                    <img id="div_li_huan_img" src="" style="width:100%;height: 348px;padding:10px;padding-top:20px;">
-                </div>
-                <!-- 环  -end-->
-                <div class="chart_main " style="width:666px;height: 350px;margin:10px;color:#fff" id="div_li_ce">3</div>
-            </div>
-            <div class="center_text1" style="position: relative;width:1095px;">
-                <!--左上边框-->
-                <div class="t_line_box">
-                    <i class="t_l_line"></i> 
-                    <i class="l_t_line"></i> 
-                </div> 
-                <!--右上边框-->
-                <div class="t_line_box">
-                    <i class="t_r_line"></i> 
-                    <i class="r_t_line"></i> 
-                </div> 
-                <!--左下边框-->
-                <div class="t_line_box">
-                    <i class="l_b_line"></i> 
-                    <i class="b_l_line"></i> 
-                </div> 
-                 <!--右下边框-->
-                 <div class="t_line_box">
-                    <i class="r_b_line"></i> 
-                    <i class="b_r_line"></i> 
-                </div> 
-                <div class="main_title" style="width: 230px;">
-                    <img src="picture/t_4.png" alt="">
-                     <div class="main_title_text">
-                       <ul class="ul2">
-				          <li id="li_ren" class="active">人</li>
-				          <li></li>
-				          <li  id="li_ji" class="">机</li>
-				          <li></li>
-				          <li id="li_liao" class="">料</li>
-				          <li></li>
-				        </ul>
-                     </div>
-                     
-                </div>
-                <!--人 -start-->
-                <div class="" id="div_li_ren">
-                   <div class="main_table t_btn8">
-	                    <table>
-	                    <thead>
-                        <tr id="ren_head">
-                        <!-- <td><span class="speed-line"><span class="speed-num" style="background-color: rgb(24, 100, 227); width: 70%;"></span><span class="numText">70%</span></span></td> -->
-                        </tr>
-                        </thead>
-	                        <tbody id="ren">
-	                        </tbody>
-	                    </table>
-	                </div>
-                </div>
-                <!--人 -end-->
-                <!--机 -start-->
-                <div id="div_li_ji" class="div_none">
-                <!-- <i class="iconfont icon-xianweijing" style="color:green;font-size:20px;"></i>  -->
-                <div class="main_table">
-	                    <table>
-	                    <thead>
-                        <tr>
-                            <th><span class="green-legend">开机</span><span style="color:#fff">开机</span></th>
-					        <th><span class="red-legend">故障</span><span style="color:#fff">故障</span></th>
-			                <th><span class="yellow-legend">待机</span><span style="color:#fff">待机</span></th>
-                        </tr>
-                        </thead>
-	                        <tbody id="ji">
-	                        </tbody>
-	                    </table>
-	                </div>
-                </div>
-                 <!--机 -end-->
-                 <!--料 -start-->
-                <div class="div_none"  id="div_li_liao">
-                  <div class="main_table t_btn8">
-	                    <table>
-	                        <thead>
-	                        <tr>
-	                            <th>物料编号</th>
-								<th>物料名称</th>
-								<th>领料数量</th>
-								<th>需领用量</th>
-								<th>退料数量</th>
-								<th>已领用量</th>
-								<th>未领用量</th>
-								<th>单位</th>
-	                        </tr>
-	                        </thead>
-	                        <tbody id="liao">
-	                        </tbody>
-	                    </table>
-	                </div>
-                </div>
-                <!--料-end -->
-            </div>
-        </div>
-        <div class="main_right fr">
-            <div class="right_1" style="height:350px">
-                <!--左上边框-->
-                <div class="t_line_box">
-                    <i class="t_l_line"></i> 
-                    <i class="l_t_line"></i> 
-                </div> 
-                <!--右上边框-->
-                <div class="t_line_box">
-                    <i class="t_r_line"></i> 
-                    <i class="r_t_line"></i> 
-                </div> 
-                <!--左下边框-->
-                <div class="t_line_box">
-                    <i class="l_b_line"></i> 
-                    <i class="b_l_line"></i> 
-                </div> 
-                    <!--右下边框-->
-                    <div class="t_line_box">
-                    <i class="r_b_line"></i> 
-                    <i class="b_r_line"></i> 
-                </div> 
-                <!-- <div class="main_title" style="width:100px;">
-                    <img src="picture/t_4.png" alt="">生产任务信息
-                </div> -->
-                
-            </div>
-        </div>
-    </div>
-</div>
-
+			<div class="main_left fl">
+				<div class="top_chart"
+					style="width:49% ; height: 200px;">
+					<!--左上边框-->
+					<div class="t_line_box">
+						<i class="t_l_line"></i> <i class="l_t_line"></i>
+					</div>
+					<!--右上边框-->
+					<div class="t_line_box">
+						<i class="t_r_line"></i> <i class="r_t_line"></i>
+					</div>
+					<!--左下边框-->
+					<div class="t_line_box">
+						<i class="l_b_line"></i> <i class="b_l_line"></i>
+					</div>
+					<!--右下边框-->
+					<div class="t_line_box">
+						<i class="r_b_line"></i> <i class="b_r_line"></i>
+					</div>
+					<!--标题-->
+					<div class="main_title">
+						<img src="picture/t_4.png" alt=""> 检包车间月产量
+					</div>
+					<!--内容-->
+					<div  style="width: 99%;height: 200px;" id="echarts_b1"></div>
+				</div>
+				<div class="top_chart"
+					style="width:49%; height: 200px;">
+					<!--左上边框-->
+					<div class="t_line_box">
+						<i class="t_l_line"></i> <i class="l_t_line"></i>
+					</div>
+					<!--右上边框-->
+					<div class="t_line_box">
+						<i class="t_r_line"></i> <i class="r_t_line"></i>
+					</div>
+					<!--左下边框-->
+					<div class="t_line_box">
+						<i class="l_b_line"></i> <i class="b_l_line"></i>
+					</div>
+					<!--右下边框-->
+					<div class="t_line_box">
+						<i class="r_b_line"></i> <i class="b_r_line"></i>
+					</div>
+					<!--标题-->
+					<div class="main_title">
+						<img src="picture/t_4.png" alt=""> 粗胚车间月产量
+					</div>
+					<!--内容-->
+					<div  style="width: 99%;height: 200px;" id="echarts_b2"></div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 <script src="../kanban/scripts/jquery-2.2.1.min.js"></script>
 <script src="../kanban/scripts/bootstrap.min.js"></script>
 <script src="../kanban/scripts/common.js"></script>
 <script src="../kanban/scripts/echarts.min.js"></script>
 <script src="../kanban/scripts/datatool.js"></script>
-<script src="/js/kanban/hl_company.js" th:src="@{/js/kanban/hl_company.js}"></script>
+<script src="/js/kanban/hl_company.js"
+	th:src="@{/js/kanban/hl_company.js}"></script>
 <script th:inline="javascript">
+var context = [[@{/}]];
+var kanbanData = [[${kanbanData}]];
+var rotime =  [[${rotime}]];
+console.log(kanbanData)
 </script>
 </html>

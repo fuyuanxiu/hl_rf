@@ -73,12 +73,37 @@ public class kanbanController extends WebController {
 		return mav;
 	}
 	
+	
+	@RequestMapping(value = "/toIndexWS", method = RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView toIndexWS() {
+		String method = "/kanban/toIndexWS";String methodName ="车间列表";
+		ModelAndView mav=new ModelAndView();
+		try {
+			mav.addObject("workShopList", kanbanService.getWorkshopList());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			mav.addObject("workShopList", null);
+		}
+		mav.setViewName("/kanban/index_ws");//返回路径
+		return mav;
+	}
+	
 	@RequestMapping(value = "/toHlWorkShop", method = RequestMethod.GET)
 	@ResponseBody
-	public ModelAndView toHlWorkShop() {
+	public ModelAndView toHlWorkShop(String workShopId,String workShopName) {
 		String method = "/kanban/toHlWorkShop";String methodName ="恒联车间看板";
 		ModelAndView mav=new ModelAndView();
-		//mav.addObject("pname", p);
+		try{
+			mav.addObject("workShopName", workShopName);
+			mav.addObject("workShopId", workShopId);
+			mav.addObject("rotime",kanbanService.getRotime("20"));//编码：20-车间看板
+			mav.addObject("kanbanData", kanbanService.getWorkshopKanban(workShopId));
+		}catch(Exception e){
+			System.out.println(e.toString());
+			mav.addObject("kanbanData", null);
+		}
 		mav.setViewName("/kanban/hl_workshop");//返回路径hl_demo
 		return mav;
 	}
@@ -89,7 +114,13 @@ public class kanbanController extends WebController {
 	public ModelAndView toHlCompany() {
 		String method = "/kanban/toHlCompany";String methodName ="恒联公司看板";
 		ModelAndView mav=new ModelAndView();
-		//mav.addObject("pname", p);
+		try{
+			mav.addObject("rotime",kanbanService.getRotime("10"));//编码：10-公司看板
+			mav.addObject("kanbanData", kanbanService.getCompanyKanban());
+		}catch(Exception e){
+			System.out.println(e.toString());
+			mav.addObject("kanbanData", null);
+		}
 		mav.setViewName("/kanban/hl_company");//返回路径hl_demo
 		return mav;
 	}
@@ -103,6 +134,9 @@ public class kanbanController extends WebController {
 		try{
 			Object object = kanbanService.getWoList(line).getData();
 			mav.addObject("WoList", object);
+			mav.addObject("Rotime",kanbanService.getRotime("30"));//编码：30-区域看板-刷新获取所有工单
+			mav.addObject("Rotime_1",kanbanService.getRotime("31"));//编码：31-区域看板_1级-工单切轮播
+			mav.addObject("Rotime_2",kanbanService.getRotime("32"));//编码：32-区域看板_2级-人机料法环测轮播
 			if(object != null){
 				List<Map<String, Object>> lm = (List<Map<String, Object>>) object;
 				System.out.println(lm.get(0).get("TASK_NO"));
@@ -113,6 +147,9 @@ public class kanbanController extends WebController {
 			System.out.println(e.toString());
 			mav.addObject("WoList", null);
 			mav.addObject("KanBanList", null);
+			mav.addObject("Rotime", null);
+			mav.addObject("Rotime_1", null);
+			mav.addObject("Rotime_2", null);
 		}
 		
 		mav.setViewName("/kanban/hl_area");//返回路径
@@ -195,6 +232,33 @@ public class kanbanController extends WebController {
 	    public ApiResponseResult getKanbanList(String area,String taskNo,String itemNo) {
 			try {
 				return kanbanService.getKanbanList(area,taskNo,itemNo);
+			} catch (Exception e) {
+				System.out.println(e.toString());
+				e.printStackTrace();
+				return ApiResponseResult.failure(e.toString());
+			}
+	    }
+	   
+	   @ApiOperation(value = "获取车间看板信息", notes = "获取车间看板信息",hidden = true)
+	    @RequestMapping(value = "/getWorkohopList", method = RequestMethod.GET)
+	    @ResponseBody
+	    public ApiResponseResult getWorkohopList(String workShopId) {
+			try {
+				return kanbanService.getWorkshopKanban(workShopId);
+			} catch (Exception e) {
+				System.out.println(e.toString());
+				e.printStackTrace();
+				return ApiResponseResult.failure(e.toString());
+			}
+	    }
+	   
+	   
+	   @ApiOperation(value = "获取公司看板信息", notes = "获取公司看板信息",hidden = true)
+	    @RequestMapping(value = "/getCompanyList", method = RequestMethod.GET)
+	    @ResponseBody
+	    public ApiResponseResult getCompanyList() {
+			try {
+				return kanbanService.getCompanyKanban();
 			} catch (Exception e) {
 				System.out.println(e.toString());
 				e.printStackTrace();

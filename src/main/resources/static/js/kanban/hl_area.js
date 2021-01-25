@@ -18,9 +18,11 @@ var time1=0,time2=0;
 $(function() {
 	
 	doData()
-	
-	interval_do = setInterval(getKanBanList,40 * 1000); // -执行轮播 2分钟 120
-	interval_taskNo=setInterval(getWoList, 90 * 1000)//-更新工单数据 -30分钟 1500
+	var cycle=parseFloat(Rotime.data[0].REFRESHTIME)//-刷新获取所有工单
+	var cycle1=parseFloat(Rotime_1.data[0].REFRESHTIME)//-工单切轮播
+		
+	interval_do = setInterval(getKanBanList,cycle1* 1000); // 工单切轮播
+	interval_taskNo=setInterval(getWoList, cycle * 1000)//-更新工单数据  1s=1*1000
 });
 
 function doData(){
@@ -424,9 +426,11 @@ function getChart3(list) {
 }
 
 function getKanBanList(){
+	console.log(area)
 	console.log(taskNo)
+	console.log(itemNo)
 	$.ajax({
-        url:  '/kanban/getKanbanList',
+        url: context+'/kanban/getKanbanList',
         cache: false,
         async: true ,
         data: {"area":area,"taskNo":taskNo,"itemNo":itemNo},
@@ -456,7 +460,7 @@ function getKanBanList(){
 
 function getWoList(){
 	$.ajax({
-        url:  '/kanban/getWoList',
+        url:  context+'/kanban/getWoList',
         cache: false,
         async: true ,
         data: {"line":permList},
@@ -649,7 +653,7 @@ var test1 = setInterval(function(){
 	}
 	chang_div1(li_1[time1]);
 	time1++;
-},1000*20);
+},20*1000);
 //清除Interval的定时器,传入变量名(创建Interval定时器时定义的变量名)
 //clearInterval(test1);
 function chang_div1(li_name){
@@ -680,7 +684,7 @@ var test2 = setInterval(function(){
 	}
 	chang_div2(li_2[time2]);
 	time2++;
-},1000*20);
+},20*1000);
 function chang_div2(li_name){
 	for (var i = 0; i < li_2.length; i++) {	 
 		if(li_2[i] == li_name){

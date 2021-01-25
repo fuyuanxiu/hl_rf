@@ -398,9 +398,14 @@
 <!-- <script src="../kanban/scripts/guangxi.js"></script> -->
 <script src="/js/kanban/hl_area.js" th:src="@{/js/kanban/hl_area.js}"></script>
 <script th:inline="javascript">
+var context = [[@{/}]];
 var permList=[[${line}]];
 var woList = [[${WoList}]];
 var KanbanList = [[${KanBanList}]];
-console.log(woList)
+var Rotime = [[${Rotime}]];//-刷新获取所有工单
+var Rotime_1 = [[${Rotime_1}]];//-工单切轮播
+var Rotime_2 = [[${Rotime_2}]];//-人机料法环测轮播
+var cycle= Rotime==null?60:parseFloat(Rotime.data[0].REFRESHTIME)//-刷新获取所有工单
+var cycle1= Rotime_1==null?10:parseFloat(Rotime_1.data[0].REFRESHTIME)//-工单切轮播
 </script>
 </html>
