@@ -164,7 +164,7 @@
 }
 .data_content .data_main .main_center .center_text{
     width: calc(100% - 20px);
-    height: 280px;
+    height: 260px;
     margin-left: 15px;
     margin-right: 15px;
     box-sizing: border-box;
@@ -175,7 +175,7 @@
 }
 .center_text1{
     width: calc(100% - 20px);
-    height: 370px;
+    height: 350px;
     margin-left: 15px;
     margin-right: 15px;
     box-sizing: border-box;
@@ -621,17 +621,17 @@ li:hover{
 .area_info_chart{
 	width:32%;
 	float:left;
-	height:130px;
+	height:115px;
 }
 .center_chart{
     width: calc(100% - 10px);
-    height: 365px;
+    height: 340px;
     margin: 5px;
     box-sizing: border-box;
 }
 .right_b_chart{
 	width: 98%;
-    height: 360px;
+    height: 330px;
     margin: 5px;
     box-sizing: border-box;
 }
@@ -642,7 +642,7 @@ li:hover{
 /**2021-01-20 任务汇总表格设置-start-**/
 
 .tablebox {
-	height:  460px;
+	height:  420px;
 	overflow: hidden;
 	position: relative;
 	margin: 15px auto;

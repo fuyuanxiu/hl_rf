@@ -85,8 +85,23 @@ function doFaImg(){
 function doHuan(){
 	var obj=KanbanList.HUAN;
 	if(obj){
-		$("#div_li_huan_img").attr('src',"../downImages/"+obj+".png");
+		if(isHasImg("../downImages/"+obj+".png")){
+			document.getElementById("div_li_huan_img").style.display="display";
+			$("#div_li_huan_img").attr('src',"../downImages/"+obj+".png");
+		}else{
+			document.getElementById("div_li_huan_img").style.display="none";
+		}
 	}
+}
+function isHasImg(pathImg){//判断路径是否存在图片
+    var ImgObj=new Image();
+    ImgObj.src= pathImg;
+     if(ImgObj.fileSize > 0 || (ImgObj.width > 0 && ImgObj.height > 0))
+     {
+       return true;
+     } else {
+       return false;
+    }
 }
 /*产能预警仪表盘*/
 function getProWarn(cn) {

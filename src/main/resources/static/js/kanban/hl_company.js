@@ -23,7 +23,7 @@ function dealData() {
 		xAxis.push(result1[i].年份+"-"+result1[i].月份)
 	}
 	//yAxis=[3820, 1932, 1301, 2934, 2290, 1330, 1320,1820, 1932, 2901, 1934, 2290]//未填写
-	setLineChart(xAxis,yAxis,'#CC00FF','客户端累计PPM','echarts_t1','个','line')//未填写
+	setLineChart(xAxis,yAxis,'#CC00FF','客户端累计PPM','echarts_t1','PPM','line')
 	
 	//--包装车间生产产量-result2-bar
 	var result2=kanbanData.data.Result2
@@ -50,7 +50,7 @@ function dealData() {
 		yAxis.push(result4[i].BMPPM)
 		xAxis.push(result4[i].MONTHS)
 	}
-	setLineChart(xAxis,yAxis,'#9999CC','表面处理不合格率','echarts_c2','%','line')
+	setLineChart(xAxis,yAxis,'#9999CC','表面处理不合格率','echarts_c2','PPM','line')
 	
 	//原料毛胚过程PPM result5-line
 	var result5=kanbanData.data.Result5
@@ -59,7 +59,7 @@ function dealData() {
 		yAxis.push(result5[i].MPPPM)
 		xAxis.push(result5[i].MONTHS)
 	}
-	setLineChart(xAxis,yAxis,'#64c4d2','原料毛胚过程PPM','echarts_c1','个','line')
+	setLineChart(xAxis,yAxis,'#64c4d2','原料毛胚过程PPM','echarts_c1','PPM','line')
 	
 	//外协过程PPM result6-line
 	var result6=kanbanData.data.Result6
@@ -68,7 +68,7 @@ function dealData() {
 		yAxis.push(result6[i].WXPPM)
 		xAxis.push(result6[i].MONTHS)
 	}
-	setLineChart(xAxis,yAxis,'#CCCC33','外协过程PPM','echarts_c3','个','line')
+	setLineChart(xAxis,yAxis,'#CCCC33','外协过程PPM','echarts_c3','PPM','line')
 }
 /*
 function getObjectKeys(object) {//获取数组键值
@@ -126,14 +126,14 @@ function setLineChart(xAxis,yAxis,color,titleName,chartId,unit,type){
 	option = {
 			color : [ color ],
 			grid : {
-				x : 50,// 左边距
+				x : 70,// 左边距
 				y : 40,// 上边距
-				x2 : 30,// 右边距
+				x2 : 10,// 右边距
 				y2 : 45,// 下边距
 				borderWidth : 10
 			},
 			legend : {
-				x : 'center', // 可设定图例在左、右、居中
+				left : 20, // 可设定图例在左、右、居中
 				bottom : 5,
 				data : [ titleName ],
 				textStyle : {
@@ -181,6 +181,7 @@ function setLineChart(xAxis,yAxis,color,titleName,chartId,unit,type){
 		    series: [{
 		    	name : titleName,
 		        data: yAxis,
+		        barMaxWidth : '80',
 		        type: type,
 		        label : {
 					show : true,

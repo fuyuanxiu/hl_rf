@@ -205,7 +205,7 @@ function getAreaCharts(item_now, item_off, titleName, color, chartId) {
 		},*/
 		series : [ {
 			type : 'pie',
-			radius : [ '55%', '70%' ],
+			radius : [ '60%', '75%' ],
 			center : [ '50%', '50%' ],
 			avoidLabelOverlap : false,
 			label : {
@@ -227,9 +227,9 @@ function getClassChart(classOk_x, classOk_y1, classOk_y2) {
 		color : [ '#CC3366', '#00FFCC' ],
 		grid : {
 			x : 45,// 左边距
-			y : 50,// 上边距
+			y : 40,// 上边距
 			x2 : 35,// 右边距
-			y2 : '25%',// 下边距
+			y2 : '28%',// 下边距
 		},
 		legend : {
 			x : 'center', // 可设定图例在左、右、居中
@@ -332,9 +332,9 @@ function getProcChart(prodOk_x, prodOk_y1, prodOk_y2) {
 		color : [ '#CC3366', '#00FFCC' ],
 		grid : {
 			x : 45,// 左边距
-			y : 50,// 上边距
+			y : 30,// 上边距
 			x2 : 35,// 右边距
-			y2 : '30%',// 下边距
+			y2 : '33%',// 下边距
 		},
 		legend : {
 			x : 'center', // 可设定图例在左、右、居中
@@ -427,8 +427,9 @@ function getProcChart(prodOk_x, prodOk_y1, prodOk_y2) {
 	myCharts1.setOption(option, true)
 }
 function getStatusChart(xData,yData) {// xData,yData
-	 //var xData = [ '一班', '二班', '三班', '四班', '五班', '六班']
+	 var xData = [ '一班', '二班', '三班', '四班', '五班', '六班']
 	// var yData = ['100', '96.01', '80.01', '72','80', '95' ]
+	 var yData = ['0', '0', '1', '72','0', '5' ]
 	var colorList = [ '#00CCCC', '#2a5fcf', '#0093ff', '#00deff', '#97e7ff', '#00CC99', '#00FFCC', '#CCCC66' ]
 	var visualMapPiecesData = []
 
@@ -483,7 +484,7 @@ function getStatusChart(xData,yData) {// xData,yData
 
 		polar : {
 			center : [ '55%', '55%' ],
-			radius : [ 100 ]
+			radius : [ 90 ]
 		// 半径大小
 		},
 		tooltip : {
@@ -510,17 +511,15 @@ function getStatusChart(xData,yData) {// xData,yData
 			center : [ '55%', '55%' ],
 			coordinateSystem : 'polar',
 			label : {
-
 				normal : {
 					show : true
 				}
-
 			},
 			itemStyle : {
 				normal : {
 					// 定制显示（按顺序）
 					color : function(params) {
-						return colorList[params.dataIndex]
+							return colorList[params.dataIndex]										
 					}
 				},
 			},

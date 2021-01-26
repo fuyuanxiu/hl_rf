@@ -35,7 +35,9 @@
         .ul_area a{
 	        color:#fff;
 	        font-size:18px;
+	         margin-left:48%;
         }
+       
     </style>
 </head>
 <body>
@@ -53,7 +55,7 @@
 <div class="data_content">
 
     <div class="data_main">
-        <div  style="width:100%;margin:10px;color:#fff" id="div_li_ce">
+        <div style="width:100%;margin:10px;color:#fff" id="div_li_ce">
                 <ul class="ul_area" id="list">
 
 		        </ul>
@@ -84,7 +86,7 @@ if(workShopList.result){
 	
 	workShopList.data.forEach(function(element) {
   		  //var html = '<a href="/kanban/toHlArea?line='+element.FCODE+'"  data-role="button" target="_blank" class="ui-link ui-btn ui-shadow ui-corner-all ui-first-child ui-last-child" role="button" >'+element.FNAME+'</a>'
-  		  var html = '<li class="bg" style="height:30px;line-height:29px;text-align:center;" id="'+element.ID+'"><a href="'+context+'kanban/toHlWorkShop?workShopId='+element.ID+'&workShopName='+element.WORKSHOP_CENTER_NAME+'"   target="_blank" >'+element.WORKSHOP_CENTER_NAME+'</a></li>';
+  		  var html = '<li class="bg" style="height:30px;line-height:29px;text-align:left;" id="'+element.ID+'"><a href="'+context+'kanban/toHlWorkShop?workShopId='+element.ID+'&workShopName='+element.WORKSHOP_CENTER_NAME+'"   target="_blank" >'+element.WORKSHOP_CENTER_NAME+'</a></li>';
   				  $("#list").append(html)	
   	 });
 }
