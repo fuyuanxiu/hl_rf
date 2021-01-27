@@ -441,9 +441,7 @@ function getChart3(list) {
 }
 
 function getKanBanList(){
-	console.log(area)
-	console.log(taskNo)
-	console.log(itemNo)
+
 	$.ajax({
         url: context+'/kanban/getKanbanList',
         cache: false,
