@@ -26,6 +26,7 @@ $(function() {
 });
 
 function doData(){
+	setDots(woList.length);
 	
 	if(woList.length>1){//至少两个工单
 		if(index<woList.length){
@@ -41,7 +42,6 @@ function doData(){
 			   }
 			}
 	}
-	
 	
 	if(KanbanList.CN != null || KanbanList.CN != 'null'){
 		getProWarn(KanbanList.CN);
@@ -491,6 +491,8 @@ function getWoList(){
             	 taskNo_action = true;
             	 woList =res.data
             	 index=0;
+            	 
+            	 setDots(woList.length);
             }else{
              //taskNo_action = false;
              //clearInterval(interval_taskNo);// 错误-关闭定时器
@@ -738,4 +740,18 @@ function getIcon(name){
 	}else if(name == '工作台'){
 		return 'icon-weibiaoti-';
 	}
+}
+
+//20210127-fyx-轮播图的导航点
+function setDots(length){
+	$("#dots i").remove();
+	for (var i = 0; i < length; i++) {	 
+		var newRow="<i class='dot'></i>";	
+	   	$("#dots").append(newRow);
+    }
+	//$('#dots i').eq((index-1)).addClass('active');
+	setDotsClass();
+}
+function setDotsClass(){
+	$("#dots i").eq((index-1)).addClass('active').siblings().removeClass("active");
 }
