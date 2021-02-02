@@ -78,7 +78,18 @@ public class ReportPrcUtils {
         //String staticPath = ClassUtils.getDefaultClassLoader().getResource("static").getPath();
         System.out.println(File.separator);
      // 图片保存路径
-        String savePath = new String("src"+ File.separator+"main"+ File.separator+"resources"+ File.separator+"static"+ File.separator+"downImages" + File.separator+fcode+ ".png");
+        //String savePath = new String("src"+ File.separator+"main"+ File.separator+"resources"+ File.separator+"static"+ File.separator+"downImages" + File.separator+fcode+ ".png");
+      //获取项目classes/static的地址
+        String staticPath = ClassUtils.getDefaultClassLoader().getResource("static").getPath();
+        String fileName = fcode+ ".png";  //获取文件名
+        
+        // 图片存储目录及图片名称
+        String url_path = "downImages" + File.separator + fileName;
+        //图片保存路径
+        String savePath = staticPath + File.separator + url_path;
+        
+        //System.out.println("图片保存地址："+savePath);
+
         File saveFile = new File(savePath);
         
         try {
