@@ -304,8 +304,9 @@ function getClassChart(classOk_x, classOk_y1, classOk_y2) {
 			barMaxWidth : '50',
 			label : {
 				show : true,
-				position : 'top',
+				position : 'inside',
 				textStyle : {
+					color:'#ffffff',
 					fontSize : 12,// 字体大小
 				}
 			},
@@ -427,9 +428,9 @@ function getProcChart(prodOk_x, prodOk_y1, prodOk_y2) {
 	myCharts1.setOption(option, true)
 }
 function getStatusChart(xData,yData) {// xData,yData
-	 var xData = [ '一班', '二班', '三班', '四班', '五班', '六班']
+	// var xData = [ '一班', '二班', '三班', '四班', '五班', '六班']
 	// var yData = ['100', '96.01', '80.01', '72','80', '95' ]
-	 var yData = ['0', '0', '1', '72','0', '5' ]
+	// var yData = ['0', '0', '1', '72','0', '5' ]
 	var colorList = [ '#00CCCC', '#2a5fcf', '#0093ff', '#00deff', '#97e7ff', '#00CC99', '#00FFCC', '#CCCC66' ]
 	var visualMapPiecesData = []
 
